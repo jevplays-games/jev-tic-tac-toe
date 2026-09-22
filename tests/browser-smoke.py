@@ -61,6 +61,7 @@ with sync_playwright() as p:
         html = html.replace('<link rel="stylesheet" href="/brand/brand.css">', '<style>' + (ROOT / 'public/brand/brand.css').read_text() + '</style>')
         html = html.replace('<link rel="stylesheet" href="/game.css">', '<style>' + (ROOT / 'public/game.css').read_text() + '</style>')
         page.set_content(html)
+        page.evaluate('(uri) => import(uri)', embedded_module(str(ROOT / 'public/brand/brand.js')))
         page.evaluate('(uri) => import(uri)', embedded_module(str(ROOT / 'public/app.js')))
     else:
         page.goto(URL, wait_until='networkidle')

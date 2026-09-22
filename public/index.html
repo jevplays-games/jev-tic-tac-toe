@@ -90,13 +90,16 @@
   <section class="panel"><div class="table-scroll"><table><thead><tr><th>Started</th><th>Profile</th><th>You</th><th>Result</th><th>Eligibility</th><th>Moves</th><th>Replay</th></tr></thead><tbody id="history-table"></tbody></table></div><p id="history-note" class="empty"></p><button id="history-more" class="subtle" hidden>Load older</button></section>
 </section>
 </main>
-<footer><span>JEV ARCADE <span class="footer-separator">/</span> TIC-TAC-TOE</span><span>No browser secrets. No fabricated model scores.</span><button id="show-privacy" class="text-button">Data & privacy</button></footer>
+<footer><span>JEV ARCADE <span class="footer-separator">/</span> TIC-TAC-TOE</span><span>No browser secrets. No fabricated model scores.</span><span class="jv-note wide-only">Keys stay on the server.</span><button id="show-privacy" class="text-button">Data & privacy</button></footer>
 <div class="jv-scrim" id="jv-scrim"></div>
 <div class="jv-sheet" id="jv-sheet" role="dialog" aria-modal="true" aria-label="Menu">
-  <p class="jv-sheet-label">Views</p>
-  <nav class="jv-nav" aria-label="Main views"><button class="jv-sheet-item nav active" data-view="play" aria-current="page">Play</button><button class="jv-sheet-item nav" data-view="analytics">Analytics</button><button class="jv-sheet-item nav" data-view="records">Records</button></nav>
-  <p class="jv-sheet-label">Account</p>
-  <div class="jv-account"><span id="identity-name" class="jv-identity">Guest</span><a id="login" class="jv-sheet-item jv-btn is-compact" href="/api/auth/discord">Sign in with Discord</a><button id="logout" class="jv-sheet-item jv-btn is-compact" hidden>Sign out</button><small class="jv-note">Keys stay on the server.</small></div>
+  <div id="jv-controls">
+    <p class="jv-sheet-label">Views</p>
+    <nav class="jv-nav" aria-label="Main views"><button class="jv-sheet-item nav active" data-view="play" aria-current="page">Play</button><button class="jv-sheet-item nav" data-view="analytics">Analytics</button><button class="jv-sheet-item nav" data-view="records">Records</button></nav>
+    <p class="jv-sheet-label">Account</p>
+    <div class="jv-account"><span id="identity-name" class="jv-identity">Guest</span><a id="login" class="jv-sheet-item jv-btn is-compact" href="/api/auth/discord">Sign in with Discord</a><button id="logout" class="jv-sheet-item jv-btn is-compact" hidden>Sign out</button></div>
+  </div>
+  <small class="jv-note">Keys stay on the server.</small>
 </div>
 </div>
 <dialog id="rules-dialog"><div class="dialog-content"><p class="eyebrow">THE RULES</p><h2>Make three in a row.</h2><p>X plays first. Alternate placing marks in empty squares. A horizontal, vertical or diagonal line of three wins. A full board without a winner is a draw.</p><p>Use the mouse, touch, arrow keys and Enter, or number keys 1–9. Difficulty changes the features and questions shown to JEV, not the rules.</p><p>Ranked matches require Discord and expire after 15 minutes. Resigning or leaving a human turn until expiration counts as a loss. A service failure or fallback is not an official JEV result.</p><p>Result rate = (wins + 0.5 × draws) / completed games. Ranked boards separate human mark, model, profile and policy. External solver use cannot be ruled out.</p><button class="primary" data-close-dialog>Back to the game</button></div></dialog>

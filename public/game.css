@@ -10,11 +10,14 @@ button:not(:disabled):active,.button:active{filter:brightness(1.16)}
 .text-button{background:none;border:0;padding:4px 0;min-height:var(--tap);color:var(--muted);font-size:var(--fs-xs)}
 @media(hover:hover){.text-button:hover{color:var(--text)}}.text-button:active{color:var(--text)}
 .danger{color:var(--danger)}
-/* Sheet contents: one set of nav tabs and account controls, relocated into the header row at >=900px. */
+/* Sheet contents: one set of nav tabs and account controls. brand.js moves #jv-controls
+   into the header at >=900px; this file only styles how those controls look. */
 .jv-nav{display:flex;flex-direction:column;gap:2px}
 .jv-account{display:flex;flex-direction:column;gap:var(--s2);padding:0 var(--s3)}
 .jv-identity{display:flex;align-items:center;min-height:var(--tap);font-size:var(--fs-sm);color:var(--muted)}
 .jv-note{font-size:var(--fs-xs);color:var(--subtle)}
+/* The sheet is hidden from 900px, so the footer carries its note above that width. */
+.wide-only{display:none}
 .nav{justify-content:flex-start;font-size:var(--fs-sm)}
 .nav.active,.jv-sheet-item[aria-current=page]{background:var(--raised);color:var(--accent)}
 .page-heading{display:flex;justify-content:space-between;align-items:center;gap:var(--s5);margin:0 0 var(--s3)}
@@ -109,18 +112,16 @@ dialog::backdrop{background:#070810cf;backdrop-filter:blur(5px)}
 .dialog-content{padding:var(--s6)}
 .dialog-content p:not(.eyebrow){font-size:.8125rem;color:#c1c6d5;line-height:1.85}.dialog-content button{margin-top:10px}
 [hidden]{display:none!important}@keyframes pulse{50%{opacity:.2}}
-/* Board first on small screens: the hero drops below the arena. */
-@media(max-width:600px){#view-play>.jv-first{order:-1}.page-heading{flex-direction:column;align-items:flex-start;gap:var(--s3)}.game-panel,.panel{padding:var(--s4) var(--s3)}.competitor small{font-size:.5625rem}.metric-grid{gap:var(--s2)}.metric>strong{font-size:1.6875rem}.eyebrow{font-size:.5rem;letter-spacing:1.6px}}
+/* Board first on small or short screens: the hero drops below the arena.
+   Same trigger as brand.css, which cannot reach .jv-first through the view wrapper. */
+@media(max-width:600px),(max-height:950px){#view-play>.jv-first{order:-1}}
+@media(max-width:600px){.page-heading{flex-direction:column;align-items:flex-start;gap:var(--s3)}.game-panel,.panel{padding:var(--s4) var(--s3)}.competitor small{font-size:.5625rem}.metric-grid{gap:var(--s2)}.metric>strong{font-size:1.6875rem}.eyebrow{font-size:.5rem;letter-spacing:1.6px}}
 @media(min-width:600px){.metric-grid{grid-template-columns:repeat(3,1fr)}.reference-grid{grid-template-columns:repeat(4,1fr)}}
-/* From 900px the single set of sheet controls becomes the right-hand cell of the header row. */
+/* From 900px brand.js has moved #jv-controls into the header; these groups lay out in a row. */
 @media(min-width:900px){
-  .jv-app{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto 1fr auto}
-  .jv-header{grid-area:1/1/2/2}.jv-main,footer{grid-column:1/-1}
-  .jv-sheet{grid-area:1/2/2/3;display:flex!important;visibility:visible;inset:auto;position:sticky;top:0;transform:none;flex-direction:row;align-items:center;gap:var(--s3);height:calc(64px + var(--sa-t));padding:var(--sa-t) calc(var(--s4) + var(--sa-r)) 0 0;max-height:none;overflow:visible;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(12px);border:0;border-bottom:1px solid var(--line-soft);border-radius:0;box-shadow:none;z-index:50}
-  .jv-sheet .jv-sheet-label,.jv-sheet .jv-note{display:none}
   .jv-nav{flex-direction:row;gap:2px}
   .jv-account{flex-direction:row;align-items:center;gap:var(--s2);padding:0}
-  .jv-sheet-item{width:auto;white-space:nowrap}
+  .wide-only{display:inline}
   .arena{grid-template-columns:minmax(0,1.4fr) minmax(18rem,1fr);gap:var(--s5)}
   .arena.without-evidence{grid-template-columns:1fr}.without-evidence .game-panel{max-width:48rem;margin:auto;width:100%}
   .analytics-grid{grid-template-columns:1fr 1fr}
