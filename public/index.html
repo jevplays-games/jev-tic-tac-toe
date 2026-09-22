@@ -1,28 +1,41 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#12131b"><meta name="description" content="Play Tic-Tac-Toe against JEV. Inspect structured decisions and measure every move.">
-  <title>JEV Arcade — Tic-Tac-Toe</title><link rel="stylesheet" href="/game.css">
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0e1017"><meta name="description" content="Play Tic-Tac-Toe against JEV. Inspect structured decisions and measure every move.">
+  <title>Tic-Tac-Toe · JEV Arcade</title>
+  <link rel="preload" href="/brand/inter-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" type="image/svg+xml" href="/brand/icon.svg">
+  <link rel="apple-touch-icon" href="/brand/icon.svg">
+  <link rel="stylesheet" href="/brand/brand.css">
+  <link rel="stylesheet" href="/game.css">
+  <script type="module" src="/brand/brand.js"></script>
   <script type="module" src="/app.js"></script>
 </head>
 <body>
-<a class="skip" href="#board">Skip to game</a>
-<div class="shell">
-<header class="topbar">
-  <a class="brand" href="/" aria-label="JEV Arcade home"><span class="brand-mark" aria-hidden="true">J<span>×</span></span><span>JEV <b>ARCADE</b></span></a>
-  <nav aria-label="Main views"><button class="nav active" data-view="play" aria-current="page">Play</button><button class="nav" data-view="analytics">Analytics</button><button class="nav" data-view="records">Records</button></nav>
-  <div class="identity"><span id="identity-name">Guest</span><a id="login" class="button subtle" href="/api/auth/discord">Sign in with Discord</a><button id="logout" class="subtle" hidden>Sign out</button></div>
+<a class="jv-skip" href="#board">Skip to game</a>
+<div class="jv-app">
+<header class="jv-header">
+  <a class="jv-brand" href="/" aria-label="JEV Arcade home">
+    <img class="jv-mark" src="/brand/mark.svg" alt="" width="28" height="28">
+    <span class="jv-wordmark">JEV ARCADE</span>
+    <span class="jv-sep" aria-hidden="true"></span>
+    <span class="jv-title">Tic-Tac-Toe</span>
+  </a>
+  <span class="jv-status"><span class="jv-dot" id="service-dot"></span><span id="service-status">Connecting to game service</span></span>
+  <button class="jv-icon-btn jv-menu-btn" id="jv-menu" type="button" aria-expanded="false" aria-controls="jv-sheet" aria-label="Menu">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  </button>
 </header>
+<main class="jv-main" id="main">
 <div id="notice" class="notice" role="status" hidden></div>
-<main>
 <section id="view-play" class="view">
-  <div class="page-heading"><div><p class="eyebrow">HUMAN INTUITION. STRUCTURED DECISIONS.</p><h1>Three in a row.<br><span>A window into JEV.</span></h1><p class="subtitle">A familiar game. A measurable opponent. Every move has a record.</p></div><div class="service"><span class="status-dot" aria-hidden="true"></span><span id="service-status">Connecting to game service</span><small>Keys stay on the server.</small></div></div>
-  <div class="arena">
+  <div class="page-heading jv-hero"><div><p class="eyebrow">HUMAN INTUITION. STRUCTURED DECISIONS.</p><h1>Three in a row.<br><span>A window into JEV.</span></h1><p class="subtitle">A familiar game. A measurable opponent. Every move has a record.</p></div></div>
+  <div class="arena jv-first">
     <section class="game-panel panel" aria-label="Tic-Tac-Toe game">
       <div class="game-top"><span class="pill" id="mode-badge">CASUAL PLAY</span><button class="text-button" id="show-rules">How to play <span aria-hidden="true">↗</span></button></div>
       <div class="competitors"><div class="competitor"><span class="mark x" id="human-symbol">×</span><div><strong>You</strong><small id="human-label">Play as X · goes first</small></div></div><span class="versus">VS</span><div class="competitor right"><div><strong id="opponent-name">JEV</strong><small id="opponent-label">Structured decision model</small></div><span class="mark o" id="jev-symbol">○</span></div></div>
-      <div class="board-wrap"><div id="board" class="board" role="group" aria-label="Tic-Tac-Toe board. Use arrow keys or keys 1 to 9."></div></div>
+      <div class="board-wrap jv-fit"><div id="board" class="board" role="group" aria-label="Tic-Tac-Toe board. Use arrow keys or keys 1 to 9."></div></div>
       <div class="turn-row"><span id="turn-dot" class="turn-dot" aria-hidden="true"></span><p id="game-status" role="status" aria-live="polite">Choose your settings and start a game.</p></div>
       <p id="eligibility" class="muted centered">Guest matches are unranked.</p>
       <div class="game-controls">
@@ -78,6 +91,13 @@
 </section>
 </main>
 <footer><span>JEV ARCADE <span class="footer-separator">/</span> TIC-TAC-TOE</span><span>No browser secrets. No fabricated model scores.</span><button id="show-privacy" class="text-button">Data & privacy</button></footer>
+<div class="jv-scrim" id="jv-scrim"></div>
+<div class="jv-sheet" id="jv-sheet" role="dialog" aria-modal="true" aria-label="Menu">
+  <p class="jv-sheet-label">Views</p>
+  <nav class="jv-nav" aria-label="Main views"><button class="jv-sheet-item nav active" data-view="play" aria-current="page">Play</button><button class="jv-sheet-item nav" data-view="analytics">Analytics</button><button class="jv-sheet-item nav" data-view="records">Records</button></nav>
+  <p class="jv-sheet-label">Account</p>
+  <div class="jv-account"><span id="identity-name" class="jv-identity">Guest</span><a id="login" class="jv-sheet-item jv-btn is-compact" href="/api/auth/discord">Sign in with Discord</a><button id="logout" class="jv-sheet-item jv-btn is-compact" hidden>Sign out</button><small class="jv-note">Keys stay on the server.</small></div>
+</div>
 </div>
 <dialog id="rules-dialog"><div class="dialog-content"><p class="eyebrow">THE RULES</p><h2>Make three in a row.</h2><p>X plays first. Alternate placing marks in empty squares. A horizontal, vertical or diagonal line of three wins. A full board without a winner is a draw.</p><p>Use the mouse, touch, arrow keys and Enter, or number keys 1–9. Difficulty changes the features and questions shown to JEV, not the rules.</p><p>Ranked matches require Discord and expire after 15 minutes. Resigning or leaving a human turn until expiration counts as a loss. A service failure or fallback is not an official JEV result.</p><p>Result rate = (wins + 0.5 × draws) / completed games. Ranked boards separate human mark, model, profile and policy. External solver use cannot be ruled out.</p><button class="primary" data-close-dialog>Back to the game</button></div></dialog>
 <dialog id="privacy-dialog"><div class="dialog-content"><p class="eyebrow">DATA & PRIVACY</p><h2>Game evidence, not surveillance.</h2><p>The server stores placements, timestamps, JEV requests and responses, configuration fingerprints, result verification, and short-lived rate counters. Signed-in accounts also store Discord ID, display name and avatar reference.</p><p>No chat messages, email addresses, keystroke streams, browser fingerprints or analytics advertising services are collected. Browser preferences are local. Model inputs contain only game state and fixed questions, never your Discord identity.</p><p>Personal evidence is available only to the match owner. Community leaderboard access uses a short-lived Discord launch grant. World rankings expose a public player identifier and display name.</p><p>Exports may contain your community IDs. Review them before sharing. Hash links detect alteration only relative to a trusted retained hash; they are not a digital signature.</p><button class="primary" data-close-dialog>Close</button></div></dialog>

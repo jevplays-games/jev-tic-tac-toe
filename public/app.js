@@ -236,12 +236,12 @@ async function initialize(){
   renderGame();
   try{
     me=await api('/api/me');backend=true;$('identity-name').textContent=me.user?.displayName??'Guest';$('login').hidden=Boolean(me.user);$('logout').hidden=!me.user;
-    $('service-status').textContent=me.jevConfigured?'Hosted JEV available':'Local fallback · JEV key not configured';
+    $('service-status').textContent=me.jevConfigured?'Hosted JEV available':'Local fallback · JEV key not configured';$('service-dot').classList.add('is-live');
     if(!me.discordConfigured){$('login').hidden=true;notice('Local-ready build. Add server-side JEV and Discord credentials to enable hosted inference and authentication.');}
     if(me.pendingLaunch){try{me.context=(await api('/api/context/redeem',{method:'POST'})).context;notice('Discord channel context verified. Ranked results can be attributed to this community.');}catch(e){notice(humanMessage(e));}}
     if(me.activeMatchId){await acceptMatch(await api(`/api/matches/${me.activeMatchId}`));if(Date.now()>=match.expiresAt)await resume(false);}
     await loadLeaderboard();
-  }catch(e){backend=false;$('service-status').textContent='Backend unreachable · local practice available';$('login').hidden=true;notice('The game backend is unreachable. Start a game to practice against a clearly labeled local opponent.');}
+  }catch(e){backend=false;$('service-status').textContent='Backend unreachable · local practice available';$('service-dot').classList.add('is-off');$('login').hidden=true;notice('The game backend is unreachable. Start a game to practice against a clearly labeled local opponent.');}
   try{const reference=await fetch('/reference-audit.json').then(r=>r.json());$('audit-reference').replaceChildren(...[['Reachable boards',reference.reachableBoards],['Nonterminal boards',reference.nonterminalBoards],['Symmetry classes',reference.symmetryClasses],['Complete games',reference.completeGames]].map(([label,n])=>{const d=element('div');d.append(element('strong',fmt(n)),element('small',label));return d;}));}catch{$('audit-reference').textContent='Run npm run audit to generate the exhaustive reference report.';}
   renderGame();renderHeatmap();
 }

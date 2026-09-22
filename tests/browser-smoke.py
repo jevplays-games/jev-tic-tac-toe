@@ -58,6 +58,7 @@ with sync_playwright() as p:
         }; }''')
         html = (ROOT / 'public/index.html').read_text()
         html = re.sub(r'<script.*?</script>', '', html, flags=re.S)
+        html = html.replace('<link rel="stylesheet" href="/brand/brand.css">', '<style>' + (ROOT / 'public/brand/brand.css').read_text() + '</style>')
         html = html.replace('<link rel="stylesheet" href="/game.css">', '<style>' + (ROOT / 'public/game.css').read_text() + '</style>')
         page.set_content(html)
         page.evaluate('(uri) => import(uri)', embedded_module(str(ROOT / 'public/app.js')))
