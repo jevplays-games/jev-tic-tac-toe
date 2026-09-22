@@ -10,9 +10,8 @@ button:not(:disabled):active,.button:active{filter:brightness(1.16)}
 .text-button{background:none;border:0;padding:4px 0;min-height:var(--tap);color:var(--muted);font-size:var(--fs-xs)}
 @media(hover:hover){.text-button:hover{color:var(--text)}}.text-button:active{color:var(--text)}
 .danger{color:var(--danger)}
-/* Sheet contents: one set of nav tabs and account controls. brand.js moves #jv-controls
-   into the header at >=900px; this file only styles how those controls look. */
-.jv-nav{display:flex;flex-direction:column;gap:2px}
+/* Sheet contents: account controls. brand.css v3 owns .jv-nav layout at both widths;
+   brand.js moves #jv-controls into the header at >=900px. */
 .jv-account{display:flex;flex-direction:column;gap:var(--s2);padding:0 var(--s3)}
 .jv-identity{display:flex;align-items:center;min-height:var(--tap);font-size:var(--fs-sm);color:var(--muted)}
 .jv-note{font-size:var(--fs-xs);color:var(--subtle)}
@@ -119,7 +118,6 @@ dialog::backdrop{background:#070810cf;backdrop-filter:blur(5px)}
 @media(min-width:600px){.metric-grid{grid-template-columns:repeat(3,1fr)}.reference-grid{grid-template-columns:repeat(4,1fr)}}
 /* From 900px brand.js has moved #jv-controls into the header; these groups lay out in a row. */
 @media(min-width:900px){
-  .jv-nav{flex-direction:row;gap:2px}
   .jv-account{flex-direction:row;align-items:center;gap:var(--s2);padding:0}
   .wide-only{display:inline}
   .arena{grid-template-columns:minmax(0,1.4fr) minmax(18rem,1fr);gap:var(--s5)}
