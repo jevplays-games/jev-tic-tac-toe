@@ -1,0 +1,7 @@
+{
+  "out": "/mnt/data/jev-tic-tac-toe/reports/baseline-games",
+  "samples": 200,
+  "basis": "offline_baselines_NOT_JEV",
+  "providerAttempts": 0,
+  "stopReason": null
+}

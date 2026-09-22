@@ -1,0 +1,177 @@
+{
+  "verifiedAt": "2026-09-22T05:20:16.040215+00:00",
+  "sourceRevision": "31b6df11c106ed54093b7424fcbe3f4dec54636b21c930809471a0873f3970c3",
+  "unitIntegrationTests": {
+    "passed": 68,
+    "failed": 0,
+    "skipped": 0,
+    "runner": "Node 22.16.0 built-in test runner",
+    "output": "reports/test-output.txt"
+  },
+  "syntaxChecks": {
+    "javascriptFiles": 31,
+    "passed": true
+  },
+  "browser": {
+    "browser": "Chromium",
+    "basis": "In-memory assets + actual local SQLite HTTP API via test bridge; navigation/cookie isolation not covered",
+    "passed": 12,
+    "checks": [
+      "Nine accessible board controls",
+      "In-page rules dialog opens and closes",
+      "Arrow-key navigation preserves accessible board focus",
+      "Complete game against visibly labeled local fallback with move analytics",
+      "Replay reconstructs initial and final positions",
+      "Full request/response/event JSON export downloads",
+      "Analytics panels, source separation, placement map and reference audit render",
+      "Paginated all-match export downloads",
+      "Private match history displays completed records",
+      "Decision-evidence visibility control works",
+      "375-pixel mobile layout has no document-level horizontal overflow",
+      "No uncaught browser JavaScript exceptions"
+    ],
+    "pageErrors": []
+  },
+  "referenceAudit": {
+    "schemaVersion": 1,
+    "rulesVersion": "ttt/1",
+    "basis": "exhaustive deterministic rules traversal; not model performance",
+    "rawAssignments": 19683,
+    "reachableBoards": 5478,
+    "nonterminalBoards": 4520,
+    "symmetryClasses": 765,
+    "completeGames": 255168,
+    "legalEdges": 16167,
+    "terminalCounts": {
+      "X": 626,
+      "O": 316,
+      "draw": 16
+    },
+    "sequenceCounts": {
+      "X": 131184,
+      "O": 77904,
+      "draw": 46080
+    },
+    "emptyBoardMinimax": 0,
+    "byPly": {
+      "0": {
+        "boards": 1,
+        "terminal": 0,
+        "edges": 9
+      },
+      "1": {
+        "boards": 9,
+        "terminal": 0,
+        "edges": 72
+      },
+      "2": {
+        "boards": 72,
+        "terminal": 0,
+        "edges": 504
+      },
+      "3": {
+        "boards": 252,
+        "terminal": 0,
+        "edges": 1512
+      },
+      "4": {
+        "boards": 756,
+        "terminal": 0,
+        "edges": 3780
+      },
+      "5": {
+        "boards": 1260,
+        "terminal": 120,
+        "edges": 4560
+      },
+      "6": {
+        "boards": 1520,
+        "terminal": 148,
+        "edges": 4116
+      },
+      "7": {
+        "boards": 1140,
+        "terminal": 444,
+        "edges": 1392
+      },
+      "8": {
+        "boards": 390,
+        "terminal": 168,
+        "edges": 222
+      },
+      "9": {
+        "boards": 78,
+        "terminal": 78,
+        "edges": 0
+      }
+    },
+    "corpusSha256": "e0c0273fa8bdb772ae78619d262059758ea9f0d74a97678076a9e1c5095c4fc4"
+  },
+  "offlinePositionBaselines": {
+    "minimax": {
+      "positions": 4520,
+      "optimalActions": 4520,
+      "optimalActionRate": 1,
+      "meanMinimaxRegret": 0,
+      "avoidableLossDecisions": 0,
+      "providerAttempts": 0,
+      "basis": "offline_baselines_NOT_JEV"
+    },
+    "tactical": {
+      "positions": 4520,
+      "optimalActions": 4305,
+      "optimalActionRate": 0.952433628318584,
+      "meanMinimaxRegret": 0.049336283185840706,
+      "avoidableLossDecisions": 56,
+      "providerAttempts": 0,
+      "basis": "offline_baselines_NOT_JEV"
+    },
+    "random": {
+      "positions": 4520,
+      "optimalActions": 2617,
+      "optimalActionRate": 0.5789823008849557,
+      "meanMinimaxRegret": 0.6480088495575221,
+      "avoidableLossDecisions": 1539,
+      "providerAttempts": 0,
+      "basis": "offline_baselines_NOT_JEV"
+    }
+  },
+  "offlineMinimaxVsRandom": {
+    "total": 200,
+    "wins": 177,
+    "draws": 23,
+    "losses": 0,
+    "withFallback": 0,
+    "byMark": {
+      "X": {
+        "games": 100,
+        "wins": 98,
+        "draws": 2,
+        "losses": 0
+      },
+      "O": {
+        "games": 100,
+        "wins": 79,
+        "draws": 21,
+        "losses": 0
+      }
+    }
+  },
+  "exportVerification": {
+    "singleMatch": true,
+    "allMatches": true,
+    "matchCount": 1
+  },
+  "externalTests": {
+    "liveTypeSafeJev": false,
+    "actualDiscordOAuthAndInteractions": false,
+    "deployedCloudflareWorkerD1": false,
+    "normalBrowserNavigationCookieCSPIsolation": false
+  },
+  "limitations": [
+    "Provider and identity tests use fixtures/mocks; no external credentials were supplied.",
+    "Browser rendering/interactions use in-memory assets and a bridge to the actual local API because browser navigation is blocked by environment policy.",
+    "Offline baseline results are not JEV performance.",
+    "Statistical quality summaries are descriptive; no claim of independent samples or real-world user representativeness."
+  ]
+}

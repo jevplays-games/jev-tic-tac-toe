@@ -1,0 +1,17 @@
+{
+  "name": "jev-tic-tac-toe",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Human vs JEV with authoritative matches, Discord community rankings and exhaustive decision analytics.",
+  "engines": { "node": ">=22.16.0" },
+  "scripts": {
+    "start": "node --env-file-if-exists=.env local/server.js",
+    "test": "node --test tests/*.test.js",
+    "audit": "node bench/audit.js",
+    "benchmark": "node bench/run.js",
+    "verify-export": "node scripts/verify-export.js",
+    "discord:register": "node --env-file-if-exists=.env scripts/register-discord.js",
+    "check": "node scripts/check.js"
+  }
+}

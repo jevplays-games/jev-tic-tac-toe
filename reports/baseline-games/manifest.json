@@ -1,0 +1,30 @@
+{
+  "runId": "90598167-f1a8-4915-8203-8bef199c4175",
+  "createdAt": "2026-09-22T05:18:46.223Z",
+  "specHash": "b3873627242a157bb3b6fee95659f642806f82d29bb394db3d8ae91c0bacd14f",
+  "spec": {
+    "schemaVersion": 1,
+    "harnessHash": "568576683394cfa7091bc84da5ccac902bd2098a9dfded725a8cc63c25a80ad3",
+    "mode": "games",
+    "source": "minimax",
+    "opponent": "random",
+    "profile": "normal",
+    "limit": 200,
+    "repeats": 1,
+    "seed": 20260922,
+    "split": "all",
+    "maxCalls": 100,
+    "config": {
+      "gameId": "tic-tac-toe",
+      "rulesVersion": "ttt/1",
+      "difficulty": "normal",
+      "modelId": "jev-1.13.0",
+      "policyVersion": "policy/1",
+      "analyticsVersion": "analytics/1",
+      "sourceRevision": "31b6df11c106ed54093b7424fcbe3f4dec54636b21c930809471a0873f3970c3",
+      "fallback": "minimax-unranked/v1",
+      "budgetMs": 3000
+    }
+  },
+  "live": false
+}

@@ -1,0 +1,11 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "jev-tic-tac-toe",
+  "main": "server/worker.js",
+  "compatibility_date": "2026-09-22",
+  "assets": { "directory": "./public", "binding": "ASSETS", "run_worker_first": ["/api/*"] },
+  "d1_databases": [{ "binding": "DB", "database_name": "jev-arcade", "database_id": "REPLACE_WITH_CREATED_D1_DATABASE_ID", "migrations_dir": "migrations" }],
+  "vars": { "PUBLIC_ORIGIN": "https://REPLACE_WITH_YOUR_HOST", "PINNED_JEV_MODEL": "jev-1.13.0", "MAX_JEV_CALLS_PER_DAY": "5000", "JEV_CALLS_PER_HOUR": "300", "MATCHES_PER_HOUR": "60", "SESSION_CREATIONS_PER_HOUR": "60" },
+  "triggers": { "crons": ["* * * * *"] },
+  "observability": { "enabled": false }
+}

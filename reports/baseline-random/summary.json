@@ -1,0 +1,2970 @@
+{
+  "schemaVersion": 1,
+  "runId": "d9ac1b9a-28c8-48cb-adbd-5330b8499ae5",
+  "specHash": "5956e2f1a6c0c1680ea496bcd68a740b8aabbc87922f9843bceb60ffc07ce8e3",
+  "generatedAt": "2026-09-22T05:18:46.170Z",
+  "basis": "offline_baselines_NOT_JEV",
+  "samples": 4520,
+  "providerAttempts": 0,
+  "stopReason": null,
+  "resultChainHead": "8645679c73525b9b2054dcc48301db06700f1a14384063b481bce3f8b9100a67",
+  "coverage": {
+    "distinctPositions": 4520,
+    "distinctFocalPositions": 4520,
+    "reachableNonterminalUniverse": 4520,
+    "repeats": 1,
+    "split": "all"
+  },
+  "sources": {
+    "baseline-random": {
+      "moves": 4520,
+      "fallbackReasons": {},
+      "attemptOutcomes": {},
+      "forkOpportunities": 1890,
+      "forksCreated": 813,
+      "valueTransitions": {
+        "win_to_draw": 364,
+        "win_to_loss": 1026,
+        "draw_to_loss": 513
+      },
+      "optimalPreferenceMass": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "preferenceExpectedOracleValue": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "entropyBits": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "topMargin": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "inputBytes": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "candidateCounts": {
+        "n": 4520,
+        "mean": 3.576769911504425,
+        "min": 1,
+        "max": 9,
+        "p50": 3,
+        "p95": 6,
+        "p99": 7
+      },
+      "knownEstimatedCostUsd": null,
+      "pricedDecisions": 0,
+      "unknownAttemptUsage": 0,
+      "optimal": 2617,
+      "optimalRate": 0.5789823008849557,
+      "meanRegret": 0.6480088495575221,
+      "avoidableLosses": 1539,
+      "winOpportunities": 2358,
+      "missedWins": 1346,
+      "blockOpportunities": 976,
+      "missedBlocks": 667,
+      "jevCalls": 0,
+      "forced": 0,
+      "fallback": 0,
+      "latencyMs": {
+        "n": 4520,
+        "mean": 0.004150017477876008,
+        "min": 0.0015120000000479195,
+        "max": 0.2209799999999973,
+        "p50": 0.003865000000018881,
+        "p95": 0.006129500000093914,
+        "p99": 0.009289390000058127
+      },
+      "providerLatencyMs": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "humanDwellMs": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "reportedConfidence": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "usageKnown": 0,
+      "retries": 0,
+      "calibration": {
+        "n": 0,
+        "accuracy": null,
+        "multiclassBrier": null,
+        "nll": null,
+        "ece": null,
+        "bins": [
+          {
+            "lower": 0,
+            "upper": 0.1,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.1,
+            "upper": 0.2,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.2,
+            "upper": 0.3,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.3,
+            "upper": 0.4,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.4,
+            "upper": 0.5,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.5,
+            "upper": 0.6,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.6,
+            "upper": 0.7,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.7,
+            "upper": 0.8,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.8,
+            "upper": 0.9,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.9,
+            "upper": 1,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          }
+        ]
+      },
+      "cellCounts": [
+        518,
+        494,
+        515,
+        497,
+        558,
+        476,
+        482,
+        475,
+        505
+      ]
+    }
+  },
+  "byPly": {
+    "1": {
+      "moves": 1,
+      "fallbackReasons": {},
+      "attemptOutcomes": {},
+      "forkOpportunities": 0,
+      "forksCreated": 0,
+      "valueTransitions": {
+        "win_to_draw": 0,
+        "win_to_loss": 0,
+        "draw_to_loss": 0
+      },
+      "optimalPreferenceMass": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "preferenceExpectedOracleValue": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "entropyBits": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "topMargin": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "inputBytes": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "candidateCounts": {
+        "n": 1,
+        "mean": 9,
+        "min": 9,
+        "max": 9,
+        "p50": 9,
+        "p95": 9,
+        "p99": 9
+      },
+      "knownEstimatedCostUsd": null,
+      "pricedDecisions": 0,
+      "unknownAttemptUsage": 0,
+      "optimal": 1,
+      "optimalRate": 1,
+      "meanRegret": 0,
+      "avoidableLosses": 0,
+      "winOpportunities": 0,
+      "missedWins": 0,
+      "blockOpportunities": 0,
+      "missedBlocks": 0,
+      "jevCalls": 0,
+      "forced": 0,
+      "fallback": 0,
+      "latencyMs": {
+        "n": 1,
+        "mean": 0.003906000000029053,
+        "min": 0.003906000000029053,
+        "max": 0.003906000000029053,
+        "p50": 0.003906000000029053,
+        "p95": 0.003906000000029053,
+        "p99": 0.003906000000029053
+      },
+      "providerLatencyMs": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "humanDwellMs": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "reportedConfidence": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "usageKnown": 0,
+      "retries": 0,
+      "calibration": {
+        "n": 0,
+        "accuracy": null,
+        "multiclassBrier": null,
+        "nll": null,
+        "ece": null,
+        "bins": [
+          {
+            "lower": 0,
+            "upper": 0.1,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.1,
+            "upper": 0.2,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.2,
+            "upper": 0.3,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.3,
+            "upper": 0.4,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.4,
+            "upper": 0.5,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.5,
+            "upper": 0.6,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.6,
+            "upper": 0.7,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.7,
+            "upper": 0.8,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.8,
+            "upper": 0.9,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.9,
+            "upper": 1,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          }
+        ]
+      },
+      "cellCounts": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "2": {
+      "moves": 9,
+      "fallbackReasons": {},
+      "attemptOutcomes": {},
+      "forkOpportunities": 0,
+      "forksCreated": 0,
+      "valueTransitions": {
+        "win_to_draw": 0,
+        "win_to_loss": 0,
+        "draw_to_loss": 6
+      },
+      "optimalPreferenceMass": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "preferenceExpectedOracleValue": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "entropyBits": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "topMargin": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "inputBytes": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "candidateCounts": {
+        "n": 9,
+        "mean": 8,
+        "min": 8,
+        "max": 8,
+        "p50": 8,
+        "p95": 8,
+        "p99": 8
+      },
+      "knownEstimatedCostUsd": null,
+      "pricedDecisions": 0,
+      "unknownAttemptUsage": 0,
+      "optimal": 3,
+      "optimalRate": 0.3333333333333333,
+      "meanRegret": 0.6666666666666666,
+      "avoidableLosses": 6,
+      "winOpportunities": 0,
+      "missedWins": 0,
+      "blockOpportunities": 0,
+      "missedBlocks": 0,
+      "jevCalls": 0,
+      "forced": 0,
+      "fallback": 0,
+      "latencyMs": {
+        "n": 9,
+        "mean": 0.003127777777801081,
+        "min": 0.0015120000000479195,
+        "max": 0.005698000000052161,
+        "p50": 0.0030440000000453438,
+        "p95": 0.005005200000027798,
+        "p99": 0.005559440000047289
+      },
+      "providerLatencyMs": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "humanDwellMs": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "reportedConfidence": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "usageKnown": 0,
+      "retries": 0,
+      "calibration": {
+        "n": 0,
+        "accuracy": null,
+        "multiclassBrier": null,
+        "nll": null,
+        "ece": null,
+        "bins": [
+          {
+            "lower": 0,
+            "upper": 0.1,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.1,
+            "upper": 0.2,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.2,
+            "upper": 0.3,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.3,
+            "upper": 0.4,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.4,
+            "upper": 0.5,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.5,
+            "upper": 0.6,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.6,
+            "upper": 0.7,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.7,
+            "upper": 0.8,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.8,
+            "upper": 0.9,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.9,
+            "upper": 1,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          }
+        ]
+      },
+      "cellCounts": [
+        2,
+        0,
+        4,
+        1,
+        0,
+        1,
+        0,
+        1,
+        0
+      ]
+    },
+    "3": {
+      "moves": 72,
+      "fallbackReasons": {},
+      "attemptOutcomes": {},
+      "forkOpportunities": 0,
+      "forksCreated": 0,
+      "valueTransitions": {
+        "win_to_draw": 18,
+        "win_to_loss": 9,
+        "draw_to_loss": 2
+      },
+      "optimalPreferenceMass": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "preferenceExpectedOracleValue": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "entropyBits": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "topMargin": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "inputBytes": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "candidateCounts": {
+        "n": 72,
+        "mean": 7,
+        "min": 7,
+        "max": 7,
+        "p50": 7,
+        "p95": 7,
+        "p99": 7
+      },
+      "knownEstimatedCostUsd": null,
+      "pricedDecisions": 0,
+      "unknownAttemptUsage": 0,
+      "optimal": 43,
+      "optimalRate": 0.5972222222222222,
+      "meanRegret": 0.5277777777777778,
+      "avoidableLosses": 11,
+      "winOpportunities": 0,
+      "missedWins": 0,
+      "blockOpportunities": 0,
+      "missedBlocks": 0,
+      "jevCalls": 0,
+      "forced": 0,
+      "fallback": 0,
+      "latencyMs": {
+        "n": 72,
+        "mean": 0.0034903194444342806,
+        "min": 0.0016829999999572465,
+        "max": 0.007140999999819542,
+        "p50": 0.003354999999970687,
+        "p95": 0.005335499999983995,
+        "p99": 0.006337279999911523
+      },
+      "providerLatencyMs": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "humanDwellMs": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "reportedConfidence": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "usageKnown": 0,
+      "retries": 0,
+      "calibration": {
+        "n": 0,
+        "accuracy": null,
+        "multiclassBrier": null,
+        "nll": null,
+        "ece": null,
+        "bins": [
+          {
+            "lower": 0,
+            "upper": 0.1,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.1,
+            "upper": 0.2,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.2,
+            "upper": 0.3,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.3,
+            "upper": 0.4,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.4,
+            "upper": 0.5,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.5,
+            "upper": 0.6,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.6,
+            "upper": 0.7,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.7,
+            "upper": 0.8,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.8,
+            "upper": 0.9,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.9,
+            "upper": 1,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          }
+        ]
+      },
+      "cellCounts": [
+        7,
+        8,
+        7,
+        5,
+        11,
+        9,
+        11,
+        3,
+        11
+      ]
+    },
+    "4": {
+      "moves": 252,
+      "fallbackReasons": {},
+      "attemptOutcomes": {},
+      "forkOpportunities": 0,
+      "forksCreated": 0,
+      "valueTransitions": {
+        "win_to_draw": 8,
+        "win_to_loss": 32,
+        "draw_to_loss": 101
+      },
+      "optimalPreferenceMass": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "preferenceExpectedOracleValue": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "entropyBits": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "topMargin": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "inputBytes": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "candidateCounts": {
+        "n": 252,
+        "mean": 6,
+        "min": 6,
+        "max": 6,
+        "p50": 6,
+        "p95": 6,
+        "p99": 6
+      },
+      "knownEstimatedCostUsd": null,
+      "pricedDecisions": 0,
+      "unknownAttemptUsage": 0,
+      "optimal": 111,
+      "optimalRate": 0.44047619047619047,
+      "meanRegret": 0.6865079365079365,
+      "avoidableLosses": 133,
+      "winOpportunities": 0,
+      "missedWins": 0,
+      "blockOpportunities": 144,
+      "missedBlocks": 122,
+      "jevCalls": 0,
+      "forced": 0,
+      "fallback": 0,
+      "latencyMs": {
+        "n": 252,
+        "mean": 0.0038842936507931442,
+        "min": 0.0016430000000582368,
+        "max": 0.030615000000011605,
+        "p50": 0.0036205000000109067,
+        "p95": 0.005787549999939756,
+        "p99": 0.014934210000014454
+      },
+      "providerLatencyMs": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "humanDwellMs": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "reportedConfidence": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "usageKnown": 0,
+      "retries": 0,
+      "calibration": {
+        "n": 0,
+        "accuracy": null,
+        "multiclassBrier": null,
+        "nll": null,
+        "ece": null,
+        "bins": [
+          {
+            "lower": 0,
+            "upper": 0.1,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.1,
+            "upper": 0.2,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.2,
+            "upper": 0.3,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.3,
+            "upper": 0.4,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.4,
+            "upper": 0.5,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.5,
+            "upper": 0.6,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.6,
+            "upper": 0.7,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.7,
+            "upper": 0.8,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.8,
+            "upper": 0.9,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.9,
+            "upper": 1,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          }
+        ]
+      },
+      "cellCounts": [
+        26,
+        26,
+        25,
+        43,
+        34,
+        26,
+        21,
+        26,
+        25
+      ]
+    },
+    "5": {
+      "moves": 756,
+      "fallbackReasons": {},
+      "attemptOutcomes": {},
+      "forkOpportunities": 594,
+      "forksCreated": 251,
+      "valueTransitions": {
+        "win_to_draw": 100,
+        "win_to_loss": 208,
+        "draw_to_loss": 74
+      },
+      "optimalPreferenceMass": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "preferenceExpectedOracleValue": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "entropyBits": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "topMargin": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "inputBytes": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "candidateCounts": {
+        "n": 756,
+        "mean": 5,
+        "min": 5,
+        "max": 5,
+        "p50": 5,
+        "p95": 5,
+        "p99": 5
+      },
+      "knownEstimatedCostUsd": null,
+      "pricedDecisions": 0,
+      "unknownAttemptUsage": 0,
+      "optimal": 374,
+      "optimalRate": 0.4947089947089947,
+      "meanRegret": 0.7804232804232805,
+      "avoidableLosses": 282,
+      "winOpportunities": 360,
+      "missedWins": 287,
+      "blockOpportunities": 208,
+      "missedBlocks": 158,
+      "jevCalls": 0,
+      "forced": 0,
+      "fallback": 0,
+      "latencyMs": {
+        "n": 756,
+        "mean": 0.003923817460320326,
+        "min": 0.0015330000001085864,
+        "max": 0.041651999999999134,
+        "p50": 0.0036959999999908177,
+        "p95": 0.006000750000055177,
+        "p99": 0.00977990000001801
+      },
+      "providerLatencyMs": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "humanDwellMs": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "reportedConfidence": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "usageKnown": 0,
+      "retries": 0,
+      "calibration": {
+        "n": 0,
+        "accuracy": null,
+        "multiclassBrier": null,
+        "nll": null,
+        "ece": null,
+        "bins": [
+          {
+            "lower": 0,
+            "upper": 0.1,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.1,
+            "upper": 0.2,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.2,
+            "upper": 0.3,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.3,
+            "upper": 0.4,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.4,
+            "upper": 0.5,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.5,
+            "upper": 0.6,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.6,
+            "upper": 0.7,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.7,
+            "upper": 0.8,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.8,
+            "upper": 0.9,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.9,
+            "upper": 1,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          }
+        ]
+      },
+      "cellCounts": [
+        76,
+        94,
+        71,
+        97,
+        88,
+        83,
+        71,
+        85,
+        91
+      ]
+    },
+    "6": {
+      "moves": 1140,
+      "fallbackReasons": {},
+      "attemptOutcomes": {},
+      "forkOpportunities": 560,
+      "forksCreated": 221,
+      "valueTransitions": {
+        "win_to_draw": 52,
+        "win_to_loss": 286,
+        "draw_to_loss": 163
+      },
+      "optimalPreferenceMass": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "preferenceExpectedOracleValue": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "entropyBits": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "topMargin": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "inputBytes": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "candidateCounts": {
+        "n": 1140,
+        "mean": 4,
+        "min": 4,
+        "max": 4,
+        "p50": 4,
+        "p95": 4,
+        "p99": 4
+      },
+      "knownEstimatedCostUsd": null,
+      "pricedDecisions": 0,
+      "unknownAttemptUsage": 0,
+      "optimal": 639,
+      "optimalRate": 0.5605263157894737,
+      "meanRegret": 0.6903508771929825,
+      "avoidableLosses": 449,
+      "winOpportunities": 444,
+      "missedWins": 330,
+      "blockOpportunities": 268,
+      "missedBlocks": 199,
+      "jevCalls": 0,
+      "forced": 0,
+      "fallback": 0,
+      "latencyMs": {
+        "n": 1140,
+        "mean": 0.0040324219298258765,
+        "min": 0.0015319999999974243,
+        "max": 0.07394099999999071,
+        "p50": 0.0038359999999784122,
+        "p95": 0.005980500000032406,
+        "p99": 0.00812920000002004
+      },
+      "providerLatencyMs": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "humanDwellMs": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "reportedConfidence": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "usageKnown": 0,
+      "retries": 0,
+      "calibration": {
+        "n": 0,
+        "accuracy": null,
+        "multiclassBrier": null,
+        "nll": null,
+        "ece": null,
+        "bins": [
+          {
+            "lower": 0,
+            "upper": 0.1,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.1,
+            "upper": 0.2,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.2,
+            "upper": 0.3,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.3,
+            "upper": 0.4,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.4,
+            "upper": 0.5,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.5,
+            "upper": 0.6,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.6,
+            "upper": 0.7,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.7,
+            "upper": 0.8,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.8,
+            "upper": 0.9,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.9,
+            "upper": 1,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          }
+        ]
+      },
+      "cellCounts": [
+        134,
+        133,
+        134,
+        124,
+        117,
+        123,
+        118,
+        129,
+        128
+      ]
+    },
+    "7": {
+      "moves": 1372,
+      "fallbackReasons": {},
+      "attemptOutcomes": {},
+      "forkOpportunities": 736,
+      "forksCreated": 341,
+      "valueTransitions": {
+        "win_to_draw": 134,
+        "win_to_loss": 368,
+        "draw_to_loss": 78
+      },
+      "optimalPreferenceMass": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "preferenceExpectedOracleValue": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "entropyBits": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "topMargin": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "inputBytes": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "candidateCounts": {
+        "n": 1372,
+        "mean": 3,
+        "min": 3,
+        "max": 3,
+        "p50": 3,
+        "p95": 3,
+        "p99": 3
+      },
+      "knownEstimatedCostUsd": null,
+      "pricedDecisions": 0,
+      "unknownAttemptUsage": 0,
+      "optimal": 792,
+      "optimalRate": 0.577259475218659,
+      "meanRegret": 0.6909620991253644,
+      "avoidableLosses": 446,
+      "winOpportunities": 996,
+      "missedWins": 554,
+      "blockOpportunities": 148,
+      "missedBlocks": 99,
+      "jevCalls": 0,
+      "forced": 0,
+      "fallback": 0,
+      "latencyMs": {
+        "n": 1372,
+        "mean": 0.004174400874634127,
+        "min": 0.0016420000001744484,
+        "max": 0.12228299999992487,
+        "p50": 0.0038960000000543005,
+        "p95": 0.006203949999962788,
+        "p99": 0.008894990000011349
+      },
+      "providerLatencyMs": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "humanDwellMs": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "reportedConfidence": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "usageKnown": 0,
+      "retries": 0,
+      "calibration": {
+        "n": 0,
+        "accuracy": null,
+        "multiclassBrier": null,
+        "nll": null,
+        "ece": null,
+        "bins": [
+          {
+            "lower": 0,
+            "upper": 0.1,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.1,
+            "upper": 0.2,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.2,
+            "upper": 0.3,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.3,
+            "upper": 0.4,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.4,
+            "upper": 0.5,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.5,
+            "upper": 0.6,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.6,
+            "upper": 0.7,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.7,
+            "upper": 0.8,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.8,
+            "upper": 0.9,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.9,
+            "upper": 1,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          }
+        ]
+      },
+      "cellCounts": [
+        163,
+        141,
+        166,
+        140,
+        168,
+        148,
+        159,
+        143,
+        144
+      ]
+    },
+    "8": {
+      "moves": 696,
+      "fallbackReasons": {},
+      "attemptOutcomes": {},
+      "forkOpportunities": 0,
+      "forksCreated": 0,
+      "valueTransitions": {
+        "win_to_draw": 52,
+        "win_to_loss": 123,
+        "draw_to_loss": 89
+      },
+      "optimalPreferenceMass": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "preferenceExpectedOracleValue": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "entropyBits": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "topMargin": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "inputBytes": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "candidateCounts": {
+        "n": 696,
+        "mean": 2,
+        "min": 2,
+        "max": 2,
+        "p50": 2,
+        "p95": 2,
+        "p99": 2
+      },
+      "knownEstimatedCostUsd": null,
+      "pricedDecisions": 0,
+      "unknownAttemptUsage": 0,
+      "optimal": 432,
+      "optimalRate": 0.6206896551724138,
+      "meanRegret": 0.5560344827586207,
+      "avoidableLosses": 212,
+      "winOpportunities": 416,
+      "missedWins": 175,
+      "blockOpportunities": 168,
+      "missedBlocks": 89,
+      "jevCalls": 0,
+      "forced": 0,
+      "fallback": 0,
+      "latencyMs": {
+        "n": 696,
+        "mean": 0.00466171120689296,
+        "min": 0.0018330000000332802,
+        "max": 0.2209799999999973,
+        "p50": 0.004065999999966152,
+        "p95": 0.006639999999890733,
+        "p99": 0.009630149999944042
+      },
+      "providerLatencyMs": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "humanDwellMs": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "reportedConfidence": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "usageKnown": 0,
+      "retries": 0,
+      "calibration": {
+        "n": 0,
+        "accuracy": null,
+        "multiclassBrier": null,
+        "nll": null,
+        "ece": null,
+        "bins": [
+          {
+            "lower": 0,
+            "upper": 0.1,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.1,
+            "upper": 0.2,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.2,
+            "upper": 0.3,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.3,
+            "upper": 0.4,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.4,
+            "upper": 0.5,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.5,
+            "upper": 0.6,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.6,
+            "upper": 0.7,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.7,
+            "upper": 0.8,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.8,
+            "upper": 0.9,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.9,
+            "upper": 1,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          }
+        ]
+      },
+      "cellCounts": [
+        82,
+        74,
+        80,
+        69,
+        101,
+        68,
+        74,
+        70,
+        78
+      ]
+    },
+    "9": {
+      "moves": 222,
+      "fallbackReasons": {},
+      "attemptOutcomes": {},
+      "forkOpportunities": 0,
+      "forksCreated": 0,
+      "valueTransitions": {
+        "win_to_draw": 0,
+        "win_to_loss": 0,
+        "draw_to_loss": 0
+      },
+      "optimalPreferenceMass": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "preferenceExpectedOracleValue": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "entropyBits": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "topMargin": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "inputBytes": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "candidateCounts": {
+        "n": 222,
+        "mean": 1,
+        "min": 1,
+        "max": 1,
+        "p50": 1,
+        "p95": 1,
+        "p99": 1
+      },
+      "knownEstimatedCostUsd": null,
+      "pricedDecisions": 0,
+      "unknownAttemptUsage": 0,
+      "optimal": 222,
+      "optimalRate": 1,
+      "meanRegret": 0,
+      "avoidableLosses": 0,
+      "winOpportunities": 142,
+      "missedWins": 0,
+      "blockOpportunities": 40,
+      "missedBlocks": 0,
+      "jevCalls": 0,
+      "forced": 0,
+      "fallback": 0,
+      "latencyMs": {
+        "n": 222,
+        "mean": 0.004327396396400838,
+        "min": 0.0021440000000438886,
+        "max": 0.03263899999990372,
+        "p50": 0.004191000000105305,
+        "p95": 0.006687500000037971,
+        "p99": 0.011225360000015009
+      },
+      "providerLatencyMs": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "humanDwellMs": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "reportedConfidence": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "usageKnown": 0,
+      "retries": 0,
+      "calibration": {
+        "n": 0,
+        "accuracy": null,
+        "multiclassBrier": null,
+        "nll": null,
+        "ece": null,
+        "bins": [
+          {
+            "lower": 0,
+            "upper": 0.1,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.1,
+            "upper": 0.2,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.2,
+            "upper": 0.3,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.3,
+            "upper": 0.4,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.4,
+            "upper": 0.5,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.5,
+            "upper": 0.6,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.6,
+            "upper": 0.7,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.7,
+            "upper": 0.8,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.8,
+            "upper": 0.9,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.9,
+            "upper": 1,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          }
+        ]
+      },
+      "cellCounts": [
+        28,
+        18,
+        28,
+        18,
+        38,
+        18,
+        28,
+        18,
+        28
+      ]
+    }
+  },
+  "byPartition": {
+    "development": {
+      "moves": 2698,
+      "fallbackReasons": {},
+      "attemptOutcomes": {},
+      "forkOpportunities": 1110,
+      "forksCreated": 515,
+      "valueTransitions": {
+        "win_to_draw": 211,
+        "win_to_loss": 600,
+        "draw_to_loss": 307
+      },
+      "optimalPreferenceMass": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "preferenceExpectedOracleValue": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "entropyBits": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "topMargin": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "inputBytes": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "candidateCounts": {
+        "n": 2698,
+        "mean": 3.5719051148999257,
+        "min": 1,
+        "max": 8,
+        "p50": 3,
+        "p95": 6,
+        "p99": 7
+      },
+      "knownEstimatedCostUsd": null,
+      "pricedDecisions": 0,
+      "unknownAttemptUsage": 0,
+      "optimal": 1580,
+      "optimalRate": 0.5856189770200149,
+      "meanRegret": 0.636767976278725,
+      "avoidableLosses": 907,
+      "winOpportunities": 1465,
+      "missedWins": 838,
+      "blockOpportunities": 540,
+      "missedBlocks": 371,
+      "jevCalls": 0,
+      "forced": 0,
+      "fallback": 0,
+      "latencyMs": {
+        "n": 2698,
+        "mean": 0.00417818087472234,
+        "min": 0.0015319999999974243,
+        "max": 0.2209799999999973,
+        "p50": 0.003885999999965861,
+        "p95": 0.00616050000002133,
+        "p99": 0.010374999999955321
+      },
+      "providerLatencyMs": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "humanDwellMs": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "reportedConfidence": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "usageKnown": 0,
+      "retries": 0,
+      "calibration": {
+        "n": 0,
+        "accuracy": null,
+        "multiclassBrier": null,
+        "nll": null,
+        "ece": null,
+        "bins": [
+          {
+            "lower": 0,
+            "upper": 0.1,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.1,
+            "upper": 0.2,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.2,
+            "upper": 0.3,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.3,
+            "upper": 0.4,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.4,
+            "upper": 0.5,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.5,
+            "upper": 0.6,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.6,
+            "upper": 0.7,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.7,
+            "upper": 0.8,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.8,
+            "upper": 0.9,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.9,
+            "upper": 1,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          }
+        ]
+      },
+      "cellCounts": [
+        323,
+        287,
+        322,
+        282,
+        326,
+        286,
+        297,
+        277,
+        298
+      ]
+    },
+    "validation": {
+      "moves": 804,
+      "fallbackReasons": {},
+      "attemptOutcomes": {},
+      "forkOpportunities": 320,
+      "forksCreated": 112,
+      "valueTransitions": {
+        "win_to_draw": 91,
+        "win_to_loss": 153,
+        "draw_to_loss": 97
+      },
+      "optimalPreferenceMass": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "preferenceExpectedOracleValue": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "entropyBits": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "topMargin": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "inputBytes": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "candidateCounts": {
+        "n": 804,
+        "mean": 3.4776119402985075,
+        "min": 1,
+        "max": 7,
+        "p50": 3,
+        "p95": 6,
+        "p99": 7
+      },
+      "knownEstimatedCostUsd": null,
+      "pricedDecisions": 0,
+      "unknownAttemptUsage": 0,
+      "optimal": 463,
+      "optimalRate": 0.5758706467661692,
+      "meanRegret": 0.6144278606965174,
+      "avoidableLosses": 250,
+      "winOpportunities": 376,
+      "missedWins": 207,
+      "blockOpportunities": 176,
+      "missedBlocks": 125,
+      "jevCalls": 0,
+      "forced": 0,
+      "fallback": 0,
+      "latencyMs": {
+        "n": 804,
+        "mean": 0.004006705223879656,
+        "min": 0.0015820000000985601,
+        "max": 0.05367000000001099,
+        "p50": 0.003790499999979602,
+        "p95": 0.006127499999990959,
+        "p99": 0.007844169999959839
+      },
+      "providerLatencyMs": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "humanDwellMs": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "reportedConfidence": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "usageKnown": 0,
+      "retries": 0,
+      "calibration": {
+        "n": 0,
+        "accuracy": null,
+        "multiclassBrier": null,
+        "nll": null,
+        "ece": null,
+        "bins": [
+          {
+            "lower": 0,
+            "upper": 0.1,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.1,
+            "upper": 0.2,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.2,
+            "upper": 0.3,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.3,
+            "upper": 0.4,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.4,
+            "upper": 0.5,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.5,
+            "upper": 0.6,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.6,
+            "upper": 0.7,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.7,
+            "upper": 0.8,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.8,
+            "upper": 0.9,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.9,
+            "upper": 1,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          }
+        ]
+      },
+      "cellCounts": [
+        84,
+        86,
+        89,
+        96,
+        100,
+        89,
+        73,
+        88,
+        99
+      ]
+    },
+    "test": {
+      "moves": 1018,
+      "fallbackReasons": {},
+      "attemptOutcomes": {},
+      "forkOpportunities": 460,
+      "forksCreated": 186,
+      "valueTransitions": {
+        "win_to_draw": 62,
+        "win_to_loss": 273,
+        "draw_to_loss": 109
+      },
+      "optimalPreferenceMass": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "preferenceExpectedOracleValue": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "entropyBits": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "topMargin": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "inputBytes": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "candidateCounts": {
+        "n": 1018,
+        "mean": 3.667976424361493,
+        "min": 1,
+        "max": 9,
+        "p50": 4,
+        "p95": 6,
+        "p99": 7
+      },
+      "knownEstimatedCostUsd": null,
+      "pricedDecisions": 0,
+      "unknownAttemptUsage": 0,
+      "optimal": 574,
+      "optimalRate": 0.5638506876227898,
+      "meanRegret": 0.7043222003929273,
+      "avoidableLosses": 382,
+      "winOpportunities": 517,
+      "missedWins": 301,
+      "blockOpportunities": 260,
+      "missedBlocks": 171,
+      "jevCalls": 0,
+      "forced": 0,
+      "fallback": 0,
+      "latencyMs": {
+        "n": 1018,
+        "mean": 0.004188561886050529,
+        "min": 0.0015120000000479195,
+        "max": 0.12228299999992487,
+        "p50": 0.0038704999999481515,
+        "p95": 0.005978999999976508,
+        "p99": 0.009311830000018543
+      },
+      "providerLatencyMs": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "humanDwellMs": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "reportedConfidence": {
+        "n": 0,
+        "mean": null,
+        "min": null,
+        "max": null,
+        "p50": null,
+        "p95": null,
+        "p99": null
+      },
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "usageKnown": 0,
+      "retries": 0,
+      "calibration": {
+        "n": 0,
+        "accuracy": null,
+        "multiclassBrier": null,
+        "nll": null,
+        "ece": null,
+        "bins": [
+          {
+            "lower": 0,
+            "upper": 0.1,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.1,
+            "upper": 0.2,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.2,
+            "upper": 0.3,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.3,
+            "upper": 0.4,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.4,
+            "upper": 0.5,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.5,
+            "upper": 0.6,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.6,
+            "upper": 0.7,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.7,
+            "upper": 0.8,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.8,
+            "upper": 0.9,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          },
+          {
+            "lower": 0.9,
+            "upper": 1,
+            "n": 0,
+            "accuracy": null,
+            "meanConfidence": null
+          }
+        ]
+      },
+      "cellCounts": [
+        111,
+        121,
+        104,
+        119,
+        132,
+        101,
+        112,
+        110,
+        108
+      ]
+    }
+  },
+  "replication": {
+    "replicatedPositions": 0,
+    "disagreeingPositions": 0,
+    "disagreementRate": null
+  },
+  "focalSummary": {
+    "moves": 4520,
+    "fallbackReasons": {},
+    "attemptOutcomes": {},
+    "forkOpportunities": 1890,
+    "forksCreated": 813,
+    "valueTransitions": {
+      "win_to_draw": 364,
+      "win_to_loss": 1026,
+      "draw_to_loss": 513
+    },
+    "optimalPreferenceMass": {
+      "n": 0,
+      "mean": null,
+      "min": null,
+      "max": null,
+      "p50": null,
+      "p95": null,
+      "p99": null
+    },
+    "preferenceExpectedOracleValue": {
+      "n": 0,
+      "mean": null,
+      "min": null,
+      "max": null,
+      "p50": null,
+      "p95": null,
+      "p99": null
+    },
+    "entropyBits": {
+      "n": 0,
+      "mean": null,
+      "min": null,
+      "max": null,
+      "p50": null,
+      "p95": null,
+      "p99": null
+    },
+    "topMargin": {
+      "n": 0,
+      "mean": null,
+      "min": null,
+      "max": null,
+      "p50": null,
+      "p95": null,
+      "p99": null
+    },
+    "inputBytes": {
+      "n": 0,
+      "mean": null,
+      "min": null,
+      "max": null,
+      "p50": null,
+      "p95": null,
+      "p99": null
+    },
+    "candidateCounts": {
+      "n": 4520,
+      "mean": 3.576769911504425,
+      "min": 1,
+      "max": 9,
+      "p50": 3,
+      "p95": 6,
+      "p99": 7
+    },
+    "knownEstimatedCostUsd": null,
+    "pricedDecisions": 0,
+    "unknownAttemptUsage": 0,
+    "optimal": 2617,
+    "optimalRate": 0.5789823008849557,
+    "meanRegret": 0.6480088495575221,
+    "avoidableLosses": 1539,
+    "winOpportunities": 2358,
+    "missedWins": 1346,
+    "blockOpportunities": 976,
+    "missedBlocks": 667,
+    "jevCalls": 0,
+    "forced": 0,
+    "fallback": 0,
+    "latencyMs": {
+      "n": 4520,
+      "mean": 0.004150017477876008,
+      "min": 0.0015120000000479195,
+      "max": 0.2209799999999973,
+      "p50": 0.003865000000018881,
+      "p95": 0.006129500000093914,
+      "p99": 0.009289390000058127
+    },
+    "providerLatencyMs": {
+      "n": 0,
+      "mean": null,
+      "min": null,
+      "max": null,
+      "p50": null,
+      "p95": null,
+      "p99": null
+    },
+    "humanDwellMs": {
+      "n": 0,
+      "mean": null,
+      "min": null,
+      "max": null,
+      "p50": null,
+      "p95": null,
+      "p99": null
+    },
+    "reportedConfidence": {
+      "n": 0,
+      "mean": null,
+      "min": null,
+      "max": null,
+      "p50": null,
+      "p95": null,
+      "p99": null
+    },
+    "inputTokens": 0,
+    "outputTokens": 0,
+    "usageKnown": 0,
+    "retries": 0,
+    "calibration": {
+      "n": 0,
+      "accuracy": null,
+      "multiclassBrier": null,
+      "nll": null,
+      "ece": null,
+      "bins": [
+        {
+          "lower": 0,
+          "upper": 0.1,
+          "n": 0,
+          "accuracy": null,
+          "meanConfidence": null
+        },
+        {
+          "lower": 0.1,
+          "upper": 0.2,
+          "n": 0,
+          "accuracy": null,
+          "meanConfidence": null
+        },
+        {
+          "lower": 0.2,
+          "upper": 0.3,
+          "n": 0,
+          "accuracy": null,
+          "meanConfidence": null
+        },
+        {
+          "lower": 0.3,
+          "upper": 0.4,
+          "n": 0,
+          "accuracy": null,
+          "meanConfidence": null
+        },
+        {
+          "lower": 0.4,
+          "upper": 0.5,
+          "n": 0,
+          "accuracy": null,
+          "meanConfidence": null
+        },
+        {
+          "lower": 0.5,
+          "upper": 0.6,
+          "n": 0,
+          "accuracy": null,
+          "meanConfidence": null
+        },
+        {
+          "lower": 0.6,
+          "upper": 0.7,
+          "n": 0,
+          "accuracy": null,
+          "meanConfidence": null
+        },
+        {
+          "lower": 0.7,
+          "upper": 0.8,
+          "n": 0,
+          "accuracy": null,
+          "meanConfidence": null
+        },
+        {
+          "lower": 0.8,
+          "upper": 0.9,
+          "n": 0,
+          "accuracy": null,
+          "meanConfidence": null
+        },
+        {
+          "lower": 0.9,
+          "upper": 1,
+          "n": 0,
+          "accuracy": null,
+          "meanConfidence": null
+        }
+      ]
+    },
+    "cellCounts": [
+      518,
+      494,
+      515,
+      497,
+      558,
+      476,
+      482,
+      475,
+      505
+    ]
+  },
+  "games": null
+}

@@ -1,0 +1,18 @@
+{
+  "basis": "exact adversarial evaluation of frozen repeat-0 policy only",
+  "runId": "f63e6fe3-637e-448d-b3bb-f8b57c8a9632",
+  "mark": "X",
+  "policyPositions": 4520,
+  "value": 0,
+  "witness": [
+    4,
+    0,
+    2,
+    6,
+    3,
+    5,
+    8,
+    1,
+    7
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "rulesVersion": "ttt/1",
+  "basis": "exhaustive deterministic rules traversal; not model performance",
+  "rawAssignments": 19683,
+  "reachableBoards": 5478,
+  "nonterminalBoards": 4520,
+  "symmetryClasses": 765,
+  "completeGames": 255168,
+  "legalEdges": 16167,
+  "terminalCounts": {
+    "X": 626,
+    "O": 316,
+    "draw": 16
+  },
+  "sequenceCounts": {
+    "X": 131184,
+    "O": 77904,
+    "draw": 46080
+  },
+  "emptyBoardMinimax": 0,
+  "byPly": {
+    "0": {
+      "boards": 1,
+      "terminal": 0,
+      "edges": 9
+    },
+    "1": {
+      "boards": 9,
+      "terminal": 0,
+      "edges": 72
+    },
+    "2": {
+      "boards": 72,
+      "terminal": 0,
+      "edges": 504
+    },
+    "3": {
+      "boards": 252,
+      "terminal": 0,
+      "edges": 1512
+    },
+    "4": {
+      "boards": 756,
+      "terminal": 0,
+      "edges": 3780
+    },
+    "5": {
+      "boards": 1260,
+      "terminal": 120,
+      "edges": 4560
+    },
+    "6": {
+      "boards": 1520,
+      "terminal": 148,
+      "edges": 4116
+    },
+    "7": {
+      "boards": 1140,
+      "terminal": 444,
+      "edges": 1392
+    },
+    "8": {
+      "boards": 390,
+      "terminal": 168,
+      "edges": 222
+    },
+    "9": {
+      "boards": 78,
+      "terminal": 78,
+      "edges": 0
+    }
+  },
+  "corpusSha256": "e0c0273fa8bdb772ae78619d262059758ea9f0d74a97678076a9e1c5095c4fc4"
+}

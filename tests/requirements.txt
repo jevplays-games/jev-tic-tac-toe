@@ -1,0 +1,2 @@
+# Optional browser tests only; not needed for the application, Node tests or benchmarks.
+playwright==1.57.0

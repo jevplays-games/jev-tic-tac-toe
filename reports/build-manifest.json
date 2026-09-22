@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "sourceHash": "31b6df11c106ed54093b7424fcbe3f4dec54636b21c930809471a0873f3970c3",
+  "files": [
+    {
+      "path": "local/database.js",
+      "sha256": "29ca05fd519ff836da289e8e9e19a51045a101775be18bf6bd003edab2a54fac",
+      "bytes": 1349
+    },
+    {
+      "path": "local/server.js",
+      "sha256": "663ec55cc78974cb0918847ce975a6f5ea4f5118df442c2fdd2f0575499f6139",
+      "bytes": 2990
+    },
+    {
+      "path": "migrations/0001.sql",
+      "sha256": "b7335023f9fa7cdd58627ed0e40cb19f0e87b02343fb4efe26b3e0678a6c8781",
+      "bytes": 3189
+    },
+    {
+      "path": "public/_headers",
+      "sha256": "eef26a4531ccb9752c3578782b97086a0d13bb55651eba50c21948f78cbd82f5",
+      "bytes": 379
+    },
+    {
+      "path": "public/app.js",
+      "sha256": "15cc2453fef945c2440dc487a498b025219d006d66a2520ae5d1f3eef2e3c5e4",
+      "bytes": 28494
+    },
+    {
+      "path": "public/game.css",
+      "sha256": "58791f951789bfcc2faa2357fab075426cc6955e7de8bf148e24f766d8d61aef",
+      "bytes": 14840
+    },
+    {
+      "path": "public/game/analytics.js",
+      "sha256": "46abb23367600d30f0f8a8ac0985a36e163a3f99ab6aac22469b0efecd38a370",
+      "bytes": 10595
+    },
+    {
+      "path": "public/game/oracle.js",
+      "sha256": "f38d02384473dd5bbced1aa7b8460898a78849232d94ca05ca2f20e43c91f4fe",
+      "bytes": 1343
+    },
+    {
+      "path": "public/game/policy.js",
+      "sha256": "17a139cbe8439437200b4a39c26fef6c9df36729ece59bf080b53bd56677d8b4",
+      "bytes": 6831
+    },
+    {
+      "path": "public/game/rules.js",
+      "sha256": "6937a120e30a03bdb507abbf2d1eaa31416a72a2999e97a65cfd99dcc09fc956",
+      "bytes": 3525
+    },
+    {
+      "path": "public/index.html",
+      "sha256": "7d1d7124fc047b53bd0830e5c4c369a0ac374ef0bf45e778f681a156052fd0ea",
+      "bytes": 13512
+    },
+    {
+      "path": "server/auth.js",
+      "sha256": "9fe28466e69c4ca45944306cb8aa6623370f23691733342021ac901f54812f62",
+      "bytes": 6351
+    },
+    {
+      "path": "server/discord.js",
+      "sha256": "ad79dfd20c1dcf86bda90223b1a37749713a1853a5c9ba7a0c26313409876de1",
+      "bytes": 3848
+    },
+    {
+      "path": "server/jev.js",
+      "sha256": "5e0babc5589a99cc576e528639d538cef1edfd5788bcfcabaafd42fb07ec0594",
+      "bytes": 3985
+    },
+    {
+      "path": "server/matches.js",
+      "sha256": "2b137339829d7dcb555c45aef359f992ed839abc240a61f41ebeb056516e018f",
+      "bytes": 14692
+    },
+    {
+      "path": "server/operations.js",
+      "sha256": "9ba9d71570e75aef0b6d44c643e35c7e6359ca452ccb05ca40ab15929c3203ba",
+      "bytes": 2141
+    },
+    {
+      "path": "server/reporting.js",
+      "sha256": "6a4f4d39f75a459b59e0ff6b1782b862afa8794bb2bf9ca88d670f9c8a7fa537",
+      "bytes": 5393
+    },
+    {
+      "path": "server/store.js",
+      "sha256": "6ce9f444abbb0215b3f6a8f16bfeca938e37e6e7886cd15052de3669a6663b59",
+      "bytes": 2121
+    },
+    {
+      "path": "server/util.js",
+      "sha256": "b980fbc489d1e499d96985f01d2cb9717f678e76072e98da4493a234b0514984",
+      "bytes": 3276
+    },
+    {
+      "path": "server/worker.js",
+      "sha256": "20566e492134a22ed818e9268e90b2d399530b1bfdc59b8d888b1bcb33b432e7",
+      "bytes": 5615
+    }
+  ]
+}

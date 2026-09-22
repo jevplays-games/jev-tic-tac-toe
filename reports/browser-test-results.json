@@ -1,0 +1,20 @@
+{
+  "browser": "Chromium",
+  "basis": "In-memory assets + actual local SQLite HTTP API via test bridge; navigation/cookie isolation not covered",
+  "passed": 12,
+  "checks": [
+    "Nine accessible board controls",
+    "In-page rules dialog opens and closes",
+    "Arrow-key navigation preserves accessible board focus",
+    "Complete game against visibly labeled local fallback with move analytics",
+    "Replay reconstructs initial and final positions",
+    "Full request/response/event JSON export downloads",
+    "Analytics panels, source separation, placement map and reference audit render",
+    "Paginated all-match export downloads",
+    "Private match history displays completed records",
+    "Decision-evidence visibility control works",
+    "375-pixel mobile layout has no document-level horizontal overflow",
+    "No uncaught browser JavaScript exceptions"
+  ],
+  "pageErrors": []
+}

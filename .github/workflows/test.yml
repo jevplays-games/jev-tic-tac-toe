@@ -1,0 +1,18 @@
+name: Tests and exhaustive audit
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  native-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.16.0'
+      - run: node scripts/check.js
+      - run: npm test
+      - run: npm run audit
+      - run: node bench/run.js --source minimax --limit 4520 --out bench-runs/ci-minimax

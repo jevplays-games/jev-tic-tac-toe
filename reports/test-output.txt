@@ -1,0 +1,445 @@
+TAP version 13
+# Subtest: optimal opening moves are all recognized, not just one tie-break choice
+ok 1 - optimal opening moves are all recognized, not just one tie-break choice
+  ---
+  duration_ms: 92.340041
+  type: 'test'
+  ...
+# Subtest: missed win and necessary block are correctly distinguished
+ok 2 - missed win and necessary block are correctly distinguished
+  ---
+  duration_ms: 2.732452
+  type: 'test'
+  ...
+# Subtest: quantiles ignore missing observations, preserve genuine zero measurements
+ok 3 - quantiles ignore missing observations, preserve genuine zero measurements
+  ---
+  duration_ms: 0.93522
+  type: 'test'
+  ...
+# Subtest: calibration perfect predictions have zero Brier, NLL and ECE
+ok 4 - calibration perfect predictions have zero Brier, NLL and ECE
+  ---
+  duration_ms: 0.375242
+  type: 'test'
+  ...
+# Subtest: uniform three-way probabilities have expected Brier and entropy
+ok 5 - uniform three-way probabilities have expected Brier and entropy
+  ---
+  duration_ms: 0.377846
+  type: 'test'
+  ...
+# Subtest: CSV neutralizes spreadsheet formulas and escapes quotes/newlines
+ok 6 - CSV neutralizes spreadsheet formulas and escapes quotes/newlines
+  ---
+  duration_ms: 0.330655
+  type: 'test'
+  ...
+# Subtest: empty analytics do not manufacture measured performance
+ok 7 - empty analytics do not manufacture measured performance
+  ---
+  duration_ms: 1.321849
+  type: 'test'
+  ...
+# Subtest: hash-linked events detect changes, missing sequence, wrong match and reordering
+ok 8 - hash-linked events detect changes, missing sequence, wrong match and reordering
+  ---
+  duration_ms: 13.009869
+  type: 'test'
+  ...
+# Subtest: canonicalization is key-order independent
+ok 9 - canonicalization is key-order independent
+  ---
+  duration_ms: 1.262971
+  type: 'test'
+  ...
+# Subtest: CSV retains negative numeric oracle labels as numbers, not escaped text
+ok 10 - CSV retains negative numeric oracle labels as numbers, not escaped text
+  ---
+  duration_ms: 0.597765
+  type: 'test'
+  ...
+# (node:2909) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: anonymous session has HttpOnly cookie, CSRF secret and security headers
+ok 11 - anonymous session has HttpOnly cookie, CSRF secret and security headers
+  ---
+  duration_ms: 35.54778
+  type: 'test'
+  ...
+# Subtest: CSRF and origin checks reject browser mutations independently
+ok 12 - CSRF and origin checks reject browser mutations independently
+  ---
+  duration_ms: 11.83428
+  type: 'test'
+  ...
+# Subtest: ranked matches require both a real account session and a configured JEV key
+ok 13 - ranked matches require both a real account session and a configured JEV key
+  ---
+  duration_ms: 12.528509
+  type: 'test'
+  ...
+# Subtest: casual no-key game is playable and visibly excludes fallback from rankings
+ok 14 - casual no-key game is playable and visibly excludes fallback from rankings
+  ---
+  duration_ms: 179.235597
+  type: 'test'
+  ...
+# Subtest: ranked match verifies genuine adapter decisions with a mocked provider
+ok 15 - ranked match verifies genuine adapter decisions with a mocked provider
+  ---
+  duration_ms: 82.085067
+  type: 'test'
+  ...
+# Subtest: playing as O schedules and records the initial JEV move
+ok 16 - playing as O schedules and records the initial JEV move
+  ---
+  duration_ms: 17.894394
+  type: 'test'
+  ...
+# Subtest: oracle data and raw request are not exposed during an active ranked game
+ok 17 - oracle data and raw request are not exposed during an active ranked game
+  ---
+  duration_ms: 7.35334
+  type: 'test'
+  ...
+# Subtest: duplicate match creation is idempotent; conflicting options reject
+ok 18 - duplicate match creation is idempotent; conflicting options reject
+  ---
+  duration_ms: 9.416519
+  type: 'test'
+  ...
+# Subtest: duplicate action request does not duplicate a placement or invoke the model twice
+ok 19 - duplicate action request does not duplicate a placement or invoke the model twice
+  ---
+  duration_ms: 35.817821
+  type: 'test'
+  ...
+# Subtest: concurrent human submissions cannot fork the authoritative state
+ok 20 - concurrent human submissions cannot fork the authoritative state
+  ---
+  duration_ms: 10.694994
+  type: 'test'
+  ...
+# Subtest: stale revision and illegal placements fail without state mutation
+ok 21 - stale revision and illegal placements fail without state mutation
+  ---
+  duration_ms: 6.052232
+  type: 'test'
+  ...
+# Subtest: another session cannot read, move or export a private match
+ok 22 - another session cannot read, move or export a private match
+  ---
+  duration_ms: 17.329518
+  type: 'test'
+  ...
+# Subtest: supplied scores, winners and community IDs cannot forge results or context
+ok 23 - supplied scores, winners and community IDs cannot forge results or context
+  ---
+  duration_ms: 5.280382
+  type: 'test'
+  ...
+# Subtest: resignation becomes a loss and cannot be replaced with a second active ranked game
+ok 24 - resignation becomes a loss and cannot be replaced with a second active ranked game
+  ---
+  duration_ms: 10.408155
+  type: 'test'
+  ...
+# Subtest: expired human turn counts as a forfeit; expired service turn is void
+ok 25 - expired human turn counts as a forfeit; expired service turn is void
+  ---
+  duration_ms: 7.239039
+  type: 'test'
+  ...
+# Subtest: fallback during a ranked match permanently removes ranking eligibility
+ok 26 - fallback during a ranked match permanently removes ranking eligibility
+  ---
+  duration_ms: 35.327557
+  type: 'test'
+  ...
+# Subtest: provider requests are prepared durably before dispatch
+ok 27 - provider requests are prepared durably before dispatch
+  ---
+  duration_ms: 6.399873
+  type: 'test'
+  ...
+# Subtest: export verifier detects action, model evidence and hash-chain tampering
+ok 28 - export verifier detects action, model evidence and hash-chain tampering
+  ---
+  duration_ms: 45.152291
+  type: 'test'
+  ...
+# Subtest: personal analytics separate human/JEV/forced/fallback and history is paginated
+ok 29 - personal analytics separate human/JEV/forced/fallback and history is paginated
+  ---
+  duration_ms: 75.695595
+  type: 'test'
+  ...
+# Subtest: channel/server endpoints fail closed without fresh verified Discord context
+ok 30 - channel/server endpoints fail closed without fresh verified Discord context
+  ---
+  duration_ms: 4.529663
+  type: 'test'
+  ...
+# Subtest: public assets and game data never include the provider secret
+ok 31 - public assets and game data never include the provider secret
+  ---
+  duration_ms: 37.230085
+  type: 'test'
+  ...
+# Subtest: oversized JSON and non-JSON mutations reject
+ok 32 - oversized JSON and non-JSON mutations reject
+  ---
+  duration_ms: 3.890956
+  type: 'test'
+  ...
+# Subtest: unknown actions and arbitrary proxy paths do not expose a JEV proxy
+ok 33 - unknown actions and arbitrary proxy paths do not expose a JEV proxy
+  ---
+  duration_ms: 3.54672
+  type: 'test'
+  ...
+# Subtest: changing duplicate decision evidence while preserving its chosen cell is detected
+ok 34 - changing duplicate decision evidence while preserving its chosen cell is detected
+  ---
+  duration_ms: 33.225984
+  type: 'test'
+  ...
+# Subtest: operational counters are anonymous and require a separate administrator secret
+ok 35 - operational counters are anonymous and require a separate administrator secret
+  ---
+  duration_ms: 5.324413
+  type: 'test'
+  ...
+# Subtest: malformed JSON provider response is not retried or misrepresented
+ok 36 - malformed JSON provider response is not retried or misrepresented
+  ---
+  duration_ms: 5.016771
+  type: 'test'
+  ...
+# Subtest: expired in-flight lease uses labeled recovery and discards a late provider result
+ok 37 - expired in-flight lease uses labeled recovery and discards a late provider result
+  ---
+  duration_ms: 12.812875
+  type: 'test'
+  ...
+# Subtest: ranked ties, mark separation, channel/server isolation and stable pagination use verified matches
+ok 38 - ranked ties, mark separation, channel/server isolation and stable pagination use verified matches
+  ---
+  duration_ms: 1137.11517
+  type: 'test'
+  ...
+# {
+#   "out": "/tmp/jev-bench-6GXiXi",
+#   "samples": 80,
+#   "basis": "offline_baselines_NOT_JEV",
+#   "providerAttempts": 0,
+#   "stopReason": null
+# }
+# {
+#   "out": "/tmp/jev-bench-6GXiXi",
+#   "samples": 80,
+#   "basis": "offline_baselines_NOT_JEV",
+#   "providerAttempts": 0,
+#   "stopReason": null
+# }
+# Subtest: offline benchmark is labeled, repeatable, resumable and rejects mixed treatments
+ok 39 - offline benchmark is labeled, repeatable, resumable and rejects mixed treatments
+  ---
+  duration_ms: 1096.872651
+  type: 'test'
+  ...
+# Subtest: benchmark never spends API credits without explicit live confirmation
+ok 40 - benchmark never spends API credits without explicit live confirmation
+  ---
+  duration_ms: 0.225708
+  type: 'test'
+  ...
+# {
+#   "out": "/tmp/jev-games-toDn1N",
+#   "samples": 10,
+#   "basis": "offline_baselines_NOT_JEV",
+#   "providerAttempts": 0,
+#   "stopReason": null
+# }
+# Subtest: minimax game benchmark distinguishes sides and draws against itself
+ok 41 - minimax game benchmark distinguishes sides and draws against itself
+  ---
+  duration_ms: 102.861996
+  type: 'test'
+  ...
+# (node:2941) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: native Ed25519 verifies exact body and timestamp, rejects modification
+ok 42 - native Ed25519 verifies exact body and timestamp, rejects modification
+  ---
+  duration_ms: 39.134306
+  type: 'test'
+  ...
+# Subtest: Discord ping and guild command are verified, personal launches are one-time
+ok 43 - Discord ping and guild command are verified, personal launches are one-time
+  ---
+  duration_ms: 14.747146
+  type: 'test'
+  ...
+# Subtest: stale signatures and non-guild launch contexts reject
+ok 44 - stale signatures and non-guild launch contexts reject
+  ---
+  duration_ms: 6.946812
+  type: 'test'
+  ...
+# Subtest: launch grants bind to Discord identity and survive idempotent same-session redemption
+ok 45 - launch grants bind to Discord identity and survive idempotent same-session redemption
+  ---
+  duration_ms: 11.951675
+  type: 'test'
+  ...
+# Subtest: OAuth flow uses identify only, rotates session, and consumes state
+ok 46 - OAuth flow uses identify only, rotates session, and consumes state
+  ---
+  duration_ms: 14.547532
+  type: 'test'
+  ...
+# Subtest: OAuth mismatched state never exchanges an authorization code
+ok 47 - OAuth mismatched state never exchanges an authorization code
+  ---
+  duration_ms: 6.292812
+  type: 'test'
+  ...
+# (node:2952) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: all profiles contain exactly the legal actions, no oracle or identity fields
+ok 48 - all profiles contain exactly the legal actions, no oracle or identity fields
+  ---
+  duration_ms: 2429.88352
+  type: 'test'
+  ...
+# Subtest: JEV full profile encodes candidate references in question instructions
+ok 49 - JEV full profile encodes candidate references in question instructions
+  ---
+  duration_ms: 1.701573
+  type: 'test'
+  ...
+# Subtest: valid documented response is accepted without extra provider fields
+ok 50 - valid documented response is accepted without extra provider fields
+  ---
+  duration_ms: 19.589022
+  type: 'test'
+  ...
+# Subtest: wrong model, missing question, invalid action, bad distributions, bad confidence reject
+ok 51 - wrong model, missing question, invalid action, bad distributions, bad confidence reject
+  ---
+  duration_ms: 0.787882
+  type: 'test'
+  ...
+# Subtest: full profile selection is based on outcome probabilities and deterministic ties
+ok 52 - full profile selection is based on outcome probabilities and deterministic ties
+  ---
+  duration_ms: 54.293687
+  type: 'test'
+  ...
+# Subtest: adapter records actual request, response, latency, tokens and hashes
+ok 53 - adapter records actual request, response, latency, tokens and hashes
+  ---
+  duration_ms: 27.221952
+  type: 'test'
+  ...
+# Subtest: no API key means a labeled deterministic fallback, not mock JEV
+ok 54 - no API key means a labeled deterministic fallback, not mock JEV
+  ---
+  duration_ms: 1.293671
+  type: 'test'
+  ...
+# Subtest: one legal placement avoids a provider call and is labeled forced
+ok 55 - one legal placement avoids a provider call and is labeled forced
+  ---
+  duration_ms: 0.352779
+  type: 'test'
+  ...
+# Subtest: malformed structured output falls back without rerolling
+ok 56 - malformed structured output falls back without rerolling
+  ---
+  duration_ms: 1.896885
+  type: 'test'
+  ...
+# Subtest: transient failure retries once within the budget
+ok 57 - transient failure retries once within the budget
+  ---
+  duration_ms: 152.892942
+  type: 'test'
+  ...
+# Subtest: Retry-After beyond remaining budget does not trigger another call
+ok 58 - Retry-After beyond remaining budget does not trigger another call
+  ---
+  duration_ms: 1.563586
+  type: 'test'
+  ...
+# Subtest: abort deadline causes a timeout fallback
+ok 59 - abort deadline causes a timeout fallback
+  ---
+  duration_ms: 30.024005
+  type: 'test'
+  ...
+# Subtest: initial state, immutable moves, coordinate independence
+ok 60 - initial state, immutable moves, coordinate independence
+  ---
+  duration_ms: 0.957133
+  type: 'test'
+  ...
+# Subtest: invalid actions and occupied cells are rejected
+ok 61 - invalid actions and occupied cells are rejected
+  ---
+  duration_ms: 0.386279
+  type: 'test'
+  ...
+# Subtest: terminal games do not accept trailing moves
+ok 62 - terminal games do not accept trailing moves
+  ---
+  duration_ms: 0.886808
+  type: 'test'
+  ...
+# Subtest: a valid full-board draw reconstructs exactly
+ok 63 - a valid full-board draw reconstructs exactly
+  ---
+  duration_ms: 81.373612
+  type: 'test'
+  ...
+# Subtest: all 19,683 raw boards have correct reachability classification against independent bitboards
+ok 64 - all 19,683 raw boards have correct reachability classification against independent bitboards
+  ---
+  duration_ms: 113.653334
+  type: 'test'
+  ...
+# Subtest: exact oracle agrees with independent bitboard minimax on all reachable boards and 16,167 legal edges
+ok 65 - exact oracle agrees with independent bitboard minimax on all reachable boards and 16,167 legal edges
+  ---
+  duration_ms: 273.516174
+  type: 'test'
+  ...
+# Subtest: exhaustive board, symmetry, terminal and complete-sequence counts match
+ok 66 - exhaustive board, symmetry, terminal and complete-sequence counts match
+  ---
+  duration_ms: 2450.572211
+  type: 'test'
+  ...
+# Subtest: minimax self-play always draws from the empty board
+ok 67 - minimax self-play always draws from the empty board
+  ---
+  duration_ms: 0.557306
+  type: 'test'
+  ...
+# Subtest: malformed snapshots and version mismatches reject
+ok 68 - malformed snapshots and version mismatches reject
+  ---
+  duration_ms: 0.370526
+  type: 'test'
+  ...
+1..68
+# tests 68
+# suites 0
+# pass 68
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4265.248616

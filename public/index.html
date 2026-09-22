@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#12131b"><meta name="description" content="Play Tic-Tac-Toe against JEV. Inspect structured decisions and measure every move.">
+  <title>JEV Arcade — Tic-Tac-Toe</title><link rel="stylesheet" href="/game.css">
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+<a class="skip" href="#board">Skip to game</a>
+<div class="shell">
+<header class="topbar">
+  <a class="brand" href="/" aria-label="JEV Arcade home"><span class="brand-mark" aria-hidden="true">J<span>×</span></span><span>JEV <b>ARCADE</b></span></a>
+  <nav aria-label="Main views"><button class="nav active" data-view="play" aria-current="page">Play</button><button class="nav" data-view="analytics">Analytics</button><button class="nav" data-view="records">Records</button></nav>
+  <div class="identity"><span id="identity-name">Guest</span><a id="login" class="button subtle" href="/api/auth/discord">Sign in with Discord</a><button id="logout" class="subtle" hidden>Sign out</button></div>
+</header>
+<div id="notice" class="notice" role="status" hidden></div>
+<main>
+<section id="view-play" class="view">
+  <div class="page-heading"><div><p class="eyebrow">HUMAN INTUITION. STRUCTURED DECISIONS.</p><h1>Three in a row.<br><span>A window into JEV.</span></h1><p class="subtitle">A familiar game. A measurable opponent. Every move has a record.</p></div><div class="service"><span class="status-dot" aria-hidden="true"></span><span id="service-status">Connecting to game service</span><small>Keys stay on the server.</small></div></div>
+  <div class="arena">
+    <section class="game-panel panel" aria-label="Tic-Tac-Toe game">
+      <div class="game-top"><span class="pill" id="mode-badge">CASUAL PLAY</span><button class="text-button" id="show-rules">How to play <span aria-hidden="true">↗</span></button></div>
+      <div class="competitors"><div class="competitor"><span class="mark x" id="human-symbol">×</span><div><strong>You</strong><small id="human-label">Play as X · goes first</small></div></div><span class="versus">VS</span><div class="competitor right"><div><strong id="opponent-name">JEV</strong><small id="opponent-label">Structured decision model</small></div><span class="mark o" id="jev-symbol">○</span></div></div>
+      <div class="board-wrap"><div id="board" class="board" role="group" aria-label="Tic-Tac-Toe board. Use arrow keys or keys 1 to 9."></div></div>
+      <div class="turn-row"><span id="turn-dot" class="turn-dot" aria-hidden="true"></span><p id="game-status" role="status" aria-live="polite">Choose your settings and start a game.</p></div>
+      <p id="eligibility" class="muted centered">Guest matches are unranked.</p>
+      <div class="game-controls">
+        <label>Opponent profile<select id="difficulty"><option value="easy">Easy</option><option value="normal" selected>Normal</option><option value="hard">Hard</option><option value="jev">JEV · full evaluation</option></select></label>
+        <label>Your mark<select id="human-mark"><option value="X">X · first</option><option value="O">O · second</option></select></label>
+        <label class="check ranked-check"><input id="ranked" type="checkbox" disabled> Ranked</label>
+        <button id="new-game" class="primary">Start game <span aria-hidden="true">↗</span></button>
+      </div>
+      <div class="under-controls"><button id="resign" class="text-button danger" hidden>Resign match</button><button id="reconnect" class="text-button" hidden>Reconnect / resume</button><label class="check"><input id="analysis-toggle" type="checkbox" checked> Show decision evidence</label></div>
+    </section>
+    <aside class="evidence-panel panel" id="evidence-panel" aria-labelledby="evidence-title">
+      <div class="panel-heading"><h2 id="evidence-title">Decision evidence</h2><span id="evidence-state" class="pill small">READY</span></div>
+      <p class="muted">Structured outputs and verified tactical facts. Not hidden chain-of-thought.</p>
+      <div class="evidence-stats"><div><small>CANDIDATES</small><strong id="candidate-count">—</strong></div><div><small>SELECTED</small><strong id="selected-cell">—</strong></div><div><small>LATENCY</small><strong id="decision-latency">—</strong></div></div>
+      <div class="subheading"><h3>Move preference</h3><small id="confidence">No response yet</small></div>
+      <div id="probabilities" class="probabilities"><p class="empty">JEV’s actual option distribution will appear after a decision.</p></div>
+      <h3 class="factors-heading">Verified factors</h3><div id="factors"><p class="empty">Play a move to begin.</p></div>
+      <div class="evidence-footnote" id="evidence-note">Confidence describes the model’s answer distribution, not a calibrated probability of winning.</div>
+      <div class="profile-detail"><small>PROFILE</small><strong id="profile-detail">Normal · immediate tactical features</strong></div>
+    </aside>
+  </div>
+  <section class="panel postgame" id="postgame" hidden>
+    <div class="panel-heading"><div><p class="eyebrow">POSTGAME LAB</p><h2>Every move, measured.</h2></div><div class="button-row"><button id="download-match" class="subtle">Export evidence JSON</button><button id="download-moves" class="subtle">Moves CSV</button></div></div>
+    <p class="muted">Exact minimax labels are calculated after selection. They are not supplied to JEV.</p>
+    <div class="replay-control"><label for="replay-step">Replay position</label><input id="replay-step" type="range" min="0" max="9" value="9"><output id="replay-output">Final</output><button id="return-live" class="text-button">Final board</button></div>
+    <div class="table-scroll"><table><thead><tr><th>Ply</th><th>Player</th><th>Cell</th><th>Source</th><th>Before → after</th><th>Regret</th><th>Optimal</th><th>Latency</th></tr></thead><tbody id="move-table"></tbody></table></div>
+    <details><summary>Raw requests, responses and hash-linked event timeline</summary><pre id="raw-evidence"></pre></details>
+  </section>
+  <section class="panel rankings">
+    <div class="panel-heading"><div><p class="eyebrow">VERIFIED RESULTS ONLY</p><h2>Leaderboard</h2></div><div class="segmented" aria-label="Leaderboard scope"><button data-scope="channel">Channel</button><button data-scope="server">Server</button><button data-scope="world" class="selected">World</button></div></div>
+    <div class="ranking-controls"><label>Profile<select id="leader-profile"><option value="easy">Easy</option><option value="normal" selected>Normal</option><option value="hard">Hard</option><option value="jev">JEV</option></select></label><label>Human mark<select id="leader-mark"><option>X</option><option>O</option></select></label><span class="muted">20 results to qualify · ties share a rank</span></div>
+    <div class="table-scroll"><table><thead><tr><th>Rank</th><th>Player</th><th>Result rate</th><th>Wins</th><th>Draws</th><th>Losses</th><th>Games</th></tr></thead><tbody id="leader-table"></tbody></table></div>
+    <p id="leader-note" class="empty">Loading verified results…</p><button id="leader-more" class="subtle" hidden>Next page</button>
+  </section>
+</section>
+<section id="view-analytics" class="view" hidden>
+  <div class="page-heading"><div><p class="eyebrow">THE MEASUREMENT LAYER</p><h1>Nothing hidden.<br><span>Nothing invented.</span></h1><p class="subtitle">Your completed server matches. Live JEV, forced moves and fallback are reported separately.</p></div><button id="export-all" class="primary">Export all my matches ↗</button></div>
+  <section class="panel analytics-filters"><label>Profile<select id="analytics-profile"><option value="">All profiles</option><option value="easy">Easy</option><option value="normal">Normal</option><option value="hard">Hard</option><option value="jev">JEV</option></select></label><label>Your mark<select id="analytics-mark"><option value="">Both marks</option><option>X</option><option>O</option></select></label><button id="refresh-analytics" class="subtle">Refresh</button><span class="muted" id="analytics-coverage">No measurements loaded.</span></section>
+  <div class="metric-grid" id="metric-grid"></div>
+  <div class="analytics-grid">
+    <section class="panel"><div class="panel-heading"><h2>Decision quality by source</h2></div><p class="muted">Optimality accepts every equally optimal move. Regret measures loss of game-theoretic value.</p><div class="table-scroll"><table><thead><tr><th>Source</th><th>Moves</th><th>Optimal</th><th>Regret</th><th>Avoidable loss</th></tr></thead><tbody id="source-table"></tbody></table></div></section>
+    <section class="panel"><div class="panel-heading"><h2>Placement map</h2><select id="heatmap-source" aria-label="Placement map source"><option value="human">Human</option><option value="jev">Live JEV</option><option value="fallback-minimax">Fallback</option></select></div><div class="heatmap" id="heatmap" aria-label="Move counts by square"></div><p class="muted">Counts, not win probabilities. Sources are never silently combined.</p></section>
+    <section class="panel"><h2>Latency & reliability</h2><div id="latency-detail" class="key-values"></div><p class="muted">Server wall time includes transport. Human dwell includes network delay and time away from the game.</p></section>
+    <section class="panel"><h2>Outcome calibration</h2><div id="calibration-detail" class="key-values"></div><p class="muted">JEV-profile candidate predictions vs exact minimax labels. A repeated board is another observation, not an independent game.</p></section>
+  </div>
+  <section class="panel"><div class="panel-heading"><h2>Quality by move number</h2><span class="muted">Combined sources; use the source table for attribution.</span></div><div class="table-scroll"><table><thead><tr><th>Ply</th><th>Moves</th><th>Optimal</th><th>Mean regret</th><th>Missed win / opportunities</th><th>Missed block / opportunities</th></tr></thead><tbody id="ply-table"></tbody></table></div></section>
+  <section class="panel"><h2>Configuration cohorts</h2><p class="muted">Model, profile, code revision and policy are fingerprinted. Compare like with like.</p><div id="cohort-list"></div></section>
+  <section class="panel"><h2>Exhaustive reference audit</h2><p class="muted">This packaged report traverses the complete reachable rules space. It is not a live JEV benchmark.</p><div id="audit-reference" class="reference-grid"></div><a class="text-button" href="/reference-audit.json">Open the generated reference report ↗</a></section>
+</section>
+<section id="view-records" class="view" hidden>
+  <div class="page-heading"><div><p class="eyebrow">REPRODUCIBLE BY DESIGN</p><h1>Your match record.</h1><p class="subtitle">Inspect a replay, download the original decision evidence, or verify the event chain offline.</p></div><button id="refresh-records" class="subtle">Refresh</button></div>
+  <section class="panel"><div class="table-scroll"><table><thead><tr><th>Started</th><th>Profile</th><th>You</th><th>Result</th><th>Eligibility</th><th>Moves</th><th>Replay</th></tr></thead><tbody id="history-table"></tbody></table></div><p id="history-note" class="empty"></p><button id="history-more" class="subtle" hidden>Load older</button></section>
+</section>
+</main>
+<footer><span>JEV ARCADE <span class="footer-separator">/</span> TIC-TAC-TOE</span><span>No browser secrets. No fabricated model scores.</span><button id="show-privacy" class="text-button">Data & privacy</button></footer>
+</div>
+<dialog id="rules-dialog"><div class="dialog-content"><p class="eyebrow">THE RULES</p><h2>Make three in a row.</h2><p>X plays first. Alternate placing marks in empty squares. A horizontal, vertical or diagonal line of three wins. A full board without a winner is a draw.</p><p>Use the mouse, touch, arrow keys and Enter, or number keys 1–9. Difficulty changes the features and questions shown to JEV, not the rules.</p><p>Ranked matches require Discord and expire after 15 minutes. Resigning or leaving a human turn until expiration counts as a loss. A service failure or fallback is not an official JEV result.</p><p>Result rate = (wins + 0.5 × draws) / completed games. Ranked boards separate human mark, model, profile and policy. External solver use cannot be ruled out.</p><button class="primary" data-close-dialog>Back to the game</button></div></dialog>
+<dialog id="privacy-dialog"><div class="dialog-content"><p class="eyebrow">DATA & PRIVACY</p><h2>Game evidence, not surveillance.</h2><p>The server stores placements, timestamps, JEV requests and responses, configuration fingerprints, result verification, and short-lived rate counters. Signed-in accounts also store Discord ID, display name and avatar reference.</p><p>No chat messages, email addresses, keystroke streams, browser fingerprints or analytics advertising services are collected. Browser preferences are local. Model inputs contain only game state and fixed questions, never your Discord identity.</p><p>Personal evidence is available only to the match owner. Community leaderboard access uses a short-lived Discord launch grant. World rankings expose a public player identifier and display name.</p><p>Exports may contain your community IDs. Review them before sharing. Hash links detect alteration only relative to a trusted retained hash; they are not a digital signature.</p><button class="primary" data-close-dialog>Close</button></div></dialog>
+</body>
+</html>
