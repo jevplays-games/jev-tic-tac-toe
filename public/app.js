@@ -25,8 +25,9 @@ function element(tag,text=null,className=null){const node=document.createElement
 function notice(message){$('notice').textContent=message;$('notice').hidden=!message;}
 function tableRow(values){const tr=element('tr');for(const value of values){const td=element('td');if(value instanceof Node)td.append(value);else td.textContent=String(value??'—');tr.append(td);}return tr;}
 function setBusy(value){busy=value;document.body.classList.toggle('busy',value);renderGame();}
+let bearer=null; // set only inside a Discord Activity, where cookies are not sent
 async function api(path,{method='GET',body}={}){
-  const response=await fetch(path,{method,credentials:'same-origin',headers:{...(body?{'Content-Type':'application/json'}:{}),...(method!=='GET'?{'X-CSRF-Token':me?.csrf??''}:{})},...(body?{body:JSON.stringify(body)}:{}),signal:AbortSignal.timeout(12000)});
+  const response=await fetch(path,{method,credentials:'same-origin',headers:{...(bearer?{Authorization:`Bearer ${bearer}`}:{}),...(body?{'Content-Type':'application/json'}:{}),...(method!=='GET'?{'X-CSRF-Token':me?.csrf??''}:{})},...(body?{body:JSON.stringify(body)}:{}),signal:AbortSignal.timeout(12000)});
   let data;try{data=await response.json();}catch{throw new Error('The game service did not return JSON. Local play remains available.');}
   if(!response.ok){const error=new Error(data.error??'Request failed');error.status=response.status;error.detail=data.detail;throw error;}
   return data;
@@ -249,6 +250,10 @@ async function initialize(){
   $('logout').addEventListener('click',async()=>{try{await api('/api/logout',{method:'POST'});location.reload();}catch(e){notice(humanMessage(e));}});
   document.addEventListener('keydown',event=>{if(/^[1-9]$/.test(event.key)&&!['INPUT','SELECT','TEXTAREA'].includes(document.activeElement.tagName)&&!document.querySelector('dialog[open]')&&!$('view-play').hidden)place(Number(event.key)-1);});
   renderGame();
+  if(new URLSearchParams(location.search).has('frame_id')){
+    try{bearer=(await (await import('/activity.js')).signInWithDiscord(api)).token;}
+    catch(e){notice(`Could not sign in through Discord. ${humanMessage(e)}`);}
+  }
   try{
     me=await api('/api/me');backend=true;$('identity-name').textContent=me.user?.displayName??'Guest';$('login').hidden=Boolean(me.user);$('logout').hidden=!me.user;
     $('service-status').textContent=me.jevConfigured?'Hosted JEV available':'Local fallback · JEV key not configured';$('service-dot').classList.add('is-live');
