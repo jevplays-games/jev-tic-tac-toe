@@ -109,7 +109,7 @@ Match evidence and results are retained until the operator removes them; they ar
 
 The same Worker handler runs as a plain Node app. GoDaddy runs `npm run build` (a no-op) and then `npm start`, which is `node --env-file-if-exists=.env local/server.js`.
 
-- Set `NODE_ENV=production`. This omits `DEV_LOCAL`, so ranked play, Discord interactions, OAuth and Activity, `__Host-` Secure cookies and HSTS behave as on the Worker. It binds `0.0.0.0` on the platform-injected `PORT` (override with `HOST`). `PUBLIC_ORIGIN` and `RATE_LIMIT_SALT` are mandatory or the process exits.
+- Production mode is on when `NODE_ENV=production` **or** `PUBLIC_ORIGIN` is an https origin on a non-loopback host (GoDaddy's platform env can override `NODE_ENV`). Loopback or http origins stay local dev. Production omits `DEV_LOCAL`, so ranked play, Discord interactions, OAuth and Activity, `__Host-` Secure cookies and HSTS behave as on the Worker. It binds `0.0.0.0` on the platform-injected `PORT` (override with `HOST`). `PUBLIC_ORIGIN` and `RATE_LIMIT_SALT` are mandatory or the process exits.
 - `PUBLIC_ORIGIN=https://tic-tac-toe.jevplay.games`; origin and CSRF checks compare against it, never against the Host header.
 - `TRUST_PROXY=1` uses the last `X-Forwarded-For` hop as the client IP for rate limits. Without it every client shares one rate-limit bucket. Set it only behind a proxy that appends that header.
 - Other env: `TYPESAFE_API_KEY`, `PINNED_JEV_MODEL`, `DISCORD_APPLICATION_ID`, `DISCORD_CLIENT_SECRET`, `DISCORD_PUBLIC_KEY`, the quota variables, and optional `ADMIN_ANALYTICS_KEY`. Real process env vars override `.env`.

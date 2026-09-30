@@ -3,17 +3,18 @@ import {readFile,stat} from 'node:fs/promises';
 import {mkdirSync} from 'node:fs';
 import {resolve,dirname,extname,sep} from 'node:path';
 import {fileURLToPath} from 'node:url';
+import {isProduction} from './mode.js';
 import {openDatabase} from './database.js';
 import {handle} from '../server/worker.js';
 import {maintenance} from '../server/matches.js';
 
 const root=fileURLToPath(new URL('../',import.meta.url)),publicRoot=resolve(root,'public');
-const production=process.env.NODE_ENV==='production';
+const production=isProduction();
 const port=Number(process.env.PORT??8787),host=process.env.HOST??(production?'0.0.0.0':'127.0.0.1');
 const dbPath=process.env.DATABASE_PATH??resolve(root,production?'data/game.sqlite':'.data/game.sqlite');
 mkdirSync(dirname(dbPath),{recursive:true});
-// Production mode (NODE_ENV=production, e.g. GoDaddy Node hosting): behaves like the Worker deployment. DEV_LOCAL is not set, so ranked play, Discord and Secure cookies are on, and the origin and salt are mandatory.
-if(production){for(const k of ['PUBLIC_ORIGIN','RATE_LIMIT_SALT'])if(!process.env[k]){console.error(`${k} is required when NODE_ENV=production`);process.exit(1);}}
+// Production mode (NODE_ENV=production or an https non-loopback PUBLIC_ORIGIN, e.g. GoDaddy Node hosting): behaves like the Worker deployment. DEV_LOCAL is not set, so ranked play, Discord and Secure cookies are on, and the origin and salt are mandatory.
+if(production){for(const k of ['PUBLIC_ORIGIN','RATE_LIMIT_SALT'])if(!process.env[k]){console.error(`${k} is required in production mode`);process.exit(1);}}
 const env={...process.env,...(production?{}:{DEV_LOCAL:'1'}),PUBLIC_ORIGIN:process.env.PUBLIC_ORIGIN??`http://localhost:${port}`,RATE_LIMIT_SALT:process.env.RATE_LIMIT_SALT??'local-development-only',DB:openDatabase(dbPath)};
 // Behind a trusted TLS-terminating proxy (TRUST_PROXY=1) the client IP for rate limiting is the last X-Forwarded-For hop, which the proxy itself appended.
 const trustProxy=process.env.TRUST_PROXY==='1';

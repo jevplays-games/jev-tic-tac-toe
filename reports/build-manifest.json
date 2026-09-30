@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceHash": "36959a826db244bc4ebb2077ee99f2eea9a89e4b588db997c3e2e38b24bad671",
+  "sourceHash": "4748a59a0019f92cd11c7336eaf5d02bd55c0bf66e3587102a61205e5e9b09d9",
   "files": [
     {
       "path": "local\\database.js",
@@ -8,9 +8,14 @@
       "bytes": 1349
     },
     {
+      "path": "local\\mode.js",
+      "sha256": "9dc3b35d3983d073934baa44f00168556270d6794a6b0d805b9ebc308ebf50dc",
+      "bytes": 419
+    },
+    {
       "path": "local\\server.js",
-      "sha256": "18ce4763b2b0fbab883fc1cc7c0a1d123fb2d190996764a29337f6ead085a3fa",
-      "bytes": 3907
+      "sha256": "8ed9086d204e78c8a48791940b30e78a41f7fcc082f45d2d413a6290bafff0f1",
+      "bytes": 3959
     },
     {
       "path": "migrations\\0001.sql",
@@ -114,7 +119,7 @@
     },
     {
       "path": "server\\build-info.js",
-      "sha256": "e899d4cb8ea78cb2f03ef69281d236b2b7e8f044a601966d7ea2fab7b45c6e98",
+      "sha256": "a30eec2a6e2287dfa4bea73cc2f2dee50d11c5b50680e0d8ed30ce7137f02cc3",
       "bytes": 203
     },
     {
