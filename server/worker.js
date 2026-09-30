@@ -2,6 +2,7 @@ import {recordOperation,operationReport} from './operations.js';
 import {assert,HttpError,json,readJson,sha256} from './util.js';
 import {sessionFor,userFor,requireMutation,contextFor,beginLogin,completeLogin,logout,isLocal} from './auth.js';
 import {interaction,redeemContext} from './discord.js';
+import {activityConfig,createActivitySession} from './activity.js';
 import {all,quota} from './store.js';
 import {createMatch,ownedMatch,publicMatch,act,driveJev,expireMatch,maintenance,configuration} from './matches.js';
 import {analytics,history,leaderboard} from './reporting.js';
@@ -11,6 +12,8 @@ export const SECURITY_HEADERS={
   'Content-Security-Policy':"default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'; worker-src 'self'",
   'Permissions-Policy':'camera=(), microphone=(), geolocation=()'
 };
+// Discord shows an Activity inside its own iframe. Only a page loaded with Discord's frame_id may be framed, and only by Discord.
+export const ACTIVITY_FRAME_ANCESTORS='frame-ancestors https://discord.com https://ptb.discord.com https://canary.discord.com';
 export async function handle(request,env) {
   const requestId=crypto.randomUUID(),url=new URL(request.url),started=performance.now();let response,errorCode='ok';
   try{
@@ -25,6 +28,7 @@ export async function handle(request,env) {
   }
   if(url.pathname.startsWith('/api/')&&env.DB){try{await recordOperation(env,{path:url.pathname,method:request.method,status:response.status,code:errorCode,durationMs:performance.now()-started});}catch{console.error(JSON.stringify({type:'metrics_write_failed',requestId}));}}
   const headers=new Headers(response.headers);for(const [k,v] of Object.entries(SECURITY_HEADERS))headers.set(k,v);
+  if(!url.pathname.startsWith('/api/')&&url.searchParams.has('frame_id')){headers.delete('X-Frame-Options');headers.set('Content-Security-Policy',SECURITY_HEADERS['Content-Security-Policy'].replace("frame-ancestors 'none'",ACTIVITY_FRAME_ANCESTORS));}
   headers.set('X-Request-Id',requestId);
   if(!isLocal(env))headers.set('Strict-Transport-Security','max-age=31536000');
   return new Response(response.body,{status:response.status,headers});
@@ -35,6 +39,8 @@ async function api(request,env,url) {
   await quota(env,`ip-api:${ip}`,Number(env.API_REQUESTS_PER_MINUTE??600),60000);
   if(path==='/api/admin/operations'&&method==='GET')return json(await operationReport(request,env));
   if(path==='/api/discord/interactions'&&method==='POST')return interaction(request,env);
+  if(path==='/api/activity/config'&&method==='GET')return activityConfig(env);
+  if(path==='/api/activity/session'&&method==='POST')return createActivitySession(request,env);
   if(path==='/api/auth/discord'&&method==='GET')return beginLogin(request,env);
   if(path==='/api/auth/discord/callback'&&method==='GET')return completeLogin(request,env);
   if(path==='/api/leaderboard'&&method==='GET'&&(url.searchParams.get('scope')??'world')==='world')return json(await leaderboard(env,null,url));

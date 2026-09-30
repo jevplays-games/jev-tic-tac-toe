@@ -3,14 +3,18 @@ import {one,run,quota} from './store.js';
 export function isLocal(env) {return env.DEV_LOCAL==='1' && ['localhost','127.0.0.1','[::1]'].includes(new URL(env.PUBLIC_ORIGIN).hostname);}
 export function cookieName(env){return isLocal(env)?'jev_dev_session':'__Host-jev_session';}
 export function cookie(env,token,age=604800){return `${cookieName(env)}=${token}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${age}${isLocal(env)?'':'; Secure'}`;}
+export const activityOrigin=env=>/^\d{5,25}$/.test(env.DISCORD_APPLICATION_ID??'')?`https://${env.DISCORD_APPLICATION_ID}.discordsays.com`:null;
+// Inside a Discord Activity the browser will not send our SameSite cookie, so the game holds the session token in memory.
+function bearerToken(request){const m=/^Bearer ([a-f0-9]{64})$/.exec(request.headers.get('authorization')??'');return m?m[1]:null;}
 export async function sessionFor(request,env,create=false) {
-  const token=request.headers.get('cookie')?.split(';').map(s=>s.trim()).find(s=>s.startsWith(`${cookieName(env)}=`))?.split('=')[1];
+  const bearer=bearerToken(request);
+  const token=bearer??request.headers.get('cookie')?.split(';').map(s=>s.trim()).find(s=>s.startsWith(`${cookieName(env)}=`))?.split('=')[1];
   let session=token && /^[a-f0-9]{64}$/.test(token)?await one(env,'SELECT * FROM sessions WHERE token_hash=?',await sha256(token)):null;
   const at=Date.now();
   if(session && (session.expires_at<=at || session.last_seen_at<at-86400000))session=null;
   if(session){
     if(session.last_seen_at<at-60000)await run(env,'UPDATE sessions SET last_seen_at=? WHERE token_hash=?',at,session.token_hash);
-    return {session,headers:{}};
+    return {session:bearer?{...session,via:'bearer'}:session,headers:{}};
   }
   if(!create)throw new HttpError(401,'session_required');
   const ip=request.headers.get('cf-connecting-ip')??(isLocal(env)?'local':'unknown');
@@ -21,7 +25,8 @@ export async function sessionFor(request,env,create=false) {
 }
 export async function userFor(env,session){return session.user_id?await one(env,'SELECT id,discord_id,display_name,avatar_hash,moderation_state FROM users WHERE id=?',session.user_id):null;}
 export function requireMutation(request,env,session) {
-  assert(request.headers.get('origin')===new URL(env.PUBLIC_ORIGIN).origin,403,'origin_rejected');
+  const origin=request.headers.get('origin'),framed=session.via==='bearer'?activityOrigin(env):null;
+  assert(origin===new URL(env.PUBLIC_ORIGIN).origin||(framed&&origin===framed),403,'origin_rejected');
   assert(safeEqual(request.headers.get('x-csrf-token'),session.csrf),403,'csrf_rejected');
 }
 export function contextFor(session) {
@@ -36,22 +41,32 @@ export async function beginLogin(request,env) {
   const params=new URLSearchParams({client_id:env.DISCORD_APPLICATION_ID,redirect_uri:`${env.PUBLIC_ORIGIN}/api/auth/discord/callback`,response_type:'code',scope:'identify',state});
   return new Response(null,{status:302,headers:{...headers,Location:`https://discord.com/oauth2/authorize?${params}`}});
 }
-export async function completeLogin(request,env) {
-  const {session}=await sessionFor(request,env),params=new URL(request.url).searchParams,state=params.get('state'),code=params.get('code');
-  assert(state && /^[a-f0-9]{64}$/.test(state) && session.oauth_expires>Date.now() && safeEqual(await sha256(state),session.oauth_state_hash),403,'oauth_state_rejected');
-  const consumed=await run(env,'UPDATE sessions SET oauth_state_hash=NULL,oauth_expires=NULL WHERE token_hash=? AND oauth_state_hash=?',session.token_hash,session.oauth_state_hash);
-  assert(consumed.meta.changes===1,403,'oauth_state_reused');assert(code && code.length<2048,400,'oauth_denied_or_missing_code');
+export async function discordIdentity(env,code,redirectUri) {
   const fetchFn=env.FETCH??fetch;
-  const tokenResponse=await fetchFn('https://discord.com/api/oauth2/token',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams({client_id:env.DISCORD_APPLICATION_ID,client_secret:env.DISCORD_CLIENT_SECRET,grant_type:'authorization_code',code,redirect_uri:`${env.PUBLIC_ORIGIN}/api/auth/discord/callback`}),signal:AbortSignal.timeout(7000)});
+  const form={client_id:env.DISCORD_APPLICATION_ID,client_secret:env.DISCORD_CLIENT_SECRET,grant_type:'authorization_code',code};
+  if(redirectUri)form.redirect_uri=redirectUri;
+  const tokenResponse=await fetchFn('https://discord.com/api/oauth2/token',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(form),signal:AbortSignal.timeout(7000)});
   assert(tokenResponse.ok,502,'discord_token_failed');const tokens=await boundedJson(tokenResponse,32000);
   assert(typeof tokens.access_token==='string',502,'discord_token_invalid');
   const identityResponse=await fetchFn('https://discord.com/api/v10/users/@me',{headers:{Authorization:`Bearer ${tokens.access_token}`},signal:AbortSignal.timeout(7000)});
   assert(identityResponse.ok,502,'discord_identity_failed');const identity=await boundedJson(identityResponse,32000);
   assert(typeof identity.id==='string' && /^\d{5,25}$/.test(identity.id),502,'discord_identity_invalid');
+  return {identity,accessToken:tokens.access_token};
+}
+export async function upsertDiscordUser(env,identity) {
   const at=Date.now(),newId=crypto.randomUUID();
   await run(env,'INSERT INTO users(id,discord_id,display_name,avatar_hash,created_at,last_seen_at) VALUES(?,?,?,?,?,?) ON CONFLICT(discord_id) DO UPDATE SET display_name=excluded.display_name,avatar_hash=excluded.avatar_hash,last_seen_at=excluded.last_seen_at',newId,identity.id,String(identity.global_name??identity.username??'Player').slice(0,100),typeof identity.avatar==='string'?identity.avatar:null,at,at);
   const user=await one(env,'SELECT * FROM users WHERE discord_id=?',identity.id);
   assert(user.moderation_state==='active',403,'account_restricted');
+  return user;
+}
+export async function completeLogin(request,env) {
+  const {session}=await sessionFor(request,env),params=new URL(request.url).searchParams,state=params.get('state'),code=params.get('code');
+  assert(state && /^[a-f0-9]{64}$/.test(state) && session.oauth_expires>Date.now() && safeEqual(await sha256(state),session.oauth_state_hash),403,'oauth_state_rejected');
+  const consumed=await run(env,'UPDATE sessions SET oauth_state_hash=NULL,oauth_expires=NULL WHERE token_hash=? AND oauth_state_hash=?',session.token_hash,session.oauth_state_hash);
+  assert(consumed.meta.changes===1,403,'oauth_state_reused');assert(code && code.length<2048,400,'oauth_denied_or_missing_code');
+  const {identity}=await discordIdentity(env,code,`${env.PUBLIC_ORIGIN}/api/auth/discord/callback`);
+  const user=await upsertDiscordUser(env,identity),at=Date.now();
   const raw=randomToken(),newHash=await sha256(raw);
   await env.DB.batch([
     env.DB.prepare('INSERT INTO sessions(token_hash,user_id,csrf,pending_launch,created_at,last_seen_at,expires_at) VALUES(?,?,?,?,?,?,?)').bind(newHash,user.id,randomToken(),session.pending_launch??null,at,at,at+604800000),
