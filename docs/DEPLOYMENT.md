@@ -104,3 +104,14 @@ curl -H "Authorization: Bearer $ADMIN_ANALYTICS_KEY" "https://YOUR_HOST/api/admi
 Disable platform query-string/request-body capture, especially on OAuth callbacks and personal launch URLs. Application logs already omit those values; a hosting provider's independent request logs require their own configuration. The supplied Worker observability default is disabled to avoid unreviewed log capture.
 
 Match evidence and results are retained until the operator removes them; they are not silently pruned and are not advertised as permanent storage. Establish a retention/export/deletion policy for your deployment and disclose it to players. Closed-match exports let users retain their own evidence. Deleting a stored match removes it from future leaderboard aggregation.
+
+## GoDaddy Node.js hosting
+
+The same Worker handler runs as a plain Node app. GoDaddy runs `npm run build` (a no-op) and then `npm start`, which is `node --env-file-if-exists=.env local/server.js`.
+
+- Set `NODE_ENV=production`. This omits `DEV_LOCAL`, so ranked play, Discord interactions, OAuth and Activity, `__Host-` Secure cookies and HSTS behave as on the Worker. It binds `0.0.0.0` on the platform-injected `PORT` (override with `HOST`). `PUBLIC_ORIGIN` and `RATE_LIMIT_SALT` are mandatory or the process exits.
+- `PUBLIC_ORIGIN=https://tic-tac-toe.jevplay.games`; origin and CSRF checks compare against it, never against the Host header.
+- `TRUST_PROXY=1` uses the last `X-Forwarded-For` hop as the client IP for rate limits. Without it every client shares one rate-limit bucket. Set it only behind a proxy that appends that header.
+- Other env: `TYPESAFE_API_KEY`, `PINNED_JEV_MODEL`, `DISCORD_APPLICATION_ID`, `DISCORD_CLIENT_SECRET`, `DISCORD_PUBLIC_KEY`, the quota variables, and optional `ADMIN_ANALYTICS_KEY`. Real process env vars override `.env`.
+- SQLite lives at `data/game.sqlite` (override `DATABASE_PATH`), outside `public/`, so it is never served. The filesystem is ephemeral: a redeploy loses matches, sessions and rankings (accepted).
+- The Cloudflare cron trigger is replaced by the in-process 60 second `maintenance` timer.
