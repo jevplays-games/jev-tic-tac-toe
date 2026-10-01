@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceHash": "4748a59a0019f92cd11c7336eaf5d02bd55c0bf66e3587102a61205e5e9b09d9",
+  "sourceHash": "a2cc14cfdcc4f81f392322622671a88d7f41d7a6524a05fbdc93e5372931113d",
   "files": [
     {
       "path": "local\\database.js",
@@ -79,18 +79,18 @@
     },
     {
       "path": "public\\game\\oracle.js",
-      "sha256": "f38d02384473dd5bbced1aa7b8460898a78849232d94ca05ca2f20e43c91f4fe",
-      "bytes": 1343
+      "sha256": "175ea4729938d324b5f3110655233ae15f8ed45bfd9869b24931d0574fd4b847",
+      "bytes": 3182
     },
     {
       "path": "public\\game\\policy.js",
-      "sha256": "17a139cbe8439437200b4a39c26fef6c9df36729ece59bf080b53bd56677d8b4",
-      "bytes": 6831
+      "sha256": "47c6617e74449267b3ddd14e552bb50fda7b34fb03eeabc1a0c4022b6bca4ac3",
+      "bytes": 7497
     },
     {
       "path": "public\\game\\rules.js",
-      "sha256": "6937a120e30a03bdb507abbf2d1eaa31416a72a2999e97a65cfd99dcc09fc956",
-      "bytes": 3525
+      "sha256": "b4fe1d704c622e04673ed28ccfb245534093f06553c688173a9b0f14574fd128",
+      "bytes": 4995
     },
     {
       "path": "public\\index.html",
@@ -119,7 +119,7 @@
     },
     {
       "path": "server\\build-info.js",
-      "sha256": "a30eec2a6e2287dfa4bea73cc2f2dee50d11c5b50680e0d8ed30ce7137f02cc3",
+      "sha256": "11b5764ec4f3cd2d011c7d1cf2657349238b80b01fdb10175b72bca44851bc61",
       "bytes": 203
     },
     {
@@ -154,8 +154,8 @@
     },
     {
       "path": "server\\util.js",
-      "sha256": "b980fbc489d1e499d96985f01d2cb9717f678e76072e98da4493a234b0514984",
-      "bytes": 3276
+      "sha256": "d9363cd04d253f37f768efd5cfdb7863bbcf33684d627f39603b24fdcb9f1000",
+      "bytes": 4275
     },
     {
       "path": "server\\worker.js",

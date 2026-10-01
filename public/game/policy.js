@@ -2,8 +2,23 @@
 import {WIN_LINES, CELL_ORDER, coordinate, getLegalActions, getPlayerToMove, applyAction, getOutcome, other} from './rules.js';
 export const POLICY_VERSION = 'policy/1';
 export const DIFFICULTIES = Object.freeze(['easy','normal','hard','jev']);
-export function winningCells(board, mark) {
+export function winningCellsReference(board, mark) {
   return CELL_ORDER.filter(cell => board[cell] === '.' && WIN_LINES.some(line => line.includes(cell) && line.every(i => i===cell || board[i]===mark)));
+}
+// LINES_THROUGH[cell]: the winning lines containing that cell.
+const LINES_THROUGH = Array.from({length: 9}, (_, cell) => WIN_LINES.filter(line => line.includes(cell)));
+export function winningCells(board, mark) {
+  const out = [];
+  for (let n = 0; n < 9; n++) {
+    const cell = CELL_ORDER[n];
+    if (board[cell] !== '.') continue;
+    const lines = LINES_THROUGH[cell];
+    for (let l = 0; l < lines.length; l++) {
+      const line = lines[l];
+      if ((line[0] === cell || board[line[0]] === mark) && (line[1] === cell || board[line[1]] === mark) && (line[2] === cell || board[line[2]] === mark)) { out.push(cell); break; }
+    }
+  }
+  return out;
 }
 function futureFeatures(state, mark) {
   const opponent = other(mark), ownWins = winningCells(state.board,mark);
