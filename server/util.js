@@ -1,11 +1,34 @@
 export class HttpError extends Error { constructor(status,code,detail=undefined){super(code);this.status=status;this.code=code;this.detail=detail;} }
 export function assert(condition,status,code,detail) {if (!condition) throw new HttpError(status,code,detail);}
-export function canonical(value) {
+export function canonicalReference(value) {
   if (Array.isArray(value)) return `[${value.map(canonical).join(',')}]`;
   if (value && typeof value==='object') return `{${Object.keys(value).sort().filter(k=>value[k]!==undefined).map(k=>`${JSON.stringify(k)}:${canonical(value[k])}`).join(',')}}`;
   return JSON.stringify(value);
 }
-export async function sha256(value) {return [...new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(typeof value==='string'?value:canonical(value))))].map(x=>x.toString(16).padStart(2,'0')).join('');}
+const keyJson=new Map();
+export function canonical(value) {
+  if (Array.isArray(value)) {
+    let out='[';
+    for(let i=0;i<value.length;i++){if(i)out+=',';const piece=canonical(value[i]);if(piece!==undefined)out+=piece;}
+    return out+']';
+  }
+  if (value && typeof value==='object') {
+    const keys=Object.keys(value).sort();let out='{',first=true;
+    for(let i=0;i<keys.length;i++){
+      const k=keys[i];if(value[k]===undefined)continue;
+      let encoded=keyJson.get(k);
+      if(encoded===undefined){encoded=JSON.stringify(k);if(keyJson.size>=2048)keyJson.clear();keyJson.set(k,encoded);}
+      out+=(first?'':',')+encoded+':'+canonical(value[k]);first=false;
+    }
+    return out+'}';
+  }
+  return JSON.stringify(value);
+}
+const HEX=Array.from({length:256},(_,i)=>i.toString(16).padStart(2,'0'));
+const encoder=new TextEncoder();
+export function hexReference(bytes) {return [...bytes].map(x=>x.toString(16).padStart(2,'0')).join('');}
+export function hex(bytes) {let out='';for(let i=0;i<bytes.length;i++)out+=HEX[bytes[i]];return out;}
+export async function sha256(value) {return hex(new Uint8Array(await crypto.subtle.digest('SHA-256',encoder.encode(typeof value==='string'?value:canonical(value)))));}
 export function randomToken(bytes=32) {return [...crypto.getRandomValues(new Uint8Array(bytes))].map(x=>x.toString(16).padStart(2,'0')).join('');}
 export const now=()=>Date.now();
 export function safeEqual(a,b) {if(typeof a!=='string'||typeof b!=='string')return false;let d=a.length^b.length;for(let i=0;i<Math.max(a.length,b.length);i++)d|=(a.charCodeAt(i)||0)^(b.charCodeAt(i)||0);return d===0;}
