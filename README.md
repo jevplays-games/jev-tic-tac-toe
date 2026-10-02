@@ -1,3 +1,5 @@
+<p align="center"><img src="assets/banner.jpg" alt="Pixel-art robot Jev playing tic-tac-toe with glowing cyan X and magenta O marks in a neon arcade" width="100%"></p>
+
 # JEV Arcade · Tic-Tac-Toe
 
 A complete vanilla HTML/CSS/JavaScript game with a real TypeSafe/JEV adapter, an authoritative backend, Discord OAuth and community launch grants, verified leaderboards, replay evidence, and exhaustive rules-space analytics.
