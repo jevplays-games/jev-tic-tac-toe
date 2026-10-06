@@ -18,7 +18,7 @@ if(production){for(const k of ['PUBLIC_ORIGIN','RATE_LIMIT_SALT'])if(!process.en
 const env={...process.env,...(production?{}:{DEV_LOCAL:'1'}),PUBLIC_ORIGIN:process.env.PUBLIC_ORIGIN??`http://localhost:${port}`,RATE_LIMIT_SALT:process.env.RATE_LIMIT_SALT??'local-development-only',DB:openDatabase(dbPath)};
 // Behind a trusted TLS-terminating proxy (TRUST_PROXY=1) the client IP for rate limiting is the last X-Forwarded-For hop, which the proxy itself appended.
 const trustProxy=process.env.TRUST_PROXY==='1';
-const types={'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.json':'application/json; charset=utf-8','.svg':'image/svg+xml','.woff2':'font/woff2'};
+const types={'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.json':'application/json; charset=utf-8','.svg':'image/svg+xml','.png':'image/png','.woff2':'font/woff2'};
 env.ASSETS={async fetch(request){
   if(!['GET','HEAD'].includes(request.method))return new Response('Method not allowed',{status:405});
   let pathname;try{pathname=decodeURIComponent(new URL(request.url).pathname);}catch{return new Response('Bad path',{status:400});}

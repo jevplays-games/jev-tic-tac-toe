@@ -38,13 +38,23 @@ function makeBoard(){
     const button=element('button',null,'cell');button.type='button';button.dataset.cell=cell;button.setAttribute('aria-label',`${coordinate(cell)}, empty`);
     button.addEventListener('click',()=>place(cell));
     button.addEventListener('keydown',event=>{const delta={ArrowLeft:-1,ArrowRight:1,ArrowUp:-3,ArrowDown:3}[event.key];if(delta!==undefined){event.preventDefault();const next=(cell+delta+9)%9;$('board').children[next].focus();}});
+    // The piece is art (public/art/x.svg, o.svg) painted by CSS from the cell's x/o class. The two spans are
+    // created once and kept, so a re-render never restarts a placement animation half way through.
+    const piece=element('span',null,'piece');piece.setAttribute('aria-hidden','true');
+    button.append(element('span',coordinate(cell),'coord'),piece);
     $('board').append(button);
   }
 }
+const shown=Array(9).fill('.');
 function drawBoard(board,wins=[],interactive=false){
+  const grid=$('board');
+  // Presentation hooks only: which mark a free square previews, and where the strike through a win is drawn.
+  grid.dataset.mark=match?.humanMark??$('human-mark').value;
+  if(wins.length){grid.dataset.strike=wins[0].join('');grid.dataset.winner=board[wins[0][0]];}else{delete grid.dataset.strike;delete grid.dataset.winner;}
   for(let cell=0;cell<9;cell++){
-    const button=$('board').children[cell],value=board[cell],display=pendingCell===cell&&value==='.'?(match?.humanMark??'X'):value;
-    button.replaceChildren(element('span',coordinate(cell),'coord'),element('span',display==='X'?'×':display==='O'?'○':''));
+    const button=grid.children[cell],value=board[cell],display=pendingCell===cell&&value==='.'?(match?.humanMark??'X'):value;
+    button.lastElementChild.classList.toggle('is-new',display!=='.'&&(shown[cell]==='.'||(shown[cell]===display&&button.lastElementChild.classList.contains('is-new'))));
+    shown[cell]=display;
     button.className=`cell ${display==='X'?'x':display==='O'?'o':''} ${wins.some(line=>line.includes(cell))?'winning':''} ${pendingCell===cell?'pending':''}`;
     // aria-disabled preserves arrow navigation and keyboard inspection on occupied cells.
     button.setAttribute('aria-disabled',String(!interactive||value!=='.'));
@@ -72,6 +82,12 @@ function renderGame(){
     else text=`Your turn · place ${human}`;
   }
   $('game-status').textContent=text;
+  // End state: the status line becomes the result plaque in place, so the final board stays in view.
+  const result=replayPly===null&&match?.status==='complete'?({win:'is-win',loss:'is-loss',draw:'is-draw'}[match.outcome]??''):'';
+  $('game-status').parentElement.className=`turn-row${result?` jv-plaque ${result}`:''}`;
+  const toMove=active&&replayPly===null?(match.status==='human_turn'?'human':'jev'):null;
+  $('human-symbol').parentElement.classList.toggle('is-turn',toMove==='human');
+  $('jev-symbol').parentElement.classList.toggle('is-turn',toMove==='jev');
   $('eligibility').textContent=match?.local?'Browser-only practice. Not included in server analytics or rankings.':match?.rankedStarted&&!match.eligible?'Excluded from ranked results: a fallback or verification issue occurred.':match?.eligible?'Official match · quitting a human turn does not erase the result.':me?.user?'Casual match · enable Ranked before starting for leaderboard eligibility.':'Guest matches are unranked.';
   $('difficulty').disabled=Boolean(active);$('human-mark').disabled=Boolean(active);
   $('ranked').disabled=Boolean(active)||!me?.user||!me?.jevConfigured;
@@ -85,7 +101,7 @@ function renderGame(){
 }
 function renderEvidence(){
   const action=[...(match?.actions??[])].reverse().find(a=>a.decision),d=action?.decision;
-  if(!d){$('candidate-count').textContent='—';$('selected-cell').textContent='—';$('decision-latency').textContent='—';$('confidence').textContent='No response yet';$('probabilities').replaceChildren(element('p','JEV’s actual option distribution will appear after a decision.','empty'));$('factors').replaceChildren(element('p','Play a move to begin.','empty'));return;}
+  if(!d){$('candidate-count').textContent='—';$('selected-cell').textContent='—';$('decision-latency').textContent='—';$('confidence').textContent='No response yet';$('probabilities').replaceChildren(element('p','JEV’s actual option distribution will appear after a decision.','empty jv-empty'));$('factors').replaceChildren(element('p','Play a move to begin.','empty'));return;}
   $('candidate-count').textContent=d.candidateCount??action.analysis?.candidates?.length??'—';$('selected-cell').textContent=coordinate(action.cell);$('decision-latency').textContent=ms(d.latencyMs);
   const confidence=d.response?.answers?.preference?.confidence??d.reportedConfidence;
   $('confidence').textContent=typeof confidence==='number'?`Confidence ${pct(confidence)}`:sourceName(d.source);

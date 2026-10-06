@@ -5,8 +5,15 @@
   <meta name="theme-color" content="#0e1017"><meta name="description" content="Play Tic-Tac-Toe against JEV. Inspect structured decisions and measure every move.">
   <title>Tic-Tac-Toe · JEV Arcade</title>
   <link rel="preload" href="/brand/inter-var.woff2" as="font" type="font/woff2" crossorigin>
+  <meta property="og:type" content="website"><meta property="og:site_name" content="JevPlay Arcade"><meta property="og:title" content="Tic-Tac-Toe · JEV Arcade">
+  <meta property="og:description" content="Three in a row against JEV. Inspect structured decisions and measure every move.">
+  <meta property="og:url" content="https://tic-tac-toe.jevplay.games/"><meta property="og:image" content="https://tic-tac-toe.jevplay.games/brand/og.png">
+  <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Tic-Tac-Toe on JevPlay Arcade: a violet X crossing a teal O.">
+  <meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://tic-tac-toe.jevplay.games/brand/og.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png">
   <link rel="icon" type="image/svg+xml" href="/brand/icon.svg">
-  <link rel="apple-touch-icon" href="/brand/icon.svg">
+  <link rel="apple-touch-icon" href="/brand/apple-touch-icon.png">
+  <link rel="preload" href="/art/x.svg" as="image" type="image/svg+xml"><link rel="preload" href="/art/o.svg" as="image" type="image/svg+xml">
   <link rel="stylesheet" href="/brand/brand.css">
   <link rel="stylesheet" href="/game.css">
   <script type="module" src="/brand/brand.js"></script>
@@ -17,7 +24,7 @@
 <div class="jv-app">
 <header class="jv-header">
   <a class="jv-brand" href="/" aria-label="JEV Arcade home">
-    <img class="jv-mark" src="/brand/mark.svg" alt="" width="28" height="28">
+    <img class="jv-mark" src="/brand/mark.svg" alt="" width="32" height="32">
     <span class="jv-wordmark">JEV ARCADE</span>
     <span class="jv-sep" aria-hidden="true"></span>
     <span class="jv-title">Tic-Tac-Toe</span>
@@ -33,25 +40,25 @@
   <div class="page-heading jv-hero"><div><p class="eyebrow">HUMAN INTUITION. STRUCTURED DECISIONS.</p><h1>Three in a row.<br><span>A window into JEV.</span></h1><p class="subtitle">A familiar game. A measurable opponent. Every move has a record.</p></div></div>
   <div class="arena jv-first">
     <section class="game-panel jv-panel" aria-label="Tic-Tac-Toe game">
-      <div class="game-top"><span class="pill" id="mode-badge">CASUAL PLAY</span><button class="jv-link-btn" id="show-rules">How to play <span aria-hidden="true">↗</span></button></div>
-      <div class="competitors"><div class="competitor"><span class="mark x" id="human-symbol">×</span><div><strong>You</strong><small id="human-label">Play as X · goes first</small></div></div><span class="versus">VS</span><div class="competitor right"><div><strong id="opponent-name">JEV</strong><small id="opponent-label">Structured decision model</small></div><span class="mark o" id="jev-symbol">○</span></div></div>
-      <div class="board-wrap jv-fit"><div id="board" class="board" role="group" aria-label="Tic-Tac-Toe board. Use arrow keys or keys 1 to 9."></div></div>
+      <div class="game-top jv-pip-hide"><span class="pill" id="mode-badge">CASUAL PLAY</span><button class="jv-link-btn" id="show-rules">How to play <span aria-hidden="true">↗</span></button></div>
+      <div class="competitors jv-pip-hide"><div class="competitor"><span class="mark x" id="human-symbol">×</span><div><strong>You</strong><small id="human-label">Play as X · goes first</small></div></div><span class="versus">VS</span><div class="competitor right"><div><strong id="opponent-name">JEV</strong><small id="opponent-label">Structured decision model</small></div><span class="mark o" id="jev-symbol">○</span></div></div>
+      <div class="board-wrap jv-fit"><div id="board" class="board jv-tray" role="group" aria-label="Tic-Tac-Toe board. Use arrow keys or keys 1 to 9."></div></div>
       <div class="turn-row"><span id="turn-dot" class="turn-dot" aria-hidden="true"></span><p id="game-status" role="status" aria-live="polite">Choose your settings and start a game.</p></div>
-      <p id="eligibility" class="muted centered">Guest matches are unranked.</p>
+      <p id="eligibility" class="muted centered jv-pip-hide">Guest matches are unranked.</p>
       <div class="game-controls">
-        <label>Opponent profile<select id="difficulty"><option value="easy">Easy</option><option value="normal">Normal</option><option value="hard">Hard</option><option value="jev" selected>JEV · full evaluation</option></select></label>
-        <label>Your mark<select id="human-mark"><option value="X">X · first</option><option value="O">O · second</option></select></label>
-        <label class="check ranked-check"><input id="ranked" type="checkbox" disabled> Ranked</label>
+        <label class="jv-pip-hide">Opponent profile<select id="difficulty"><option value="easy">Easy</option><option value="normal">Normal</option><option value="hard">Hard</option><option value="jev" selected>JEV · full evaluation</option></select></label>
+        <label class="jv-pip-hide">Your mark<select id="human-mark"><option value="X">X · first</option><option value="O">O · second</option></select></label>
+        <label class="check ranked-check jv-pip-hide"><input id="ranked" type="checkbox" disabled> Ranked</label>
         <button id="new-game" class="primary">Start game <span aria-hidden="true">↗</span></button>
       </div>
-      <div class="under-controls"><button id="resign" class="jv-link-btn danger" hidden>Resign match</button><button id="reconnect" class="jv-link-btn" hidden>Reconnect / resume</button><label class="check"><input id="analysis-toggle" type="checkbox" checked> Show decision evidence</label></div>
+      <div class="under-controls jv-pip-hide"><button id="resign" class="jv-link-btn danger" hidden>Resign match</button><button id="reconnect" class="jv-link-btn" hidden>Reconnect / resume</button><label class="check"><input id="analysis-toggle" type="checkbox" checked> Show decision evidence</label></div>
     </section>
-    <aside class="evidence-panel jv-panel" id="evidence-panel" aria-labelledby="evidence-title">
+    <aside class="evidence-panel jv-panel jv-pip-hide" id="evidence-panel" aria-labelledby="evidence-title">
       <div class="panel-heading"><h2 id="evidence-title">Decision evidence</h2><span id="evidence-state" class="pill small">READY</span></div>
       <p class="muted">Structured outputs and verified tactical facts. Not hidden chain-of-thought.</p>
       <div class="evidence-stats"><div><small>CANDIDATES</small><strong id="candidate-count">—</strong></div><div><small>SELECTED</small><strong id="selected-cell">—</strong></div><div><small>LATENCY</small><strong id="decision-latency">—</strong></div></div>
       <div class="subheading"><h3>Move preference</h3><small id="confidence">No response yet</small></div>
-      <div id="probabilities" class="probabilities"><p class="empty">JEV’s actual option distribution will appear after a decision.</p></div>
+      <div id="probabilities" class="probabilities"><p class="empty jv-empty">JEV’s actual option distribution will appear after a decision.</p></div>
       <h3 class="factors-heading">Verified factors</h3><div id="factors"><p class="empty">Play a move to begin.</p></div>
       <div class="evidence-footnote" id="evidence-note">Confidence describes the model’s answer distribution, not a calibrated probability of winning.</div>
       <div class="profile-detail"><small>PROFILE</small><strong id="profile-detail">Normal · immediate tactical features</strong></div>

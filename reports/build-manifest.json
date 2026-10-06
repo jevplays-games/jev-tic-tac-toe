@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceHash": "a2cc14cfdcc4f81f392322622671a88d7f41d7a6524a05fbdc93e5372931113d",
+  "sourceHash": "7c12e6f9d80b81d42fc2460f2728553c5a7d2d75d782f8abd1bea133799ad359",
   "files": [
     {
       "path": "local\\database.js",
@@ -14,8 +14,8 @@
     },
     {
       "path": "local\\server.js",
-      "sha256": "8ed9086d204e78c8a48791940b30e78a41f7fcc082f45d2d413a6290bafff0f1",
-      "bytes": 3959
+      "sha256": "f1f9ec0991c9d08a9189da0987ebb059022bdeb2656033176219332e282d0556",
+      "bytes": 3978
     },
     {
       "path": "migrations\\0001.sql",
@@ -34,8 +34,18 @@
     },
     {
       "path": "public\\app.js",
-      "sha256": "59d404e2c514b18b07add284d94321e23b334b8880674ee59d918ea2251a98f9",
-      "bytes": 29784
+      "sha256": "ecf81d10138d34f923c993af9ffd6b7c5144729041fca724d885417659090525",
+      "bytes": 31169
+    },
+    {
+      "path": "public\\art\\o.svg",
+      "sha256": "63ebd18e0aed1ac643f289a0899948cbbff6564f6d19d55e8e65774678c7f1de",
+      "bytes": 1153
+    },
+    {
+      "path": "public\\art\\x.svg",
+      "sha256": "197db0ae794b3ef53bdbd5b5fcf76d7e5e4ec2879cb39d18fdbea9b642b8b9c7",
+      "bytes": 1245
     },
     {
       "path": "public\\brand\\OFL.txt",
@@ -43,9 +53,14 @@
       "bytes": 4380
     },
     {
+      "path": "public\\brand\\apple-touch-icon.png",
+      "sha256": "351b47e6960ed68a407a826e0a972ef3e4ffda4d7fc8b03a4edf9cce67419153",
+      "bytes": 20378
+    },
+    {
       "path": "public\\brand\\brand.css",
-      "sha256": "47a9a1dd23a93d08d61bc1ff28cc84e64b07c3ddefb0e24506960e51ce6cbf65",
-      "bytes": 17683
+      "sha256": "9138ab8bc31bcd47ec1cbf003925a993b1bb63e2cd0c2f6d15ab77b12db2b404",
+      "bytes": 25412
     },
     {
       "path": "public\\brand\\brand.js",
@@ -53,9 +68,14 @@
       "bytes": 3481
     },
     {
+      "path": "public\\brand\\favicon-32.png",
+      "sha256": "760071fb810c1159a3cd4b23b983ab34f8a3fbd3e1b84aef1edb2b329815500e",
+      "bytes": 2029
+    },
+    {
       "path": "public\\brand\\icon.svg",
-      "sha256": "af2560bdafc7d75bd90da77cabcfef68048b653a0439acc0eb9c5ceac64d6cf1",
-      "bytes": 699
+      "sha256": "a307ea34ba47a58e45b873d9fa194c0522a685536252d5f6e772bb90fed414c7",
+      "bytes": 1380
     },
     {
       "path": "public\\brand\\inter-var.woff2",
@@ -64,13 +84,33 @@
     },
     {
       "path": "public\\brand\\mark.svg",
-      "sha256": "36302e2d29ca7b644799190de1af44727eb416d91e30648e10ff71f8571ddeb3",
-      "bytes": 314
+      "sha256": "5032d2ba96bbed6102c14f18b4065554806a7e33709ee2b839d3bab83ab934cc",
+      "bytes": 1363
+    },
+    {
+      "path": "public\\brand\\og.png",
+      "sha256": "28baf2d8e0aeaa36ea00f05bdc0f2c7fbacdbecb85436a3ac7a250fd222245a4",
+      "bytes": 170926
+    },
+    {
+      "path": "public\\brand\\result-draw.svg",
+      "sha256": "c7c4069551fe2be380118c5379dd8f6ee0f80bc969d09c3b07c2e526a6609fe2",
+      "bytes": 1004
+    },
+    {
+      "path": "public\\brand\\result-loss.svg",
+      "sha256": "7759d7a48baf9a7a1502320036df8d98e8be435dd37d4aa3fcd509ae6a25eedc",
+      "bytes": 1048
+    },
+    {
+      "path": "public\\brand\\result-win.svg",
+      "sha256": "80a744fdca06775cfca12fd8e00044471f9e2dbf3d1245b992b0463d4c51208a",
+      "bytes": 1203
     },
     {
       "path": "public\\game.css",
-      "sha256": "506bc974d6175964d4c040b3b0be0496cf7ffbb6715609a32c853f9c153fd299",
-      "bytes": 14194
+      "sha256": "f7c0991d6206c96cce96a54fde8ef84e506fd74fdc35fce3608085ee40c1acc5",
+      "bytes": 20867
     },
     {
       "path": "public\\game\\analytics.js",
@@ -94,8 +134,8 @@
     },
     {
       "path": "public\\index.html",
-      "sha256": "e13c71960bb80097150fffa4351b5f1081cbd5344ae78486d1093e896b66188d",
-      "bytes": 14795
+      "sha256": "bab3f7fec9b9fc31a901127e3c8553ae7b5b1946c822735e868bf689c9b503ee",
+      "bytes": 15944
     },
     {
       "path": "public\\reference-audit.json",
@@ -119,7 +159,7 @@
     },
     {
       "path": "server\\build-info.js",
-      "sha256": "11b5764ec4f3cd2d011c7d1cf2657349238b80b01fdb10175b72bca44851bc61",
+      "sha256": "615ff854eaf52d3d08a7348722697a9016cfb2841682b47110a323eb132e5dc5",
       "bytes": 203
     },
     {
