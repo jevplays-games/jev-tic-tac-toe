@@ -1,5 +1,5 @@
 {
-  "id": "39703586-9853-44a3-94c8-eebc46e0bcdc",
+  "id": "3b7bae5e-8cf1-46e6-936b-137a40771766",
   "schemaVersion": 1,
   "revision": 9,
   "status": "complete",
@@ -18,31 +18,31 @@
   "config": {
     "gameId": "tic-tac-toe",
     "rulesVersion": "ttt/1",
-    "difficulty": "normal",
+    "difficulty": "jev",
     "modelId": "jev-1.13.0",
     "policyVersion": "policy/1",
     "analyticsVersion": "analytics/1",
-    "sourceRevision": "31b6df11c106ed54093b7424fcbe3f4dec54636b21c930809471a0873f3970c3",
+    "sourceRevision": "a2cc14cfdcc4f81f392322622671a88d7f41d7a6524a05fbdc93e5372931113d",
     "fallback": "minimax-unranked/v1",
     "budgetMs": 3000
   },
-  "configHash": "3436a47cf0f2b98b724311ff43e2222d3e95930f3e462f844eed23a85d6225e6",
+  "configHash": "3f3dec2278dee1b0d367705d2d62755ed4dd5d572fa637c79c492911dda086c4",
   "rankedStarted": false,
   "eligible": false,
   "opponent": "Local perfect-play fallback — unranked",
   "context": null,
   "outcome": "loss",
   "termination": "board",
-  "startedAt": 1790054351973,
-  "finishedAt": 1790054352291,
-  "expiresAt": 1790140751973,
+  "startedAt": 1791306259662,
+  "finishedAt": 1791306268108,
+  "expiresAt": 1791392659662,
   "actions": [
     {
       "cell": 0,
       "mark": "X",
       "actor": "human",
-      "acceptedAt": 1790054352073,
-      "serverDwellMs": 100,
+      "acceptedAt": 1791306263909,
+      "serverDwellMs": 4247,
       "analysis": {
         "board": ".........",
         "canonicalBoard": ".........",
@@ -118,7 +118,7 @@
       "cell": 4,
       "mark": "O",
       "actor": "jev",
-      "acceptedAt": 1790054352170,
+      "acceptedAt": 1791306263912,
       "serverDwellMs": null,
       "analysis": {
         "board": "X........",
@@ -187,7 +187,7 @@
         },
         "source": "fallback-minimax",
         "modelId": null,
-        "inputHash": "f93806dbb1b28ef0359429798d420bd08de0befb7448fe356bc27cd2b430c319",
+        "inputHash": "b05464d82f0a28eb0af2e710ed75637b0b012405b44f47cdc7b35196d66de6b9",
         "request": {
           "model": "jev-1.13.0",
           "state": {
@@ -227,8 +227,55 @@
                   "winsNow": false,
                   "opponentImmediateWinningReplies": 0,
                   "isCenter": true,
-                  "isCorner": false
-                }
+                  "isCorner": false,
+                  "ownFutureWinningCells": 0,
+                  "createsFork": false,
+                  "unblockedLines": 5
+                },
+                "replySummary": [
+                  {
+                    "humanCell": 2,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 6,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 8,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 1,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 3,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 5,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 7,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  }
+                ]
               },
               {
                 "actionId": "cell_2",
@@ -249,8 +296,55 @@
                   "winsNow": false,
                   "opponentImmediateWinningReplies": 0,
                   "isCenter": false,
-                  "isCorner": true
-                }
+                  "isCorner": true,
+                  "ownFutureWinningCells": 0,
+                  "createsFork": false,
+                  "unblockedLines": 5
+                },
+                "replySummary": [
+                  {
+                    "humanCell": 4,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 6,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 8,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 1,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 3,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 5,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 7,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  }
+                ]
               },
               {
                 "actionId": "cell_6",
@@ -271,8 +365,55 @@
                   "winsNow": false,
                   "opponentImmediateWinningReplies": 0,
                   "isCenter": false,
-                  "isCorner": true
-                }
+                  "isCorner": true,
+                  "ownFutureWinningCells": 0,
+                  "createsFork": false,
+                  "unblockedLines": 5
+                },
+                "replySummary": [
+                  {
+                    "humanCell": 4,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 2,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 8,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 1,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 3,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 5,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 7,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  }
+                ]
               },
               {
                 "actionId": "cell_8",
@@ -293,8 +434,55 @@
                   "winsNow": false,
                   "opponentImmediateWinningReplies": 0,
                   "isCenter": false,
-                  "isCorner": true
-                }
+                  "isCorner": true,
+                  "ownFutureWinningCells": 0,
+                  "createsFork": false,
+                  "unblockedLines": 5
+                },
+                "replySummary": [
+                  {
+                    "humanCell": 4,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 2,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 6,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 1,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 3,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 5,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 7,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  }
+                ]
               },
               {
                 "actionId": "cell_1",
@@ -315,8 +503,55 @@
                   "winsNow": false,
                   "opponentImmediateWinningReplies": 0,
                   "isCenter": false,
-                  "isCorner": false
-                }
+                  "isCorner": false,
+                  "ownFutureWinningCells": 0,
+                  "createsFork": false,
+                  "unblockedLines": 5
+                },
+                "replySummary": [
+                  {
+                    "humanCell": 4,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 2,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 6,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 8,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 3,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 5,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 7,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  }
+                ]
               },
               {
                 "actionId": "cell_3",
@@ -337,8 +572,55 @@
                   "winsNow": false,
                   "opponentImmediateWinningReplies": 0,
                   "isCenter": false,
-                  "isCorner": false
-                }
+                  "isCorner": false,
+                  "ownFutureWinningCells": 0,
+                  "createsFork": false,
+                  "unblockedLines": 5
+                },
+                "replySummary": [
+                  {
+                    "humanCell": 4,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 2,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 6,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 8,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 1,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 5,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 7,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  }
+                ]
               },
               {
                 "actionId": "cell_5",
@@ -359,8 +641,55 @@
                   "winsNow": false,
                   "opponentImmediateWinningReplies": 0,
                   "isCenter": false,
-                  "isCorner": false
-                }
+                  "isCorner": false,
+                  "ownFutureWinningCells": 0,
+                  "createsFork": false,
+                  "unblockedLines": 5
+                },
+                "replySummary": [
+                  {
+                    "humanCell": 4,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 2,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 6,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 8,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 1,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 3,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 7,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  }
+                ]
               },
               {
                 "actionId": "cell_7",
@@ -381,8 +710,55 @@
                   "winsNow": false,
                   "opponentImmediateWinningReplies": 0,
                   "isCenter": false,
-                  "isCorner": false
-                }
+                  "isCorner": false,
+                  "ownFutureWinningCells": 0,
+                  "createsFork": false,
+                  "unblockedLines": 5
+                },
+                "replySummary": [
+                  {
+                    "humanCell": 4,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 2,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 6,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 8,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 1,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 3,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 5,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  }
+                ]
               }
             ]
           },
@@ -424,13 +800,109 @@
                   "coordinate": "B3"
                 }
               }
+            },
+            "outcome_4": {
+              "type": "choice",
+              "instructions": {
+                "candidateActionId": "cell_4",
+                "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+              },
+              "criteria": {
+                "win": "JEV can force a win.",
+                "draw": "JEV can force a draw but cannot force a win.",
+                "loss": "The human can force JEV to lose."
+              }
+            },
+            "outcome_2": {
+              "type": "choice",
+              "instructions": {
+                "candidateActionId": "cell_2",
+                "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+              },
+              "criteria": {
+                "win": "JEV can force a win.",
+                "draw": "JEV can force a draw but cannot force a win.",
+                "loss": "The human can force JEV to lose."
+              }
+            },
+            "outcome_6": {
+              "type": "choice",
+              "instructions": {
+                "candidateActionId": "cell_6",
+                "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+              },
+              "criteria": {
+                "win": "JEV can force a win.",
+                "draw": "JEV can force a draw but cannot force a win.",
+                "loss": "The human can force JEV to lose."
+              }
+            },
+            "outcome_8": {
+              "type": "choice",
+              "instructions": {
+                "candidateActionId": "cell_8",
+                "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+              },
+              "criteria": {
+                "win": "JEV can force a win.",
+                "draw": "JEV can force a draw but cannot force a win.",
+                "loss": "The human can force JEV to lose."
+              }
+            },
+            "outcome_1": {
+              "type": "choice",
+              "instructions": {
+                "candidateActionId": "cell_1",
+                "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+              },
+              "criteria": {
+                "win": "JEV can force a win.",
+                "draw": "JEV can force a draw but cannot force a win.",
+                "loss": "The human can force JEV to lose."
+              }
+            },
+            "outcome_3": {
+              "type": "choice",
+              "instructions": {
+                "candidateActionId": "cell_3",
+                "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+              },
+              "criteria": {
+                "win": "JEV can force a win.",
+                "draw": "JEV can force a draw but cannot force a win.",
+                "loss": "The human can force JEV to lose."
+              }
+            },
+            "outcome_5": {
+              "type": "choice",
+              "instructions": {
+                "candidateActionId": "cell_5",
+                "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+              },
+              "criteria": {
+                "win": "JEV can force a win.",
+                "draw": "JEV can force a draw but cannot force a win.",
+                "loss": "The human can force JEV to lose."
+              }
+            },
+            "outcome_7": {
+              "type": "choice",
+              "instructions": {
+                "candidateActionId": "cell_7",
+                "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+              },
+              "criteria": {
+                "win": "JEV can force a win.",
+                "draw": "JEV can force a draw but cannot force a win.",
+                "loss": "The human can force JEV to lose."
+              }
             }
           }
         },
         "response": null,
         "attempts": [],
-        "latencyMs": 19.557737999999972,
-        "inputBytes": 2343,
+        "latencyMs": 0.32180000000516884,
+        "inputBytes": 10631,
         "probabilities": null,
         "distribution": null,
         "fallbackReason": "missing_api_key",
@@ -442,8 +914,8 @@
       "cell": 1,
       "mark": "X",
       "actor": "human",
-      "acceptedAt": 1790054352223,
-      "serverDwellMs": 53,
+      "acceptedAt": 1791306265966,
+      "serverDwellMs": 2054,
       "analysis": {
         "board": "X...O....",
         "canonicalBoard": "....O...X",
@@ -509,7 +981,7 @@
       "cell": 2,
       "mark": "O",
       "actor": "jev",
-      "acceptedAt": 1790054352226,
+      "acceptedAt": 1791306265970,
       "serverDwellMs": null,
       "analysis": {
         "board": "XX..O....",
@@ -570,7 +1042,7 @@
         },
         "source": "fallback-minimax",
         "modelId": null,
-        "inputHash": "52e8d66522f4fe39727dfe5fd12310b159db037eca73750440b8d9bb16abdf48",
+        "inputHash": "04510a7cc3bf329227605ce5f7812bf95254743f92447349c8cb01675f2c86ea",
         "request": {
           "model": "jev-1.13.0",
           "state": {
@@ -610,8 +1082,51 @@
                   "winsNow": false,
                   "opponentImmediateWinningReplies": 0,
                   "isCenter": false,
-                  "isCorner": true
-                }
+                  "isCorner": true,
+                  "ownFutureWinningCells": 1,
+                  "createsFork": false,
+                  "unblockedLines": 4
+                },
+                "replySummary": [
+                  {
+                    "humanCell": 6,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 8,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": [
+                      6
+                    ]
+                  },
+                  {
+                    "humanCell": 3,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": [
+                      6
+                    ]
+                  },
+                  {
+                    "humanCell": 5,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": [
+                      6
+                    ]
+                  },
+                  {
+                    "humanCell": 7,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": [
+                      6
+                    ]
+                  }
+                ]
               },
               {
                 "actionId": "cell_6",
@@ -632,8 +1147,51 @@
                   "winsNow": false,
                   "opponentImmediateWinningReplies": 1,
                   "isCenter": false,
-                  "isCorner": true
-                }
+                  "isCorner": true,
+                  "ownFutureWinningCells": 1,
+                  "createsFork": false,
+                  "unblockedLines": 4
+                },
+                "replySummary": [
+                  {
+                    "humanCell": 2,
+                    "humanWins": true,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 8,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": [
+                      2
+                    ]
+                  },
+                  {
+                    "humanCell": 3,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": [
+                      2
+                    ]
+                  },
+                  {
+                    "humanCell": 5,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": [
+                      2
+                    ]
+                  },
+                  {
+                    "humanCell": 7,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": [
+                      2
+                    ]
+                  }
+                ]
               },
               {
                 "actionId": "cell_8",
@@ -654,8 +1212,43 @@
                   "winsNow": false,
                   "opponentImmediateWinningReplies": 1,
                   "isCenter": false,
-                  "isCorner": true
-                }
+                  "isCorner": true,
+                  "ownFutureWinningCells": 0,
+                  "createsFork": false,
+                  "unblockedLines": 4
+                },
+                "replySummary": [
+                  {
+                    "humanCell": 2,
+                    "humanWins": true,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 6,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 2,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 3,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 2,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 5,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 7,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  }
+                ]
               },
               {
                 "actionId": "cell_3",
@@ -676,8 +1269,49 @@
                   "winsNow": false,
                   "opponentImmediateWinningReplies": 1,
                   "isCenter": false,
-                  "isCorner": false
-                }
+                  "isCorner": false,
+                  "ownFutureWinningCells": 1,
+                  "createsFork": false,
+                  "unblockedLines": 4
+                },
+                "replySummary": [
+                  {
+                    "humanCell": 2,
+                    "humanWins": true,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 6,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": [
+                      5
+                    ]
+                  },
+                  {
+                    "humanCell": 8,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": [
+                      5
+                    ]
+                  },
+                  {
+                    "humanCell": 5,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 7,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": [
+                      5
+                    ]
+                  }
+                ]
               },
               {
                 "actionId": "cell_5",
@@ -698,8 +1332,49 @@
                   "winsNow": false,
                   "opponentImmediateWinningReplies": 1,
                   "isCenter": false,
-                  "isCorner": false
-                }
+                  "isCorner": false,
+                  "ownFutureWinningCells": 1,
+                  "createsFork": false,
+                  "unblockedLines": 4
+                },
+                "replySummary": [
+                  {
+                    "humanCell": 2,
+                    "humanWins": true,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 6,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 2,
+                    "jevWinningResponses": [
+                      3
+                    ]
+                  },
+                  {
+                    "humanCell": 8,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": [
+                      3
+                    ]
+                  },
+                  {
+                    "humanCell": 3,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 2,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 7,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": [
+                      3
+                    ]
+                  }
+                ]
               },
               {
                 "actionId": "cell_7",
@@ -720,8 +1395,43 @@
                   "winsNow": false,
                   "opponentImmediateWinningReplies": 1,
                   "isCenter": false,
-                  "isCorner": false
-                }
+                  "isCorner": false,
+                  "ownFutureWinningCells": 0,
+                  "createsFork": false,
+                  "unblockedLines": 4
+                },
+                "replySummary": [
+                  {
+                    "humanCell": 2,
+                    "humanWins": true,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 6,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 2,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 8,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 3,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 2,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 5,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  }
+                ]
               }
             ]
           },
@@ -755,13 +1465,85 @@
                   "coordinate": "B3"
                 }
               }
+            },
+            "outcome_2": {
+              "type": "choice",
+              "instructions": {
+                "candidateActionId": "cell_2",
+                "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+              },
+              "criteria": {
+                "win": "JEV can force a win.",
+                "draw": "JEV can force a draw but cannot force a win.",
+                "loss": "The human can force JEV to lose."
+              }
+            },
+            "outcome_6": {
+              "type": "choice",
+              "instructions": {
+                "candidateActionId": "cell_6",
+                "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+              },
+              "criteria": {
+                "win": "JEV can force a win.",
+                "draw": "JEV can force a draw but cannot force a win.",
+                "loss": "The human can force JEV to lose."
+              }
+            },
+            "outcome_8": {
+              "type": "choice",
+              "instructions": {
+                "candidateActionId": "cell_8",
+                "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+              },
+              "criteria": {
+                "win": "JEV can force a win.",
+                "draw": "JEV can force a draw but cannot force a win.",
+                "loss": "The human can force JEV to lose."
+              }
+            },
+            "outcome_3": {
+              "type": "choice",
+              "instructions": {
+                "candidateActionId": "cell_3",
+                "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+              },
+              "criteria": {
+                "win": "JEV can force a win.",
+                "draw": "JEV can force a draw but cannot force a win.",
+                "loss": "The human can force JEV to lose."
+              }
+            },
+            "outcome_5": {
+              "type": "choice",
+              "instructions": {
+                "candidateActionId": "cell_5",
+                "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+              },
+              "criteria": {
+                "win": "JEV can force a win.",
+                "draw": "JEV can force a draw but cannot force a win.",
+                "loss": "The human can force JEV to lose."
+              }
+            },
+            "outcome_7": {
+              "type": "choice",
+              "instructions": {
+                "candidateActionId": "cell_7",
+                "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+              },
+              "criteria": {
+                "win": "JEV can force a win.",
+                "draw": "JEV can force a draw but cannot force a win.",
+                "loss": "The human can force JEV to lose."
+              }
             }
           }
         },
         "response": null,
         "attempts": [],
-        "latencyMs": 0.7818919999999707,
-        "inputBytes": 1870,
+        "latencyMs": 0.20829999999841675,
+        "inputBytes": 7051,
         "probabilities": null,
         "distribution": null,
         "fallbackReason": "missing_api_key",
@@ -773,8 +1555,8 @@
       "cell": 3,
       "mark": "X",
       "actor": "human",
-      "acceptedAt": 1790054352289,
-      "serverDwellMs": 63,
+      "acceptedAt": 1791306268071,
+      "serverDwellMs": 2101,
       "analysis": {
         "board": "XXO.O....",
         "canonicalBoard": "....O.OXX",
@@ -828,7 +1610,7 @@
       "cell": 6,
       "mark": "O",
       "actor": "jev",
-      "acceptedAt": 1790054352291,
+      "acceptedAt": 1791306268108,
       "serverDwellMs": null,
       "analysis": {
         "board": "XXOXO....",
@@ -885,7 +1667,7 @@
         },
         "source": "fallback-minimax",
         "modelId": null,
-        "inputHash": "d65525297faf61f7ce987ad8c5e614c31a080b1d2a5b2796afc80502f52350de",
+        "inputHash": "1f76ce1b5ebbd04d463a4e8480a240543595d4377db65d18d960be4ef8a8e463",
         "request": {
           "model": "jev-1.13.0",
           "state": {
@@ -925,8 +1707,12 @@
                   "winsNow": true,
                   "opponentImmediateWinningReplies": 0,
                   "isCenter": false,
-                  "isCorner": true
-                }
+                  "isCorner": true,
+                  "ownFutureWinningCells": 0,
+                  "createsFork": false,
+                  "unblockedLines": 3
+                },
+                "replySummary": []
               },
               {
                 "actionId": "cell_8",
@@ -947,8 +1733,36 @@
                   "winsNow": false,
                   "opponentImmediateWinningReplies": 1,
                   "isCenter": false,
-                  "isCorner": true
-                }
+                  "isCorner": true,
+                  "ownFutureWinningCells": 2,
+                  "createsFork": true,
+                  "unblockedLines": 3
+                },
+                "replySummary": [
+                  {
+                    "humanCell": 6,
+                    "humanWins": true,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 5,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": [
+                      6
+                    ]
+                  },
+                  {
+                    "humanCell": 7,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": [
+                      6,
+                      5
+                    ]
+                  }
+                ]
               },
               {
                 "actionId": "cell_5",
@@ -969,8 +1783,36 @@
                   "winsNow": false,
                   "opponentImmediateWinningReplies": 1,
                   "isCenter": false,
-                  "isCorner": false
-                }
+                  "isCorner": false,
+                  "ownFutureWinningCells": 2,
+                  "createsFork": true,
+                  "unblockedLines": 3
+                },
+                "replySummary": [
+                  {
+                    "humanCell": 6,
+                    "humanWins": true,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 8,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": [
+                      6
+                    ]
+                  },
+                  {
+                    "humanCell": 7,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": [
+                      6,
+                      8
+                    ]
+                  }
+                ]
               },
               {
                 "actionId": "cell_7",
@@ -991,8 +1833,35 @@
                   "winsNow": false,
                   "opponentImmediateWinningReplies": 1,
                   "isCenter": false,
-                  "isCorner": false
-                }
+                  "isCorner": false,
+                  "ownFutureWinningCells": 1,
+                  "createsFork": false,
+                  "unblockedLines": 3
+                },
+                "replySummary": [
+                  {
+                    "humanCell": 6,
+                    "humanWins": true,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 8,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": [
+                      6
+                    ]
+                  },
+                  {
+                    "humanCell": 5,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": [
+                      6
+                    ]
+                  }
+                ]
               }
             ]
           },
@@ -1018,13 +1887,61 @@
                   "coordinate": "B3"
                 }
               }
+            },
+            "outcome_6": {
+              "type": "choice",
+              "instructions": {
+                "candidateActionId": "cell_6",
+                "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+              },
+              "criteria": {
+                "win": "JEV can force a win.",
+                "draw": "JEV can force a draw but cannot force a win.",
+                "loss": "The human can force JEV to lose."
+              }
+            },
+            "outcome_8": {
+              "type": "choice",
+              "instructions": {
+                "candidateActionId": "cell_8",
+                "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+              },
+              "criteria": {
+                "win": "JEV can force a win.",
+                "draw": "JEV can force a draw but cannot force a win.",
+                "loss": "The human can force JEV to lose."
+              }
+            },
+            "outcome_5": {
+              "type": "choice",
+              "instructions": {
+                "candidateActionId": "cell_5",
+                "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+              },
+              "criteria": {
+                "win": "JEV can force a win.",
+                "draw": "JEV can force a draw but cannot force a win.",
+                "loss": "The human can force JEV to lose."
+              }
+            },
+            "outcome_7": {
+              "type": "choice",
+              "instructions": {
+                "candidateActionId": "cell_7",
+                "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+              },
+              "criteria": {
+                "win": "JEV can force a win.",
+                "draw": "JEV can force a draw but cannot force a win.",
+                "loss": "The human can force JEV to lose."
+              }
             }
           }
         },
         "response": null,
         "attempts": [],
-        "latencyMs": 0.30720000000019354,
-        "inputBytes": 1396,
+        "latencyMs": 0.2206000000005588,
+        "inputBytes": 3893,
         "probabilities": null,
         "distribution": null,
         "fallbackReason": "missing_api_key",
@@ -1036,37 +1953,37 @@
   "events": [
     {
       "schemaVersion": 1,
-      "matchId": "39703586-9853-44a3-94c8-eebc46e0bcdc",
+      "matchId": "3b7bae5e-8cf1-46e6-936b-137a40771766",
       "seq": 1,
       "type": "match_started",
-      "at": "2026-09-22T05:19:11.973Z",
+      "at": "2026-10-06T17:04:19.662Z",
       "causedBy": null,
       "payload": {
         "config": {
           "gameId": "tic-tac-toe",
           "rulesVersion": "ttt/1",
-          "difficulty": "normal",
+          "difficulty": "jev",
           "modelId": "jev-1.13.0",
           "policyVersion": "policy/1",
           "analyticsVersion": "analytics/1",
-          "sourceRevision": "31b6df11c106ed54093b7424fcbe3f4dec54636b21c930809471a0873f3970c3",
+          "sourceRevision": "a2cc14cfdcc4f81f392322622671a88d7f41d7a6524a05fbdc93e5372931113d",
           "fallback": "minimax-unranked/v1",
           "budgetMs": 3000
         },
-        "configHash": "3436a47cf0f2b98b724311ff43e2222d3e95930f3e462f844eed23a85d6225e6",
+        "configHash": "3f3dec2278dee1b0d367705d2d62755ed4dd5d572fa637c79c492911dda086c4",
         "humanMark": "X",
         "ranked": false,
-        "expiresAt": 1790140751973
+        "expiresAt": 1791392659662
       },
       "previousHash": "0000000000000000000000000000000000000000000000000000000000000000",
-      "hash": "11370a9dcc79e4a62fd333164a3ba210aeeb72d5bdeef1616ff6359e424ba8e4"
+      "hash": "9b7e14e41dc1298dfa787a91616115b138aef174e40f412a2e7786689f32e63e"
     },
     {
       "schemaVersion": 1,
-      "matchId": "39703586-9853-44a3-94c8-eebc46e0bcdc",
+      "matchId": "3b7bae5e-8cf1-46e6-936b-137a40771766",
       "seq": 2,
       "type": "action_applied",
-      "at": "2026-09-22T05:19:12.143Z",
+      "at": "2026-10-06T17:04:23.909Z",
       "causedBy": null,
       "payload": {
         "ply": 1,
@@ -1077,15 +1994,15 @@
         "before": ".........",
         "after": "X........"
       },
-      "previousHash": "11370a9dcc79e4a62fd333164a3ba210aeeb72d5bdeef1616ff6359e424ba8e4",
-      "hash": "9bf7b58e8c32f88aa6a4f275e7b285f68067c02f5495a1ac1bebf683cb186ff5"
+      "previousHash": "9b7e14e41dc1298dfa787a91616115b138aef174e40f412a2e7786689f32e63e",
+      "hash": "471c36f95c139c696679c8adf12b3ecdcd33b5e0df09b865a27c1702950200cf"
     },
     {
       "schemaVersion": 1,
-      "matchId": "39703586-9853-44a3-94c8-eebc46e0bcdc",
+      "matchId": "3b7bae5e-8cf1-46e6-936b-137a40771766",
       "seq": 3,
       "type": "jev_request_prepared",
-      "at": "2026-09-22T05:19:12.149Z",
+      "at": "2026-10-06T17:04:23.911Z",
       "causedBy": null,
       "payload": {
         "basisBoard": "X........",
@@ -1128,8 +2045,55 @@
                   "winsNow": false,
                   "opponentImmediateWinningReplies": 0,
                   "isCenter": true,
-                  "isCorner": false
-                }
+                  "isCorner": false,
+                  "ownFutureWinningCells": 0,
+                  "createsFork": false,
+                  "unblockedLines": 5
+                },
+                "replySummary": [
+                  {
+                    "humanCell": 2,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 6,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 8,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 1,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 3,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 5,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 7,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  }
+                ]
               },
               {
                 "actionId": "cell_2",
@@ -1150,8 +2114,55 @@
                   "winsNow": false,
                   "opponentImmediateWinningReplies": 0,
                   "isCenter": false,
-                  "isCorner": true
-                }
+                  "isCorner": true,
+                  "ownFutureWinningCells": 0,
+                  "createsFork": false,
+                  "unblockedLines": 5
+                },
+                "replySummary": [
+                  {
+                    "humanCell": 4,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 6,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 8,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 1,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 3,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 5,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 7,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  }
+                ]
               },
               {
                 "actionId": "cell_6",
@@ -1172,8 +2183,55 @@
                   "winsNow": false,
                   "opponentImmediateWinningReplies": 0,
                   "isCenter": false,
-                  "isCorner": true
-                }
+                  "isCorner": true,
+                  "ownFutureWinningCells": 0,
+                  "createsFork": false,
+                  "unblockedLines": 5
+                },
+                "replySummary": [
+                  {
+                    "humanCell": 4,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 2,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 8,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 1,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 3,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 5,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 7,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  }
+                ]
               },
               {
                 "actionId": "cell_8",
@@ -1194,8 +2252,55 @@
                   "winsNow": false,
                   "opponentImmediateWinningReplies": 0,
                   "isCenter": false,
-                  "isCorner": true
-                }
+                  "isCorner": true,
+                  "ownFutureWinningCells": 0,
+                  "createsFork": false,
+                  "unblockedLines": 5
+                },
+                "replySummary": [
+                  {
+                    "humanCell": 4,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 2,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 6,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 1,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 3,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 5,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 7,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  }
+                ]
               },
               {
                 "actionId": "cell_1",
@@ -1216,8 +2321,55 @@
                   "winsNow": false,
                   "opponentImmediateWinningReplies": 0,
                   "isCenter": false,
-                  "isCorner": false
-                }
+                  "isCorner": false,
+                  "ownFutureWinningCells": 0,
+                  "createsFork": false,
+                  "unblockedLines": 5
+                },
+                "replySummary": [
+                  {
+                    "humanCell": 4,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 2,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 6,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 8,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 3,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 5,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 7,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  }
+                ]
               },
               {
                 "actionId": "cell_3",
@@ -1238,8 +2390,55 @@
                   "winsNow": false,
                   "opponentImmediateWinningReplies": 0,
                   "isCenter": false,
-                  "isCorner": false
-                }
+                  "isCorner": false,
+                  "ownFutureWinningCells": 0,
+                  "createsFork": false,
+                  "unblockedLines": 5
+                },
+                "replySummary": [
+                  {
+                    "humanCell": 4,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 2,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 6,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 8,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 1,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 5,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 7,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  }
+                ]
               },
               {
                 "actionId": "cell_5",
@@ -1260,8 +2459,55 @@
                   "winsNow": false,
                   "opponentImmediateWinningReplies": 0,
                   "isCenter": false,
-                  "isCorner": false
-                }
+                  "isCorner": false,
+                  "ownFutureWinningCells": 0,
+                  "createsFork": false,
+                  "unblockedLines": 5
+                },
+                "replySummary": [
+                  {
+                    "humanCell": 4,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 2,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 6,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 8,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 1,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 3,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 7,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  }
+                ]
               },
               {
                 "actionId": "cell_7",
@@ -1282,8 +2528,55 @@
                   "winsNow": false,
                   "opponentImmediateWinningReplies": 0,
                   "isCenter": false,
-                  "isCorner": false
-                }
+                  "isCorner": false,
+                  "ownFutureWinningCells": 0,
+                  "createsFork": false,
+                  "unblockedLines": 5
+                },
+                "replySummary": [
+                  {
+                    "humanCell": 4,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 2,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 6,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 8,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 1,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 3,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 5,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  }
+                ]
               }
             ]
           },
@@ -1325,21 +2618,117 @@
                   "coordinate": "B3"
                 }
               }
+            },
+            "outcome_4": {
+              "type": "choice",
+              "instructions": {
+                "candidateActionId": "cell_4",
+                "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+              },
+              "criteria": {
+                "win": "JEV can force a win.",
+                "draw": "JEV can force a draw but cannot force a win.",
+                "loss": "The human can force JEV to lose."
+              }
+            },
+            "outcome_2": {
+              "type": "choice",
+              "instructions": {
+                "candidateActionId": "cell_2",
+                "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+              },
+              "criteria": {
+                "win": "JEV can force a win.",
+                "draw": "JEV can force a draw but cannot force a win.",
+                "loss": "The human can force JEV to lose."
+              }
+            },
+            "outcome_6": {
+              "type": "choice",
+              "instructions": {
+                "candidateActionId": "cell_6",
+                "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+              },
+              "criteria": {
+                "win": "JEV can force a win.",
+                "draw": "JEV can force a draw but cannot force a win.",
+                "loss": "The human can force JEV to lose."
+              }
+            },
+            "outcome_8": {
+              "type": "choice",
+              "instructions": {
+                "candidateActionId": "cell_8",
+                "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+              },
+              "criteria": {
+                "win": "JEV can force a win.",
+                "draw": "JEV can force a draw but cannot force a win.",
+                "loss": "The human can force JEV to lose."
+              }
+            },
+            "outcome_1": {
+              "type": "choice",
+              "instructions": {
+                "candidateActionId": "cell_1",
+                "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+              },
+              "criteria": {
+                "win": "JEV can force a win.",
+                "draw": "JEV can force a draw but cannot force a win.",
+                "loss": "The human can force JEV to lose."
+              }
+            },
+            "outcome_3": {
+              "type": "choice",
+              "instructions": {
+                "candidateActionId": "cell_3",
+                "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+              },
+              "criteria": {
+                "win": "JEV can force a win.",
+                "draw": "JEV can force a draw but cannot force a win.",
+                "loss": "The human can force JEV to lose."
+              }
+            },
+            "outcome_5": {
+              "type": "choice",
+              "instructions": {
+                "candidateActionId": "cell_5",
+                "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+              },
+              "criteria": {
+                "win": "JEV can force a win.",
+                "draw": "JEV can force a draw but cannot force a win.",
+                "loss": "The human can force JEV to lose."
+              }
+            },
+            "outcome_7": {
+              "type": "choice",
+              "instructions": {
+                "candidateActionId": "cell_7",
+                "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+              },
+              "criteria": {
+                "win": "JEV can force a win.",
+                "draw": "JEV can force a draw but cannot force a win.",
+                "loss": "The human can force JEV to lose."
+              }
             }
           }
         },
-        "inputHash": "f93806dbb1b28ef0359429798d420bd08de0befb7448fe356bc27cd2b430c319",
+        "inputHash": "b05464d82f0a28eb0af2e710ed75637b0b012405b44f47cdc7b35196d66de6b9",
         "reason": null
       },
-      "previousHash": "9bf7b58e8c32f88aa6a4f275e7b285f68067c02f5495a1ac1bebf683cb186ff5",
-      "hash": "96b03bf9a9692cc2a6923492f92afa80e9943059ca4d50a9f441ce101e000353"
+      "previousHash": "471c36f95c139c696679c8adf12b3ecdcd33b5e0df09b865a27c1702950200cf",
+      "hash": "ca07018cf09733191b0d6fde81f0e1c16802524dedbd59863277398013ff8ce4"
     },
     {
       "schemaVersion": 1,
-      "matchId": "39703586-9853-44a3-94c8-eebc46e0bcdc",
+      "matchId": "3b7bae5e-8cf1-46e6-936b-137a40771766",
       "seq": 4,
       "type": "jev_result",
-      "at": "2026-09-22T05:19:12.169Z",
+      "at": "2026-10-06T17:04:23.912Z",
       "causedBy": 3,
       "payload": {
         "decision": {
@@ -1349,7 +2738,7 @@
           },
           "source": "fallback-minimax",
           "modelId": null,
-          "inputHash": "f93806dbb1b28ef0359429798d420bd08de0befb7448fe356bc27cd2b430c319",
+          "inputHash": "b05464d82f0a28eb0af2e710ed75637b0b012405b44f47cdc7b35196d66de6b9",
           "request": {
             "model": "jev-1.13.0",
             "state": {
@@ -1389,8 +2778,55 @@
                     "winsNow": false,
                     "opponentImmediateWinningReplies": 0,
                     "isCenter": true,
-                    "isCorner": false
-                  }
+                    "isCorner": false,
+                    "ownFutureWinningCells": 0,
+                    "createsFork": false,
+                    "unblockedLines": 5
+                  },
+                  "replySummary": [
+                    {
+                      "humanCell": 2,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 6,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 8,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 0,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 1,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 3,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 5,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 0,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 7,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 0,
+                      "jevWinningResponses": []
+                    }
+                  ]
                 },
                 {
                   "actionId": "cell_2",
@@ -1411,8 +2847,55 @@
                     "winsNow": false,
                     "opponentImmediateWinningReplies": 0,
                     "isCenter": false,
-                    "isCorner": true
-                  }
+                    "isCorner": true,
+                    "ownFutureWinningCells": 0,
+                    "createsFork": false,
+                    "unblockedLines": 5
+                  },
+                  "replySummary": [
+                    {
+                      "humanCell": 4,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 6,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 8,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 1,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 0,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 3,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 5,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 0,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 7,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 0,
+                      "jevWinningResponses": []
+                    }
+                  ]
                 },
                 {
                   "actionId": "cell_6",
@@ -1433,8 +2916,55 @@
                     "winsNow": false,
                     "opponentImmediateWinningReplies": 0,
                     "isCenter": false,
-                    "isCorner": true
-                  }
+                    "isCorner": true,
+                    "ownFutureWinningCells": 0,
+                    "createsFork": false,
+                    "unblockedLines": 5
+                  },
+                  "replySummary": [
+                    {
+                      "humanCell": 4,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 2,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 8,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 1,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 3,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 0,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 5,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 0,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 7,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 0,
+                      "jevWinningResponses": []
+                    }
+                  ]
                 },
                 {
                   "actionId": "cell_8",
@@ -1455,8 +2985,55 @@
                     "winsNow": false,
                     "opponentImmediateWinningReplies": 0,
                     "isCenter": false,
-                    "isCorner": true
-                  }
+                    "isCorner": true,
+                    "ownFutureWinningCells": 0,
+                    "createsFork": false,
+                    "unblockedLines": 5
+                  },
+                  "replySummary": [
+                    {
+                      "humanCell": 4,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 0,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 2,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 6,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 1,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 3,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 5,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 0,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 7,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 0,
+                      "jevWinningResponses": []
+                    }
+                  ]
                 },
                 {
                   "actionId": "cell_1",
@@ -1477,8 +3054,55 @@
                     "winsNow": false,
                     "opponentImmediateWinningReplies": 0,
                     "isCenter": false,
-                    "isCorner": false
-                  }
+                    "isCorner": false,
+                    "ownFutureWinningCells": 0,
+                    "createsFork": false,
+                    "unblockedLines": 5
+                  },
+                  "replySummary": [
+                    {
+                      "humanCell": 4,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 2,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 0,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 6,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 8,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 3,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 5,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 0,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 7,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 0,
+                      "jevWinningResponses": []
+                    }
+                  ]
                 },
                 {
                   "actionId": "cell_3",
@@ -1499,8 +3123,55 @@
                     "winsNow": false,
                     "opponentImmediateWinningReplies": 0,
                     "isCenter": false,
-                    "isCorner": false
-                  }
+                    "isCorner": false,
+                    "ownFutureWinningCells": 0,
+                    "createsFork": false,
+                    "unblockedLines": 5
+                  },
+                  "replySummary": [
+                    {
+                      "humanCell": 4,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 2,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 6,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 0,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 8,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 1,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 5,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 0,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 7,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 0,
+                      "jevWinningResponses": []
+                    }
+                  ]
                 },
                 {
                   "actionId": "cell_5",
@@ -1521,8 +3192,55 @@
                     "winsNow": false,
                     "opponentImmediateWinningReplies": 0,
                     "isCenter": false,
-                    "isCorner": false
-                  }
+                    "isCorner": false,
+                    "ownFutureWinningCells": 0,
+                    "createsFork": false,
+                    "unblockedLines": 5
+                  },
+                  "replySummary": [
+                    {
+                      "humanCell": 4,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 2,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 6,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 8,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 1,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 3,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 7,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 0,
+                      "jevWinningResponses": []
+                    }
+                  ]
                 },
                 {
                   "actionId": "cell_7",
@@ -1543,8 +3261,55 @@
                     "winsNow": false,
                     "opponentImmediateWinningReplies": 0,
                     "isCenter": false,
-                    "isCorner": false
-                  }
+                    "isCorner": false,
+                    "ownFutureWinningCells": 0,
+                    "createsFork": false,
+                    "unblockedLines": 5
+                  },
+                  "replySummary": [
+                    {
+                      "humanCell": 4,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 2,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 6,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 8,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 1,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 3,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 5,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 0,
+                      "jevWinningResponses": []
+                    }
+                  ]
                 }
               ]
             },
@@ -1586,13 +3351,109 @@
                     "coordinate": "B3"
                   }
                 }
+              },
+              "outcome_4": {
+                "type": "choice",
+                "instructions": {
+                  "candidateActionId": "cell_4",
+                  "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+                },
+                "criteria": {
+                  "win": "JEV can force a win.",
+                  "draw": "JEV can force a draw but cannot force a win.",
+                  "loss": "The human can force JEV to lose."
+                }
+              },
+              "outcome_2": {
+                "type": "choice",
+                "instructions": {
+                  "candidateActionId": "cell_2",
+                  "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+                },
+                "criteria": {
+                  "win": "JEV can force a win.",
+                  "draw": "JEV can force a draw but cannot force a win.",
+                  "loss": "The human can force JEV to lose."
+                }
+              },
+              "outcome_6": {
+                "type": "choice",
+                "instructions": {
+                  "candidateActionId": "cell_6",
+                  "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+                },
+                "criteria": {
+                  "win": "JEV can force a win.",
+                  "draw": "JEV can force a draw but cannot force a win.",
+                  "loss": "The human can force JEV to lose."
+                }
+              },
+              "outcome_8": {
+                "type": "choice",
+                "instructions": {
+                  "candidateActionId": "cell_8",
+                  "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+                },
+                "criteria": {
+                  "win": "JEV can force a win.",
+                  "draw": "JEV can force a draw but cannot force a win.",
+                  "loss": "The human can force JEV to lose."
+                }
+              },
+              "outcome_1": {
+                "type": "choice",
+                "instructions": {
+                  "candidateActionId": "cell_1",
+                  "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+                },
+                "criteria": {
+                  "win": "JEV can force a win.",
+                  "draw": "JEV can force a draw but cannot force a win.",
+                  "loss": "The human can force JEV to lose."
+                }
+              },
+              "outcome_3": {
+                "type": "choice",
+                "instructions": {
+                  "candidateActionId": "cell_3",
+                  "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+                },
+                "criteria": {
+                  "win": "JEV can force a win.",
+                  "draw": "JEV can force a draw but cannot force a win.",
+                  "loss": "The human can force JEV to lose."
+                }
+              },
+              "outcome_5": {
+                "type": "choice",
+                "instructions": {
+                  "candidateActionId": "cell_5",
+                  "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+                },
+                "criteria": {
+                  "win": "JEV can force a win.",
+                  "draw": "JEV can force a draw but cannot force a win.",
+                  "loss": "The human can force JEV to lose."
+                }
+              },
+              "outcome_7": {
+                "type": "choice",
+                "instructions": {
+                  "candidateActionId": "cell_7",
+                  "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+                },
+                "criteria": {
+                  "win": "JEV can force a win.",
+                  "draw": "JEV can force a draw but cannot force a win.",
+                  "loss": "The human can force JEV to lose."
+                }
               }
             }
           },
           "response": null,
           "attempts": [],
-          "latencyMs": 19.557737999999972,
-          "inputBytes": 2343,
+          "latencyMs": 0.32180000000516884,
+          "inputBytes": 10631,
           "probabilities": null,
           "distribution": null,
           "fallbackReason": "missing_api_key",
@@ -1600,15 +3461,15 @@
           "costBasis": "not_configured"
         }
       },
-      "previousHash": "96b03bf9a9692cc2a6923492f92afa80e9943059ca4d50a9f441ce101e000353",
-      "hash": "2ef52b45e1ff153726bd6d213cadb917d56197b6650dd432b40a3dbb085db513"
+      "previousHash": "ca07018cf09733191b0d6fde81f0e1c16802524dedbd59863277398013ff8ce4",
+      "hash": "5bf11d39c6e16768f5ef73ba89ef16d4cd0d97ed2cbe7741e626fbdb95aecd86"
     },
     {
       "schemaVersion": 1,
-      "matchId": "39703586-9853-44a3-94c8-eebc46e0bcdc",
+      "matchId": "3b7bae5e-8cf1-46e6-936b-137a40771766",
       "seq": 5,
       "type": "action_applied",
-      "at": "2026-09-22T05:19:12.170Z",
+      "at": "2026-10-06T17:04:23.912Z",
       "causedBy": null,
       "payload": {
         "ply": 2,
@@ -1619,15 +3480,15 @@
         "before": "X........",
         "after": "X...O...."
       },
-      "previousHash": "2ef52b45e1ff153726bd6d213cadb917d56197b6650dd432b40a3dbb085db513",
-      "hash": "2aa7bdd1c58141dab7908796220c316d9961a0f3d8d898a628a4b88fa51ed32b"
+      "previousHash": "5bf11d39c6e16768f5ef73ba89ef16d4cd0d97ed2cbe7741e626fbdb95aecd86",
+      "hash": "82a3fc48b4bfbd4b9d6a52bca0f4e30dd3fc768b1cf229dda9d00a82ba330a02"
     },
     {
       "schemaVersion": 1,
-      "matchId": "39703586-9853-44a3-94c8-eebc46e0bcdc",
+      "matchId": "3b7bae5e-8cf1-46e6-936b-137a40771766",
       "seq": 6,
       "type": "action_applied",
-      "at": "2026-09-22T05:19:12.223Z",
+      "at": "2026-10-06T17:04:25.966Z",
       "causedBy": null,
       "payload": {
         "ply": 3,
@@ -1638,15 +3499,15 @@
         "before": "X...O....",
         "after": "XX..O...."
       },
-      "previousHash": "2aa7bdd1c58141dab7908796220c316d9961a0f3d8d898a628a4b88fa51ed32b",
-      "hash": "d269e5ecef325d8a51467b2772f567d153f56a5580f568d0fc638584b6b71fb8"
+      "previousHash": "82a3fc48b4bfbd4b9d6a52bca0f4e30dd3fc768b1cf229dda9d00a82ba330a02",
+      "hash": "ec33573b467217df03076695822176cab3b41ee08a5d482e58eb20da4e036fa3"
     },
     {
       "schemaVersion": 1,
-      "matchId": "39703586-9853-44a3-94c8-eebc46e0bcdc",
+      "matchId": "3b7bae5e-8cf1-46e6-936b-137a40771766",
       "seq": 7,
       "type": "jev_request_prepared",
-      "at": "2026-09-22T05:19:12.224Z",
+      "at": "2026-10-06T17:04:25.968Z",
       "causedBy": null,
       "payload": {
         "basisBoard": "XX..O....",
@@ -1689,8 +3550,51 @@
                   "winsNow": false,
                   "opponentImmediateWinningReplies": 0,
                   "isCenter": false,
-                  "isCorner": true
-                }
+                  "isCorner": true,
+                  "ownFutureWinningCells": 1,
+                  "createsFork": false,
+                  "unblockedLines": 4
+                },
+                "replySummary": [
+                  {
+                    "humanCell": 6,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 8,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": [
+                      6
+                    ]
+                  },
+                  {
+                    "humanCell": 3,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": [
+                      6
+                    ]
+                  },
+                  {
+                    "humanCell": 5,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": [
+                      6
+                    ]
+                  },
+                  {
+                    "humanCell": 7,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": [
+                      6
+                    ]
+                  }
+                ]
               },
               {
                 "actionId": "cell_6",
@@ -1711,8 +3615,51 @@
                   "winsNow": false,
                   "opponentImmediateWinningReplies": 1,
                   "isCenter": false,
-                  "isCorner": true
-                }
+                  "isCorner": true,
+                  "ownFutureWinningCells": 1,
+                  "createsFork": false,
+                  "unblockedLines": 4
+                },
+                "replySummary": [
+                  {
+                    "humanCell": 2,
+                    "humanWins": true,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 8,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": [
+                      2
+                    ]
+                  },
+                  {
+                    "humanCell": 3,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": [
+                      2
+                    ]
+                  },
+                  {
+                    "humanCell": 5,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": [
+                      2
+                    ]
+                  },
+                  {
+                    "humanCell": 7,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": [
+                      2
+                    ]
+                  }
+                ]
               },
               {
                 "actionId": "cell_8",
@@ -1733,8 +3680,43 @@
                   "winsNow": false,
                   "opponentImmediateWinningReplies": 1,
                   "isCenter": false,
-                  "isCorner": true
-                }
+                  "isCorner": true,
+                  "ownFutureWinningCells": 0,
+                  "createsFork": false,
+                  "unblockedLines": 4
+                },
+                "replySummary": [
+                  {
+                    "humanCell": 2,
+                    "humanWins": true,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 6,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 2,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 3,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 2,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 5,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 7,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  }
+                ]
               },
               {
                 "actionId": "cell_3",
@@ -1755,8 +3737,49 @@
                   "winsNow": false,
                   "opponentImmediateWinningReplies": 1,
                   "isCenter": false,
-                  "isCorner": false
-                }
+                  "isCorner": false,
+                  "ownFutureWinningCells": 1,
+                  "createsFork": false,
+                  "unblockedLines": 4
+                },
+                "replySummary": [
+                  {
+                    "humanCell": 2,
+                    "humanWins": true,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 6,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": [
+                      5
+                    ]
+                  },
+                  {
+                    "humanCell": 8,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": [
+                      5
+                    ]
+                  },
+                  {
+                    "humanCell": 5,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 7,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": [
+                      5
+                    ]
+                  }
+                ]
               },
               {
                 "actionId": "cell_5",
@@ -1777,8 +3800,49 @@
                   "winsNow": false,
                   "opponentImmediateWinningReplies": 1,
                   "isCenter": false,
-                  "isCorner": false
-                }
+                  "isCorner": false,
+                  "ownFutureWinningCells": 1,
+                  "createsFork": false,
+                  "unblockedLines": 4
+                },
+                "replySummary": [
+                  {
+                    "humanCell": 2,
+                    "humanWins": true,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 6,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 2,
+                    "jevWinningResponses": [
+                      3
+                    ]
+                  },
+                  {
+                    "humanCell": 8,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": [
+                      3
+                    ]
+                  },
+                  {
+                    "humanCell": 3,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 2,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 7,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": [
+                      3
+                    ]
+                  }
+                ]
               },
               {
                 "actionId": "cell_7",
@@ -1799,8 +3863,43 @@
                   "winsNow": false,
                   "opponentImmediateWinningReplies": 1,
                   "isCenter": false,
-                  "isCorner": false
-                }
+                  "isCorner": false,
+                  "ownFutureWinningCells": 0,
+                  "createsFork": false,
+                  "unblockedLines": 4
+                },
+                "replySummary": [
+                  {
+                    "humanCell": 2,
+                    "humanWins": true,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 6,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 2,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 8,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 3,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 2,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 5,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": []
+                  }
+                ]
               }
             ]
           },
@@ -1834,21 +3933,93 @@
                   "coordinate": "B3"
                 }
               }
+            },
+            "outcome_2": {
+              "type": "choice",
+              "instructions": {
+                "candidateActionId": "cell_2",
+                "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+              },
+              "criteria": {
+                "win": "JEV can force a win.",
+                "draw": "JEV can force a draw but cannot force a win.",
+                "loss": "The human can force JEV to lose."
+              }
+            },
+            "outcome_6": {
+              "type": "choice",
+              "instructions": {
+                "candidateActionId": "cell_6",
+                "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+              },
+              "criteria": {
+                "win": "JEV can force a win.",
+                "draw": "JEV can force a draw but cannot force a win.",
+                "loss": "The human can force JEV to lose."
+              }
+            },
+            "outcome_8": {
+              "type": "choice",
+              "instructions": {
+                "candidateActionId": "cell_8",
+                "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+              },
+              "criteria": {
+                "win": "JEV can force a win.",
+                "draw": "JEV can force a draw but cannot force a win.",
+                "loss": "The human can force JEV to lose."
+              }
+            },
+            "outcome_3": {
+              "type": "choice",
+              "instructions": {
+                "candidateActionId": "cell_3",
+                "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+              },
+              "criteria": {
+                "win": "JEV can force a win.",
+                "draw": "JEV can force a draw but cannot force a win.",
+                "loss": "The human can force JEV to lose."
+              }
+            },
+            "outcome_5": {
+              "type": "choice",
+              "instructions": {
+                "candidateActionId": "cell_5",
+                "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+              },
+              "criteria": {
+                "win": "JEV can force a win.",
+                "draw": "JEV can force a draw but cannot force a win.",
+                "loss": "The human can force JEV to lose."
+              }
+            },
+            "outcome_7": {
+              "type": "choice",
+              "instructions": {
+                "candidateActionId": "cell_7",
+                "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+              },
+              "criteria": {
+                "win": "JEV can force a win.",
+                "draw": "JEV can force a draw but cannot force a win.",
+                "loss": "The human can force JEV to lose."
+              }
             }
           }
         },
-        "inputHash": "52e8d66522f4fe39727dfe5fd12310b159db037eca73750440b8d9bb16abdf48",
+        "inputHash": "04510a7cc3bf329227605ce5f7812bf95254743f92447349c8cb01675f2c86ea",
         "reason": null
       },
-      "previousHash": "d269e5ecef325d8a51467b2772f567d153f56a5580f568d0fc638584b6b71fb8",
-      "hash": "6bdcf8fb1b861a795a53d4d239fcd471289e1a33f6548e7e1bdff40799c51840"
+      "previousHash": "ec33573b467217df03076695822176cab3b41ee08a5d482e58eb20da4e036fa3",
+      "hash": "4b4bdf0ea656b475dcacf3b0f1dca9834e700dbcf02e1cb48d5c6f09dbf1defc"
     },
     {
       "schemaVersion": 1,
-      "matchId": "39703586-9853-44a3-94c8-eebc46e0bcdc",
+      "matchId": "3b7bae5e-8cf1-46e6-936b-137a40771766",
       "seq": 8,
       "type": "jev_result",
-      "at": "2026-09-22T05:19:12.226Z",
+      "at": "2026-10-06T17:04:25.970Z",
       "causedBy": 7,
       "payload": {
         "decision": {
@@ -1858,7 +4029,7 @@
           },
           "source": "fallback-minimax",
           "modelId": null,
-          "inputHash": "52e8d66522f4fe39727dfe5fd12310b159db037eca73750440b8d9bb16abdf48",
+          "inputHash": "04510a7cc3bf329227605ce5f7812bf95254743f92447349c8cb01675f2c86ea",
           "request": {
             "model": "jev-1.13.0",
             "state": {
@@ -1898,8 +4069,51 @@
                     "winsNow": false,
                     "opponentImmediateWinningReplies": 0,
                     "isCenter": false,
-                    "isCorner": true
-                  }
+                    "isCorner": true,
+                    "ownFutureWinningCells": 1,
+                    "createsFork": false,
+                    "unblockedLines": 4
+                  },
+                  "replySummary": [
+                    {
+                      "humanCell": 6,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 8,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 0,
+                      "jevWinningResponses": [
+                        6
+                      ]
+                    },
+                    {
+                      "humanCell": 3,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": [
+                        6
+                      ]
+                    },
+                    {
+                      "humanCell": 5,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 0,
+                      "jevWinningResponses": [
+                        6
+                      ]
+                    },
+                    {
+                      "humanCell": 7,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 0,
+                      "jevWinningResponses": [
+                        6
+                      ]
+                    }
+                  ]
                 },
                 {
                   "actionId": "cell_6",
@@ -1920,8 +4134,51 @@
                     "winsNow": false,
                     "opponentImmediateWinningReplies": 1,
                     "isCenter": false,
-                    "isCorner": true
-                  }
+                    "isCorner": true,
+                    "ownFutureWinningCells": 1,
+                    "createsFork": false,
+                    "unblockedLines": 4
+                  },
+                  "replySummary": [
+                    {
+                      "humanCell": 2,
+                      "humanWins": true,
+                      "humanFutureWinningCells": 0,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 8,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": [
+                        2
+                      ]
+                    },
+                    {
+                      "humanCell": 3,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": [
+                        2
+                      ]
+                    },
+                    {
+                      "humanCell": 5,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": [
+                        2
+                      ]
+                    },
+                    {
+                      "humanCell": 7,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": [
+                        2
+                      ]
+                    }
+                  ]
                 },
                 {
                   "actionId": "cell_8",
@@ -1942,8 +4199,43 @@
                     "winsNow": false,
                     "opponentImmediateWinningReplies": 1,
                     "isCenter": false,
-                    "isCorner": true
-                  }
+                    "isCorner": true,
+                    "ownFutureWinningCells": 0,
+                    "createsFork": false,
+                    "unblockedLines": 4
+                  },
+                  "replySummary": [
+                    {
+                      "humanCell": 2,
+                      "humanWins": true,
+                      "humanFutureWinningCells": 0,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 6,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 2,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 3,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 2,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 5,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 7,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": []
+                    }
+                  ]
                 },
                 {
                   "actionId": "cell_3",
@@ -1964,8 +4256,49 @@
                     "winsNow": false,
                     "opponentImmediateWinningReplies": 1,
                     "isCenter": false,
-                    "isCorner": false
-                  }
+                    "isCorner": false,
+                    "ownFutureWinningCells": 1,
+                    "createsFork": false,
+                    "unblockedLines": 4
+                  },
+                  "replySummary": [
+                    {
+                      "humanCell": 2,
+                      "humanWins": true,
+                      "humanFutureWinningCells": 0,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 6,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": [
+                        5
+                      ]
+                    },
+                    {
+                      "humanCell": 8,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": [
+                        5
+                      ]
+                    },
+                    {
+                      "humanCell": 5,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 7,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": [
+                        5
+                      ]
+                    }
+                  ]
                 },
                 {
                   "actionId": "cell_5",
@@ -1986,8 +4319,49 @@
                     "winsNow": false,
                     "opponentImmediateWinningReplies": 1,
                     "isCenter": false,
-                    "isCorner": false
-                  }
+                    "isCorner": false,
+                    "ownFutureWinningCells": 1,
+                    "createsFork": false,
+                    "unblockedLines": 4
+                  },
+                  "replySummary": [
+                    {
+                      "humanCell": 2,
+                      "humanWins": true,
+                      "humanFutureWinningCells": 0,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 6,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 2,
+                      "jevWinningResponses": [
+                        3
+                      ]
+                    },
+                    {
+                      "humanCell": 8,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": [
+                        3
+                      ]
+                    },
+                    {
+                      "humanCell": 3,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 2,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 7,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": [
+                        3
+                      ]
+                    }
+                  ]
                 },
                 {
                   "actionId": "cell_7",
@@ -2008,8 +4382,43 @@
                     "winsNow": false,
                     "opponentImmediateWinningReplies": 1,
                     "isCenter": false,
-                    "isCorner": false
-                  }
+                    "isCorner": false,
+                    "ownFutureWinningCells": 0,
+                    "createsFork": false,
+                    "unblockedLines": 4
+                  },
+                  "replySummary": [
+                    {
+                      "humanCell": 2,
+                      "humanWins": true,
+                      "humanFutureWinningCells": 0,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 6,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 2,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 8,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 3,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 2,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 5,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": []
+                    }
+                  ]
                 }
               ]
             },
@@ -2043,13 +4452,85 @@
                     "coordinate": "B3"
                   }
                 }
+              },
+              "outcome_2": {
+                "type": "choice",
+                "instructions": {
+                  "candidateActionId": "cell_2",
+                  "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+                },
+                "criteria": {
+                  "win": "JEV can force a win.",
+                  "draw": "JEV can force a draw but cannot force a win.",
+                  "loss": "The human can force JEV to lose."
+                }
+              },
+              "outcome_6": {
+                "type": "choice",
+                "instructions": {
+                  "candidateActionId": "cell_6",
+                  "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+                },
+                "criteria": {
+                  "win": "JEV can force a win.",
+                  "draw": "JEV can force a draw but cannot force a win.",
+                  "loss": "The human can force JEV to lose."
+                }
+              },
+              "outcome_8": {
+                "type": "choice",
+                "instructions": {
+                  "candidateActionId": "cell_8",
+                  "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+                },
+                "criteria": {
+                  "win": "JEV can force a win.",
+                  "draw": "JEV can force a draw but cannot force a win.",
+                  "loss": "The human can force JEV to lose."
+                }
+              },
+              "outcome_3": {
+                "type": "choice",
+                "instructions": {
+                  "candidateActionId": "cell_3",
+                  "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+                },
+                "criteria": {
+                  "win": "JEV can force a win.",
+                  "draw": "JEV can force a draw but cannot force a win.",
+                  "loss": "The human can force JEV to lose."
+                }
+              },
+              "outcome_5": {
+                "type": "choice",
+                "instructions": {
+                  "candidateActionId": "cell_5",
+                  "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+                },
+                "criteria": {
+                  "win": "JEV can force a win.",
+                  "draw": "JEV can force a draw but cannot force a win.",
+                  "loss": "The human can force JEV to lose."
+                }
+              },
+              "outcome_7": {
+                "type": "choice",
+                "instructions": {
+                  "candidateActionId": "cell_7",
+                  "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+                },
+                "criteria": {
+                  "win": "JEV can force a win.",
+                  "draw": "JEV can force a draw but cannot force a win.",
+                  "loss": "The human can force JEV to lose."
+                }
               }
             }
           },
           "response": null,
           "attempts": [],
-          "latencyMs": 0.7818919999999707,
-          "inputBytes": 1870,
+          "latencyMs": 0.20829999999841675,
+          "inputBytes": 7051,
           "probabilities": null,
           "distribution": null,
           "fallbackReason": "missing_api_key",
@@ -2057,15 +4538,15 @@
           "costBasis": "not_configured"
         }
       },
-      "previousHash": "6bdcf8fb1b861a795a53d4d239fcd471289e1a33f6548e7e1bdff40799c51840",
-      "hash": "bde6a002c0380dc9ea47de47564ddbe734a0fa1db57d0e8c6d060bdcf2a51ef0"
+      "previousHash": "4b4bdf0ea656b475dcacf3b0f1dca9834e700dbcf02e1cb48d5c6f09dbf1defc",
+      "hash": "f0752ef3c5fecb17fbcc54e33ade94f859bb7d992a0a78972458e270576eeddb"
     },
     {
       "schemaVersion": 1,
-      "matchId": "39703586-9853-44a3-94c8-eebc46e0bcdc",
+      "matchId": "3b7bae5e-8cf1-46e6-936b-137a40771766",
       "seq": 9,
       "type": "action_applied",
-      "at": "2026-09-22T05:19:12.226Z",
+      "at": "2026-10-06T17:04:25.970Z",
       "causedBy": null,
       "payload": {
         "ply": 4,
@@ -2076,15 +4557,15 @@
         "before": "XX..O....",
         "after": "XXO.O...."
       },
-      "previousHash": "bde6a002c0380dc9ea47de47564ddbe734a0fa1db57d0e8c6d060bdcf2a51ef0",
-      "hash": "7aa3d479351df61095081cd827a771ff8a2c562e2d061f63146b0f6c6568db4a"
+      "previousHash": "f0752ef3c5fecb17fbcc54e33ade94f859bb7d992a0a78972458e270576eeddb",
+      "hash": "5d24dbfb7e9f2cbeff18cda015bdd5f62fdf5bd58d9254cedf9041be5027854c"
     },
     {
       "schemaVersion": 1,
-      "matchId": "39703586-9853-44a3-94c8-eebc46e0bcdc",
+      "matchId": "3b7bae5e-8cf1-46e6-936b-137a40771766",
       "seq": 10,
       "type": "action_applied",
-      "at": "2026-09-22T05:19:12.289Z",
+      "at": "2026-10-06T17:04:28.071Z",
       "causedBy": null,
       "payload": {
         "ply": 5,
@@ -2095,15 +4576,15 @@
         "before": "XXO.O....",
         "after": "XXOXO...."
       },
-      "previousHash": "7aa3d479351df61095081cd827a771ff8a2c562e2d061f63146b0f6c6568db4a",
-      "hash": "a049298b6df4c25f01ab75de00159e60892bbde8b07c96b522367e8ff6880b74"
+      "previousHash": "5d24dbfb7e9f2cbeff18cda015bdd5f62fdf5bd58d9254cedf9041be5027854c",
+      "hash": "4e94beea14879dfe8e01fab18addda4abb94fbe10ba57d712c4691a8c2803e39"
     },
     {
       "schemaVersion": 1,
-      "matchId": "39703586-9853-44a3-94c8-eebc46e0bcdc",
+      "matchId": "3b7bae5e-8cf1-46e6-936b-137a40771766",
       "seq": 11,
       "type": "jev_request_prepared",
-      "at": "2026-09-22T05:19:12.290Z",
+      "at": "2026-10-06T17:04:28.103Z",
       "causedBy": null,
       "payload": {
         "basisBoard": "XXOXO....",
@@ -2146,8 +4627,12 @@
                   "winsNow": true,
                   "opponentImmediateWinningReplies": 0,
                   "isCenter": false,
-                  "isCorner": true
-                }
+                  "isCorner": true,
+                  "ownFutureWinningCells": 0,
+                  "createsFork": false,
+                  "unblockedLines": 3
+                },
+                "replySummary": []
               },
               {
                 "actionId": "cell_8",
@@ -2168,8 +4653,36 @@
                   "winsNow": false,
                   "opponentImmediateWinningReplies": 1,
                   "isCenter": false,
-                  "isCorner": true
-                }
+                  "isCorner": true,
+                  "ownFutureWinningCells": 2,
+                  "createsFork": true,
+                  "unblockedLines": 3
+                },
+                "replySummary": [
+                  {
+                    "humanCell": 6,
+                    "humanWins": true,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 5,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": [
+                      6
+                    ]
+                  },
+                  {
+                    "humanCell": 7,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": [
+                      6,
+                      5
+                    ]
+                  }
+                ]
               },
               {
                 "actionId": "cell_5",
@@ -2190,8 +4703,36 @@
                   "winsNow": false,
                   "opponentImmediateWinningReplies": 1,
                   "isCenter": false,
-                  "isCorner": false
-                }
+                  "isCorner": false,
+                  "ownFutureWinningCells": 2,
+                  "createsFork": true,
+                  "unblockedLines": 3
+                },
+                "replySummary": [
+                  {
+                    "humanCell": 6,
+                    "humanWins": true,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 8,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": [
+                      6
+                    ]
+                  },
+                  {
+                    "humanCell": 7,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": [
+                      6,
+                      8
+                    ]
+                  }
+                ]
               },
               {
                 "actionId": "cell_7",
@@ -2212,8 +4753,35 @@
                   "winsNow": false,
                   "opponentImmediateWinningReplies": 1,
                   "isCenter": false,
-                  "isCorner": false
-                }
+                  "isCorner": false,
+                  "ownFutureWinningCells": 1,
+                  "createsFork": false,
+                  "unblockedLines": 3
+                },
+                "replySummary": [
+                  {
+                    "humanCell": 6,
+                    "humanWins": true,
+                    "humanFutureWinningCells": 0,
+                    "jevWinningResponses": []
+                  },
+                  {
+                    "humanCell": 8,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": [
+                      6
+                    ]
+                  },
+                  {
+                    "humanCell": 5,
+                    "humanWins": false,
+                    "humanFutureWinningCells": 1,
+                    "jevWinningResponses": [
+                      6
+                    ]
+                  }
+                ]
               }
             ]
           },
@@ -2239,21 +4807,69 @@
                   "coordinate": "B3"
                 }
               }
+            },
+            "outcome_6": {
+              "type": "choice",
+              "instructions": {
+                "candidateActionId": "cell_6",
+                "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+              },
+              "criteria": {
+                "win": "JEV can force a win.",
+                "draw": "JEV can force a draw but cannot force a win.",
+                "loss": "The human can force JEV to lose."
+              }
+            },
+            "outcome_8": {
+              "type": "choice",
+              "instructions": {
+                "candidateActionId": "cell_8",
+                "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+              },
+              "criteria": {
+                "win": "JEV can force a win.",
+                "draw": "JEV can force a draw but cannot force a win.",
+                "loss": "The human can force JEV to lose."
+              }
+            },
+            "outcome_5": {
+              "type": "choice",
+              "instructions": {
+                "candidateActionId": "cell_5",
+                "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+              },
+              "criteria": {
+                "win": "JEV can force a win.",
+                "draw": "JEV can force a draw but cannot force a win.",
+                "loss": "The human can force JEV to lose."
+              }
+            },
+            "outcome_7": {
+              "type": "choice",
+              "instructions": {
+                "candidateActionId": "cell_7",
+                "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+              },
+              "criteria": {
+                "win": "JEV can force a win.",
+                "draw": "JEV can force a draw but cannot force a win.",
+                "loss": "The human can force JEV to lose."
+              }
             }
           }
         },
-        "inputHash": "d65525297faf61f7ce987ad8c5e614c31a080b1d2a5b2796afc80502f52350de",
+        "inputHash": "1f76ce1b5ebbd04d463a4e8480a240543595d4377db65d18d960be4ef8a8e463",
         "reason": null
       },
-      "previousHash": "a049298b6df4c25f01ab75de00159e60892bbde8b07c96b522367e8ff6880b74",
-      "hash": "093f69c79aca6c065d73dd5d5aff4b1f8ecf4e5bea9951298941decf252fcd29"
+      "previousHash": "4e94beea14879dfe8e01fab18addda4abb94fbe10ba57d712c4691a8c2803e39",
+      "hash": "823a38a1befddcee67962555afe5eaedcd708f9233dc1d02b518f3a9b789b409"
     },
     {
       "schemaVersion": 1,
-      "matchId": "39703586-9853-44a3-94c8-eebc46e0bcdc",
+      "matchId": "3b7bae5e-8cf1-46e6-936b-137a40771766",
       "seq": 12,
       "type": "jev_result",
-      "at": "2026-09-22T05:19:12.291Z",
+      "at": "2026-10-06T17:04:28.108Z",
       "causedBy": 11,
       "payload": {
         "decision": {
@@ -2263,7 +4879,7 @@
           },
           "source": "fallback-minimax",
           "modelId": null,
-          "inputHash": "d65525297faf61f7ce987ad8c5e614c31a080b1d2a5b2796afc80502f52350de",
+          "inputHash": "1f76ce1b5ebbd04d463a4e8480a240543595d4377db65d18d960be4ef8a8e463",
           "request": {
             "model": "jev-1.13.0",
             "state": {
@@ -2303,8 +4919,12 @@
                     "winsNow": true,
                     "opponentImmediateWinningReplies": 0,
                     "isCenter": false,
-                    "isCorner": true
-                  }
+                    "isCorner": true,
+                    "ownFutureWinningCells": 0,
+                    "createsFork": false,
+                    "unblockedLines": 3
+                  },
+                  "replySummary": []
                 },
                 {
                   "actionId": "cell_8",
@@ -2325,8 +4945,36 @@
                     "winsNow": false,
                     "opponentImmediateWinningReplies": 1,
                     "isCenter": false,
-                    "isCorner": true
-                  }
+                    "isCorner": true,
+                    "ownFutureWinningCells": 2,
+                    "createsFork": true,
+                    "unblockedLines": 3
+                  },
+                  "replySummary": [
+                    {
+                      "humanCell": 6,
+                      "humanWins": true,
+                      "humanFutureWinningCells": 0,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 5,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": [
+                        6
+                      ]
+                    },
+                    {
+                      "humanCell": 7,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": [
+                        6,
+                        5
+                      ]
+                    }
+                  ]
                 },
                 {
                   "actionId": "cell_5",
@@ -2347,8 +4995,36 @@
                     "winsNow": false,
                     "opponentImmediateWinningReplies": 1,
                     "isCenter": false,
-                    "isCorner": false
-                  }
+                    "isCorner": false,
+                    "ownFutureWinningCells": 2,
+                    "createsFork": true,
+                    "unblockedLines": 3
+                  },
+                  "replySummary": [
+                    {
+                      "humanCell": 6,
+                      "humanWins": true,
+                      "humanFutureWinningCells": 0,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 8,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": [
+                        6
+                      ]
+                    },
+                    {
+                      "humanCell": 7,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": [
+                        6,
+                        8
+                      ]
+                    }
+                  ]
                 },
                 {
                   "actionId": "cell_7",
@@ -2369,8 +5045,35 @@
                     "winsNow": false,
                     "opponentImmediateWinningReplies": 1,
                     "isCenter": false,
-                    "isCorner": false
-                  }
+                    "isCorner": false,
+                    "ownFutureWinningCells": 1,
+                    "createsFork": false,
+                    "unblockedLines": 3
+                  },
+                  "replySummary": [
+                    {
+                      "humanCell": 6,
+                      "humanWins": true,
+                      "humanFutureWinningCells": 0,
+                      "jevWinningResponses": []
+                    },
+                    {
+                      "humanCell": 8,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": [
+                        6
+                      ]
+                    },
+                    {
+                      "humanCell": 5,
+                      "humanWins": false,
+                      "humanFutureWinningCells": 1,
+                      "jevWinningResponses": [
+                        6
+                      ]
+                    }
+                  ]
                 }
               ]
             },
@@ -2396,13 +5099,61 @@
                     "coordinate": "B3"
                   }
                 }
+              },
+              "outcome_6": {
+                "type": "choice",
+                "instructions": {
+                  "candidateActionId": "cell_6",
+                  "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+                },
+                "criteria": {
+                  "win": "JEV can force a win.",
+                  "draw": "JEV can force a draw but cannot force a win.",
+                  "loss": "The human can force JEV to lose."
+                }
+              },
+              "outcome_8": {
+                "type": "choice",
+                "instructions": {
+                  "candidateActionId": "cell_8",
+                  "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+                },
+                "criteria": {
+                  "win": "JEV can force a win.",
+                  "draw": "JEV can force a draw but cannot force a win.",
+                  "loss": "The human can force JEV to lose."
+                }
+              },
+              "outcome_5": {
+                "type": "choice",
+                "instructions": {
+                  "candidateActionId": "cell_5",
+                  "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+                },
+                "criteria": {
+                  "win": "JEV can force a win.",
+                  "draw": "JEV can force a draw but cannot force a win.",
+                  "loss": "The human can force JEV to lose."
+                }
+              },
+              "outcome_7": {
+                "type": "choice",
+                "instructions": {
+                  "candidateActionId": "cell_7",
+                  "question": "After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?"
+                },
+                "criteria": {
+                  "win": "JEV can force a win.",
+                  "draw": "JEV can force a draw but cannot force a win.",
+                  "loss": "The human can force JEV to lose."
+                }
               }
             }
           },
           "response": null,
           "attempts": [],
-          "latencyMs": 0.30720000000019354,
-          "inputBytes": 1396,
+          "latencyMs": 0.2206000000005588,
+          "inputBytes": 3893,
           "probabilities": null,
           "distribution": null,
           "fallbackReason": "missing_api_key",
@@ -2410,15 +5161,15 @@
           "costBasis": "not_configured"
         }
       },
-      "previousHash": "093f69c79aca6c065d73dd5d5aff4b1f8ecf4e5bea9951298941decf252fcd29",
-      "hash": "7a8201cd5bed6a33ce6da381063c3a2f4015e5591dcb0eb8550794f715d6f69a"
+      "previousHash": "823a38a1befddcee67962555afe5eaedcd708f9233dc1d02b518f3a9b789b409",
+      "hash": "5150f46ec8332caa876d678a3d990c82c255a6371f361872b957a488310c2ee5"
     },
     {
       "schemaVersion": 1,
-      "matchId": "39703586-9853-44a3-94c8-eebc46e0bcdc",
+      "matchId": "3b7bae5e-8cf1-46e6-936b-137a40771766",
       "seq": 13,
       "type": "action_applied",
-      "at": "2026-09-22T05:19:12.291Z",
+      "at": "2026-10-06T17:04:28.108Z",
       "causedBy": null,
       "payload": {
         "ply": 6,
@@ -2429,45 +5180,45 @@
         "before": "XXOXO....",
         "after": "XXOXO.O.."
       },
-      "previousHash": "7a8201cd5bed6a33ce6da381063c3a2f4015e5591dcb0eb8550794f715d6f69a",
-      "hash": "612a6a623a4628a9bee24b9a434c7d0a041f407c74937637a269d008413923ce"
+      "previousHash": "5150f46ec8332caa876d678a3d990c82c255a6371f361872b957a488310c2ee5",
+      "hash": "62ef0b556d3866e8ef3849ef296a90f19ea980cd7f8d54c5e66f9dd065c4ecdd"
     },
     {
       "schemaVersion": 1,
-      "matchId": "39703586-9853-44a3-94c8-eebc46e0bcdc",
+      "matchId": "3b7bae5e-8cf1-46e6-936b-137a40771766",
       "seq": 14,
       "type": "match_completed",
-      "at": "2026-09-22T05:19:12.292Z",
+      "at": "2026-10-06T17:04:28.108Z",
       "causedBy": null,
       "payload": {
         "outcome": "loss",
         "termination": "board",
         "eligible": false
       },
-      "previousHash": "612a6a623a4628a9bee24b9a434c7d0a041f407c74937637a269d008413923ce",
-      "hash": "b1441ada05a2fdd071a9548d30d12a96c6f923f09b66df131cc5628da46229d1"
+      "previousHash": "62ef0b556d3866e8ef3849ef296a90f19ea980cd7f8d54c5e66f9dd065c4ecdd",
+      "hash": "555e5dbba03bb16ca7dd8ed34d34857bbafe8e130a9bf056212763ca5b4ecb39"
     },
     {
       "schemaVersion": 1,
-      "matchId": "39703586-9853-44a3-94c8-eebc46e0bcdc",
+      "matchId": "3b7bae5e-8cf1-46e6-936b-137a40771766",
       "seq": 15,
       "type": "replay_verified",
-      "at": "2026-09-22T05:19:12.298Z",
+      "at": "2026-10-06T17:04:28.111Z",
       "causedBy": null,
       "payload": {
         "ok": true,
         "reason": null,
-        "verifiedHead": "b1441ada05a2fdd071a9548d30d12a96c6f923f09b66df131cc5628da46229d1"
+        "verifiedHead": "555e5dbba03bb16ca7dd8ed34d34857bbafe8e130a9bf056212763ca5b4ecb39"
       },
-      "previousHash": "b1441ada05a2fdd071a9548d30d12a96c6f923f09b66df131cc5628da46229d1",
-      "hash": "d5acda6f8177a72cd612d33c0e5e292e88b57ca29499a78b339c508dbe3f3e80"
+      "previousHash": "555e5dbba03bb16ca7dd8ed34d34857bbafe8e130a9bf056212763ca5b4ecb39",
+      "hash": "4369ff01ab4dc3b62c7debcd2628db6accb316f0111fbea6fc4a7d927bfb936e"
     }
   ],
   "audit": {
     "ok": true,
     "events": 14,
-    "head": "b1441ada05a2fdd071a9548d30d12a96c6f923f09b66df131cc5628da46229d1",
+    "head": "555e5dbba03bb16ca7dd8ed34d34857bbafe8e130a9bf056212763ca5b4ecb39",
     "moves": 6
   },
-  "exportedAt": "2026-09-22T05:19:12.298Z"
+  "exportedAt": "2026-10-06T17:04:28.112Z"
 }

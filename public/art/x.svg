@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <title>X</title>
+  <defs>
+    <linearGradient id="edge" gradientUnits="userSpaceOnUse" x1="20" y1="18" x2="80" y2="84">
+      <stop offset="0" stop-color="#f1edff"/>
+      <stop offset="0.35" stop-color="#b9adff"/>
+      <stop offset="1" stop-color="#4a3bb5"/>
+    </linearGradient>
+    <linearGradient id="face" gradientUnits="userSpaceOnUse" x1="22" y1="18" x2="78" y2="84">
+      <stop offset="0" stop-color="#c4b8ff"/>
+      <stop offset="0.5" stop-color="#8f7dff"/>
+      <stop offset="1" stop-color="#5540d8"/>
+    </linearGradient>
+  </defs>
+  <g fill="none" stroke-linecap="round">
+    <path d="M27 26L73 72M73 26L27 72" stroke="#05060c" stroke-opacity="0.34" stroke-width="21" transform="translate(4 6.5)"/>
+    <path d="M27 26L73 72M73 26L27 72" stroke="#2a1e86" stroke-width="19" transform="translate(1.8 3.2)"/>
+    <path d="M27 26L73 72M73 26L27 72" stroke="url(#edge)" stroke-width="19"/>
+    <path d="M27 26L73 72M73 26L27 72" stroke="url(#face)" stroke-width="14.6"/>
+    <path d="M68 25L52.5 40.5" stroke="#ffffff" stroke-opacity="0.82" stroke-width="2.4"/>
+    <path d="M27.5 22.5L41 36" stroke="#ffffff" stroke-opacity="0.66" stroke-width="2.4"/>
+  </g>
+</svg>

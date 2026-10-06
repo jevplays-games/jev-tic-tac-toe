@@ -1,1 +1,26 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="28" height="28" aria-hidden="true"><rect width="64" height="64" rx="15" fill="currentColor" opacity=".1"/><path d="M34 14v20.5c0 5.2-4.2 9.5-9.5 9.5S15 39.7 15 34.5" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="32" height="32" aria-hidden="true">
+  <defs>
+    <radialGradient id="ground" cx="0.28" cy="0.2" r="1">
+      <stop offset="0" stop-color="#5343c4"/>
+      <stop offset="0.45" stop-color="#231b5c"/>
+      <stop offset="1" stop-color="#0c0d17"/>
+    </radialGradient>
+    <linearGradient id="x" gradientUnits="userSpaceOnUse" x1="10" y1="10" x2="40" y2="42">
+      <stop offset="0" stop-color="#ece7ff"/>
+      <stop offset="0.5" stop-color="#a99bff"/>
+      <stop offset="1" stop-color="#5540d8"/>
+    </linearGradient>
+    <linearGradient id="o" gradientUnits="userSpaceOnUse" x1="28" y1="26" x2="54" y2="54">
+      <stop offset="0" stop-color="#c9fff4"/>
+      <stop offset="0.5" stop-color="#3fd6bc"/>
+      <stop offset="1" stop-color="#12917e"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="15" fill="url(#ground)"/>
+  <g fill="none" stroke-linecap="round">
+    <circle cx="41" cy="40" r="10.5" stroke="#0a0b13" stroke-opacity="0.5" stroke-width="8" transform="translate(1.2 2)"/>
+    <circle cx="41" cy="40" r="10.5" stroke="url(#o)" stroke-width="7"/>
+    <path d="M14 14L37 37M37 14L14 37" stroke="#0a0b13" stroke-opacity="0.55" stroke-width="10" transform="translate(1.2 2)"/>
+    <path d="M14 14L37 37M37 14L14 37" stroke="url(#x)" stroke-width="9"/>
+  </g>
+</svg>
