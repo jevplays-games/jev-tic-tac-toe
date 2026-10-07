@@ -160,7 +160,11 @@ dialog::backdrop{background:#070810cf;backdrop-filter:blur(5px)}
 @media(min-width:600px){.metric-grid{grid-template-columns:repeat(3,1fr)}.reference-grid{grid-template-columns:repeat(4,1fr)}}
 /* From 900px brand.js has moved #jv-controls into the header; these groups lay out in a row. */
 @media(min-width:900px){
-  .jv-account{flex-direction:row;align-items:center;gap:var(--s2);padding:0}
+  /* The account group sits inline in the header from 900px: a row, not the sheet's column.
+     (This rule used to name .jv-account, a class nothing carries, so the identity and the
+     sign-in button stacked and spilled out of the 64px header wherever Discord is configured.) */
+  .account-row{flex-direction:row;align-items:center;gap:var(--s2);padding:0}
+  .account-identity{min-height:0;white-space:nowrap}
   .wide-only{display:inline}
   .arena{grid-template-columns:minmax(0,1.4fr) minmax(18rem,1fr);gap:var(--s5)}
   .arena.without-evidence{grid-template-columns:1fr}.without-evidence .game-panel{max-width:48rem;margin:auto;width:100%}
