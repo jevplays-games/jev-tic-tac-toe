@@ -5,6 +5,7 @@ Failure injection uses page.route on this app's own /api paths only; no provider
 import asyncio
 import json
 import os
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -131,29 +132,45 @@ async def a_me(page):
     return await page.evaluate("() => fetch('/api/me', {credentials: 'same-origin'}).then(r => r.json())")
 
 
+async def settle(page, pattern):
+    try:
+        await page.locator('#game-status', has_text=pattern).wait_for(timeout=20000)
+        return True
+    except Exception:
+        return False
+
+
 async def overlap_suite(launch_kwargs):
     """Genuinely overlapping initialisation: several pages of one browser boot at once. Without Web Locks every page's
     create is held at a barrier until all have arrived, so the server sees them simultaneously."""
     async with async_playwright() as p:
         browser = await p.chromium.launch(**launch_kwargs)
-        for label, token, locks in [('guest', None, True), ('guest', None, False), ('signed-in', seed('Overlap Player') if DB else None, False)]:
+        scenarios = [
+            ('guest', None, True, False),
+            ('guest', None, False, True),
+            ('guest', None, False, False),
+            ('signed-in', seed('Overlap Player') if DB else None, False, True),
+        ]
+        for label, token, locks, warm in scenarios:
             if label == 'signed-in' and not DB:
                 continue
-            tag = f'overlap {label} {"with" if locks else "without"} Web Locks'
+            jar = 'session cookie already present' if token or warm else 'cold cookie jar'
+            tag = f'overlap {label} {"with" if locks else "without"} Web Locks, {jar}'
             context = await browser.new_context(viewport={'width': 1280, 'height': 900}, reduced_motion='reduce')
             if token:
                 await context.add_cookies([{'name': COOKIE, 'value': token, 'domain': HOST, 'path': '/', 'httpOnly': True, 'sameSite': 'Lax'}])
             if not locks:
                 await context.add_init_script(NO_LOCKS)
-            count, arrived, posts = 4, [], []
+            if warm and label == 'guest' and not locks:
+                await context.request.get(ORIGIN + '/api/me')
+            count, arrived, outcomes = 4, [], []
             released = asyncio.Event()
+            context.on('response', lambda r: outcomes.append((r.status, r.url.split('/api/')[-1])) if r.request.method == 'POST' and r.url.endswith('/api/matches') else None)
 
             async def hold(route):
-                request = route.request
-                if request.method != 'POST' or locks:
+                if route.request.method != 'POST' or locks:
                     await route.continue_()
                     return
-                posts.append(request.post_data)
                 arrived.append(1)
                 if len(arrived) >= count:
                     released.set()
@@ -169,13 +186,31 @@ async def overlap_suite(launch_kwargs):
             for page in pages:
                 page.on('pageerror', lambda e: errors.append(str(e)))
             await asyncio.gather(*[page.goto(ORIGIN, wait_until='commit') for page in pages])
-            for page in pages:
-                await page.locator('#game-status', has_text='Your turn').wait_for(timeout=20000)
+            strict = locks or warm
+            # Cold jar, no Web Locks: every page mints its own guest session and keeps only its own CSRF token, while the
+            # browser keeps one cookie. Pages whose token no longer matches show the error state with Retry, which is
+            # recoverable; what must never happen is a second match, a local fallback, or a page left loading.
+            first_pattern = 'Your turn' if strict else re.compile('Your turn|Could not')
+            settled = await asyncio.gather(*[settle(page, first_pattern) for page in pages])
+            states = [await page.locator('#game-status').inner_text() for page in pages]
+            diag = {'posts': outcomes, 'states': states, 'errors': errors}
+            check(f'{tag}: every page settles (match or Retry) and none stays loading', all(settled), diag)
+            if not strict:
+                needs_retry = [page for page, text in zip(pages, states) if 'Could not' in text]
+                diag['retried'] = len(needs_retry)
+                check(f'{tag}: pages that lost the race show Retry, not a local game', all([await page.locator('#boot-retry').is_visible() and 'LOCAL' not in await page.locator('#mode-badge').inner_text() for page in needs_retry]), diag)
+                for page in needs_retry:
+                    await page.locator('#boot-retry').click()
+                recovered = await asyncio.gather(*[settle(page, 'Your turn') for page in pages])
+                check(f'{tag}: Retry brings every page to the match', all(recovered), diag)
             ids = {(await a_me(page))['activeMatchId'] for page in pages}
-            check(f'{tag}: all {count} pages show one match', len(ids) == 1, ids)
+            check(f'{tag}: all {count} pages show one match', len(ids) == 1, diag)
+            created = [o for o in outcomes if 200 <= o[0] < 300]
+            check(f'{tag}: the server created at most one match', len(created) <= 1, diag)
             if not locks:
-                check(f'{tag}: creates really overlapped at the server', len(arrived) == count, len(arrived))
-            check(f'{tag}: no page is in an error state', all([await page.locator('#boot-actions').is_hidden() for page in pages]) and not errors, errors)
+                check(f'{tag}: creates really overlapped at the server', len(arrived) == count, diag)
+            check(f'{tag}: no page is in an error state', all([await page.locator('#boot-actions').is_hidden() for page in pages]) and not errors, diag)
+            (OUT / f'overlap-{label}-{"locks" if locks else "nolocks"}-{"warm" if warm else "cold"}.json').write_text(json.dumps({'tag': tag, **diag}, indent=2) + '\n')
             await context.close()
 
         # Loader, error and Retry, observed while they are on screen.
