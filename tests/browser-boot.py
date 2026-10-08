@@ -259,7 +259,7 @@ def layout(browser, label, token, name):
             ident = info['identity']
             btn = page.locator(action).bounding_box()
             if desktop and ident and ident['w'] > 0:
-                check(f'#10 {tag}: identity and account action share a row', abs((ident['y'] + ident['h'] / 2) - (btn['y'] + btn['h'] / 2)) < 12, (ident, btn))
+                check(f'#10 {tag}: identity and account action share a row', abs((ident['y'] + ident['h'] / 2) - (btn['y'] + btn['height'] / 2)) < 12, (ident, btn))
             if desktop:
                 check(f'#10 {tag}: account action reachable (inside controls box or scrollable)', btn['x'] + btn['width'] <= info['controls']['r'] + 1 or info['controlsScroll'], (btn, info['controls']))
             page.locator(action).focus()
