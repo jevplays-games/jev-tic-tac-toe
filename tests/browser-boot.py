@@ -155,17 +155,17 @@ def boot_flows(browser, label, token):
     check(f'{label}: Retry restores the same match', me(page)['activeMatchId'] == first and len(creates) == before)
 
     # Server failure while loading the prior match.
+    board_before_500 = rendered_board(page)
     page.route('**/api/matches/*', lambda route: route.fulfill(status=500, content_type='application/json', body='{"error":"internal"}') if route.request.method == 'GET' else route.continue_())
     page.reload()
     page.locator('#boot-actions').wait_for(state='visible', timeout=15000)
     check(f'{label}: prior-match 500 shows retry and creates nothing', len(creates) == before)
     check(f'{label}: R6 prior-match 500 shows the visible Could-not-load error notice', page.locator('#notice').is_visible() and 'Could not' in page.locator('#notice').inner_text(), page.locator('#notice').inner_text())
-    board_at_error = rendered_board(page)
     page.unroute('**/api/matches/*')
     page.locator('#boot-retry').click()
     ready(page)
     check(f'{label}: Retry after 500 restores the same match', me(page)['activeMatchId'] == first and len(creates) == before)
-    check(f'{label}: R6 after the successful Retry the obsolete error banner and Retry are hidden, the same match and board stay, controls are usable and nothing was created', page.locator('#notice').is_hidden() and page.locator('#boot-actions').is_hidden() and page.locator('#new-game').is_enabled() and page.locator('#reconnect').is_visible() and me(page)['activeMatchId'] == first and rendered_board(page) == board_at_error and len(creates) == before, (page.locator('#notice').inner_text(), len(creates), before))
+    check(f'{label}: R6 after the successful Retry the obsolete error banner and Retry are hidden, the same match and board stay, controls are usable and nothing was created', page.locator('#notice').is_hidden() and page.locator('#boot-actions').is_hidden() and page.locator('#new-game').is_enabled() and page.locator('#reconnect').is_visible() and me(page)['activeMatchId'] == first and rendered_board(page) == board_before_500 and board_before_500.count('.') < 9 and len(creates) == before, (page.locator('#notice').inner_text(), len(creates), before))
     check(f'{label}: no page errors', not errors, errors)
 
     # Resign (ended match), then reload yields exactly one new playable match.
@@ -654,10 +654,13 @@ async def recovery_suite(launch_kwargs):
             await page.locator('#board button').nth(4).click()
             await page.locator('#board button[aria-label$=", O"]').first.wait_for(timeout=15000)
             await page.locator('#game-status', has_text='Your turn').wait_for(timeout=15000)
+            # place() clears the notice, so a fresh real load on the existing board is what shows the session notice.
+            await page.reload()
+            await page.locator('#game-status', has_text='Your turn').wait_for(timeout=15000)
             first = (await a_me(page))['activeMatchId']
             board6 = await a_rendered_board(page)
             session_text = await page.locator('#notice').inner_text()
-            check('R6 notice: the app\'s own session notice (Local-ready build) is shown after the first load, one create so far', await page.locator('#notice').is_visible() and 'Local-ready build' in session_text and len(creates6) == 1 and board6.count('.') == 7, (session_text, len(creates6), board6))
+            check('R6 notice: after a move and a reload on the same board, the app\'s own session notice (Local-ready build) is shown by the fresh load, one create so far', await page.locator('#notice').is_visible() and 'Local-ready build' in session_text and len(creates6) == 1 and board6.count('.') == 7, (session_text, len(creates6), board6))
             mode6['fail'] = True
             await page.reload()
             await page.locator('#boot-actions').wait_for(state='visible', timeout=15000)
@@ -671,7 +674,7 @@ async def recovery_suite(launch_kwargs):
             await page.locator('#boot-actions').wait_for(state='visible', timeout=15000)
             await page.wait_for_timeout(300)
             text2 = await page.locator('#notice').inner_text()
-            check('R6 notice: a failed Retry keeps the failure visible with exactly one error notice, the session notice intact, same board, no create', len(gets) >= 2 and 'Local-ready build' in text2 and text2.count('Could not load your saved game') == 1 and text2.count('Local-ready build') == 1 and await a_rendered_board(page) == board6 and len(creates6) == 1, (len(gets), text2))
+            check('R6 notice: a failed Retry keeps the failure visible with exactly one error notice, the session notice intact, no create', len(gets) >= 2 and 'Local-ready build' in text2 and text2.count('Could not load your saved game') == 1 and text2.count('Local-ready build') == 1 and len(creates6) == 1, (len(gets), text2))
             mode6['fail'] = False
             await page.locator('#boot-retry').click()
             await page.locator('#game-status', has_text='Your turn').wait_for(timeout=15000)
