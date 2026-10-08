@@ -34,7 +34,7 @@ For browser mutations: session cookie, exact `Origin`, and `X-CSRF-Token` from `
 
 Supported profiles: `easy`, `normal`, `hard`, `jev`. No client model, score, winner, guild or channel field is authoritative. The server captures configured model/version and valid context itself.
 
-Same creation key and normalized options returns the existing match. A conflicting body produces `409`. A new attempt while another owned match is active returns `409 active_match_exists` with `detail.matchId`. Status is `201` on creation, or `202` when service work remains pending.
+Same creation key and normalized options returns the existing match. A conflicting body produces `409`. A new attempt while another owned match is active returns `409 active_match_exists` with `detail.matchId`; this holds under concurrent creates from one session or several sessions of one account, because the active-match check and the insert are one atomic statement. Concurrent creates with the same key return the one match and call the provider once. Status is `201` on creation, or `202` when service work remains pending.
 
 ## Placement / resignation
 

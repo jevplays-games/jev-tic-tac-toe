@@ -1,6 +1,7 @@
 import {createInitialState,applyAction,getLegalActions,getOutcome,getPlayerToMove,replay,coordinate} from './game/rules.js';
 import {minimaxAction} from './game/oracle.js';
 import {inspectMove,csv} from './game/analytics.js';
+import {resolveInitialMatch,singleFlight,createRequestHolder,withBootLock} from './game/boot.js';
 
 const $=id=>document.getElementById(id);
 function newId(){
@@ -15,16 +16,25 @@ const ms=n=>typeof n==='number'?n>=1000?`${(n/1000).toFixed(2)} s`:`${Math.round
 const outcomeName=v=>v===1?'Win':v===0?'Draw':'Loss';
 const profileText={easy:'Easy · board and legal actions',normal:'Normal · immediate tactical features',hard:'Hard · forks and bounded replies',jev:'JEV · candidate outcome distributions'};
 const sourceName=s=>({'jev':'JEV','human':'Human','forced':'Forced','fallback-minimax':'Fallback','local-minimax':'Local oracle'}[s]??s);
-let me=null,match=null,busy=false,pendingCell=null,pendingAction=null,pendingCreate=null,replayPly=null;
+let me=null,match=null,busy=false,pendingCell=null,pendingAction=null,replayPly=null;
+let boot={state:'loading',stage:null};
+const createRequest=createRequestHolder(()=>({requestId:newId(),humanMark:$('human-mark').value,difficulty:$('difficulty').value,ranked:$('ranked').checked}));
 let backend=false,scope='world',leaderNext=null,historyNext=null,summary=null;
-let resumeTimer=null;
+let resumeTimer=null,bootEpoch=0,autoPolls=0;
+const maxAutoPolls=30;
 const preferences=readPreferences();
 function readPreferences(){try{return JSON.parse(localStorage.getItem('jev-preferences')??'{}');}catch{return {};}}
 function savePreferences(){try{localStorage.setItem('jev-preferences',JSON.stringify({difficulty:$('difficulty').value,humanMark:$('human-mark').value,analysis:$('analysis-toggle').checked}));}catch{/* Storage can be unavailable in private contexts. */}}
 function element(tag,text=null,className=null){const node=document.createElement(tag);if(text!==null)node.textContent=text;if(className)node.className=className;return node;}
 function notice(message){$('notice').textContent=message;$('notice').hidden=!message;}
+// A boot failure is shown as a suffix on any session/context notice from the current load. Retry retires only that
+// suffix, so an obsolete error never outlives a recovery while a session or context warning is never erased with it.
+let sessionNotice='',errorSuffix='';
+function sessionNote(message){sessionNotice=message;notice(message);}
+function errorNote(message){const shown=$('notice').textContent,base=sessionNotice&&shown.startsWith(sessionNotice)?sessionNotice:'';errorSuffix=message;notice(base?`${base} ${message}`:message);}
+function retireErrorNote(){if(!errorSuffix)return;const shown=$('notice').textContent;if(shown.endsWith(errorSuffix))notice(shown.slice(0,shown.length-errorSuffix.length).trimEnd());errorSuffix='';}
 function tableRow(values){const tr=element('tr');for(const value of values){const td=element('td');if(value instanceof Node)td.append(value);else td.textContent=String(value??'—');tr.append(td);}return tr;}
-function setBusy(value){busy=value;document.body.classList.toggle('busy',value);renderGame();}
+function setBusy(value){busy=value;renderGame();}
 let bearer=null; // set only inside a Discord Activity, where cookies are not sent
 async function api(path,{method='GET',body}={}){
   const response=await fetch(path,{method,credentials:'same-origin',headers:{...(bearer?{Authorization:`Bearer ${bearer}`}:{}),...(body?{'Content-Type':'application/json'}:{}),...(method!=='GET'?{'X-CSRF-Token':me?.csrf??''}:{})},...(body?{body:JSON.stringify(body)}:{}),signal:AbortSignal.timeout(12000)});
@@ -72,7 +82,7 @@ function renderGame(){
   $('opponent-name').textContent=match?.local||fallback?'Local oracle':'JEV';
   $('opponent-label').textContent=match?.local?'Browser-only · unranked':fallback?'Perfect-play fallback · unranked':'Structured decision model';
   $('mode-badge').textContent=match?.rankedStarted&&match?.eligible?'RANKED MATCH':match?.local?'LOCAL PRACTICE':'CASUAL PLAY';
-  let text='Choose your settings and start a game.';
+  let text=boot.state==='loading'?'Loading your game…':boot.state==='error'?(match?'Could not refresh your game.':'Could not load your game.'):'Choose your settings and start a game.';
   if(match){
     if(replayPly!==null)text=`Replay · after ${replayPly} of ${match.actions.length} moves`;
     else if(match.status==='complete')text=match.termination==='resign'?'Match resigned.':match.termination==='expired'?'Match expired.':match.outcome==='win'?'You win. Three in a row.':match.outcome==='loss'?'Your opponent wins.':'A draw. No squares left.';
@@ -80,6 +90,9 @@ function renderGame(){
     else if(busy&&pendingCell!==null)text='Move submitted · waiting for opponent';
     else if(match.status==='jev_pending'||busy)text=match.local?'Local opponent is selecting a move…':'JEV is evaluating legal actions…';
     else text=`Your turn · place ${human}`;
+    // A refresh in flight or failed on a displayed game is said plainly; the board itself stays as it was.
+    if(replayPly===null&&boot.state==='loading')text='Loading your game…';
+    else if(replayPly===null&&boot.state==='error')text='Could not refresh your game.';
   }
   $('game-status').textContent=text;
   // End state: the status line becomes the result plaque in place, so the final board stays in view.
@@ -91,7 +104,9 @@ function renderGame(){
   $('eligibility').textContent=match?.local?'Browser-only practice. Not included in server analytics or rankings.':match?.rankedStarted&&!match.eligible?'Excluded from ranked results: a fallback or verification issue occurred.':match?.eligible?'Official match · quitting a human turn does not erase the result.':me?.user?'Casual match · enable Ranked before starting for leaderboard eligibility.':'Guest matches are unranked.';
   $('difficulty').disabled=Boolean(active);$('human-mark').disabled=Boolean(active);
   $('ranked').disabled=Boolean(active)||!me?.user||!me?.jevConfigured;
-  $('new-game').disabled=busy||Boolean(active&&match.status==='jev_pending');
+  document.body.classList.toggle('busy',busy||boot.state==='loading');
+  $('new-game').disabled=busy||boot.state!=='ready'||Boolean(active&&match.status==='jev_pending');
+  $('boot-actions').hidden=boot.state!=='error';$('boot-retry').disabled=boot.state==='loading'||busy;$('boot-local').hidden=Boolean(match);
   $('new-game').textContent=active?'New game':match?'Play again ↗':'Start game ↗';
   $('resign').hidden=!active;$('resign').disabled=busy||match?.status==='jev_pending';
   $('reconnect').hidden=!active||Boolean(match?.local);
@@ -114,10 +129,14 @@ function renderEvidence(){
   if(!$('factors').childNodes.length)$('factors').append(element('p','No immediate tactical factors flagged.','empty'));
   $('evidence-note').textContent=d.source==='jev'?'Confidence describes the model’s answer distribution, not a calibrated probability of winning.':d.source==='forced'?'A forced legal action is not an inference result.':'This move was not selected by JEV. It cannot contribute to official JEV rankings.';
 }
-async function acceptMatch(data){
+async function acceptMatch(data,{auto=true}={}){
   match=data;replayPly=null;pendingCell=null;renderGame();renderPostgame();
   clearTimeout(resumeTimer);
-  if(match.status==='jev_pending'&&!match.local)resumeTimer=setTimeout(()=>resume(false),1800);
+  if(match.status!=='jev_pending')autoPolls=0;
+  if(auto&&match.status==='jev_pending'&&!match.local){
+    if(autoPolls>=maxAutoPolls)notice('JEV is still working on this move. Use Reconnect to check again.');
+    else resumeTimer=setTimeout(()=>{if(boot.state==='ready')resume(false);},1800);
+  }
   if(['complete','void'].includes(match.status)&&!match.local){loadLeaderboard();loadAnalytics();}
 }
 async function startGame(){
@@ -129,11 +148,10 @@ async function startGame(){
   notice('');setBusy(true);replayPly=null;
   try{
     if(!backend){await startLocal();return;}
-    pendingCreate??={requestId:newId(),humanMark:$('human-mark').value,difficulty:$('difficulty').value,ranked:$('ranked').checked};
-    const data=await api('/api/matches',{method:'POST',body:pendingCreate});pendingCreate=null;await acceptMatch(data);
+    const data=await api('/api/matches',{method:'POST',body:createRequest.current});createRequest.clear();await acceptMatch(data);
   }catch(e){
     if(e.message==='active_match_exists'&&e.detail?.matchId)await acceptMatch(await api(`/api/matches/${e.detail.matchId}`));
-    if(e.status && e.status<500)pendingCreate=null;
+    if(e.status && e.status<500)createRequest.clear();
     notice(humanMessage(e));
   }finally{setBusy(false);}
 }
@@ -158,30 +176,59 @@ async function resign(ask=true){
   }catch(e){notice(humanMessage(e));}finally{setBusy(false);}
 }
 async function resume(manual=true){
-  if(busy||!match||match.local)return;
-  const id=match.id;if(manual)notice('');setBusy(true);
+  if(busy||!match||match.local||boot.state==='loading')return;
+  const id=match.id,epoch=bootEpoch,current=()=>epoch===bootEpoch&&match?.id===id;
+  if(manual){notice('');autoPolls=0;}else autoPolls++;
+  setBusy(true);
   try{
     let data;
     if(pendingAction){data=await api(`/api/matches/${id}/actions`,{method:'POST',body:pendingAction});pendingAction=null;}
     else data=await api(`/api/matches/${id}/resume`,{method:'POST'});
-    if(match.id===id)await acceptMatch(data);
-  }catch(e){if(manual)notice(humanMessage(e));}finally{setBusy(false);}
+    if(!current())return;
+    // An authoritative answer for the displayed match proves the service is back: it clears a refresh error
+    // (never a failed session load, which only Retry can repair), so the board, New game and polling resume.
+    const recovered=boot.state==='error'&&boot.stage!=='connect'&&backend;
+    if(recovered){retireErrorNote();setBoot('ready');}
+    await acceptMatch(data);
+    if(recovered)loadLeaderboard();
+  }catch(e){
+    if(!current())return;
+    if(manual){if(boot.state==='error')errorNote(humanMessage(e));else notice(humanMessage(e));}
+    else{errorNote(`${bootStageText.resume} ${describeBootError(e)} Your game is unchanged. Retry to continue.`);setBoot('error','resume');}
+  }finally{setBusy(false);}
 }
-/* Auto-start: the board is playable as soon as the page is, with no click.
-   Guarded so it can only ever ADD a match where none exists -- a live match was
-   already resumed above, so a reload rejoins it instead of opening a second one
-   and the server's active-match/idempotency path keeps owning duplicates.
-   Ranked follows the same rule as the checkbox (signed in AND hosted JEV), so
-   auto-start can never rank a game the player could not have ranked by hand.
-   With no backend this falls through to startLocal(), which labels the
-   opponent local -- an auto-started game is never relabeled as JEV. */
-async function autoStart(){
-  if(busy)return;
-  if(match&&!['complete','void'].includes(match.status))return;
-  if(!backend){await startLocal();return;}
-  $('ranked').checked=Boolean(me?.user&&me?.jevConfigured);
-  await startGame();
+/* Boot: the board is playable as soon as the page is, with no click -- but only after the player's prior
+   match is resolved. A live match is restored (never a second one beside it), an expired one is resumed
+   first, and only an absent or ended one is replaced by a new match. A connection or server failure at any
+   step leaves the page in a visible error state with Retry; it never starts a local game on its own and
+   never replaces the match already on screen. Ranked follows the checkbox rule (signed in AND hosted JEV),
+   so auto-start cannot rank a game the player could not have ranked by hand. */
+function setBoot(state,stage=null){boot={state,stage};renderGame();}
+function describeBootError(error){const text=!error?.status?'The game service did not respond':error.status>=500?'The game service had a problem':humanMessage(error);return text.replace(/\.?$/,'.');}
+const bootStageText={connect:'Could not reach the game service.',load:'Could not load your saved game.',resume:'Could not refresh your saved game.',create:'Could not start a new game.'};
+async function loadSession(){
+  me=await api('/api/me');backend=true;$('identity-name').textContent=me.user?.displayName??'Guest';$('login').hidden=Boolean(me.user);$('logout').hidden=!me.user;
+  $('service-status').textContent=me.jevConfigured?'Hosted JEV available':'Local fallback · JEV key not configured';$('service-dot').classList.remove('is-off');$('service-dot').classList.add('is-live');
+  if(!me.discordConfigured){$('login').hidden=true;sessionNote('Local-ready build. Add server-side JEV and Discord credentials to enable hosted inference and authentication.');}
+  if(me.pendingLaunch){try{me.context=(await api('/api/context/redeem',{method:'POST'})).context;sessionNote('Discord channel context verified. Ranked results can be attributed to this community.');}catch(e){sessionNote(humanMessage(e));}}
 }
+const runBoot=singleFlight(()=>withBootLock(async()=>{
+  bootEpoch++;autoPolls=0;clearTimeout(resumeTimer);retireErrorNote();
+  setBoot('loading');
+  try{await loadSession();}
+  catch(error){
+    backend=false;$('service-status').textContent='Game service unreachable';$('service-dot').classList.remove('is-live');$('service-dot').classList.add('is-off');
+    errorNote(`${bootStageText.connect} ${describeBootError(error)} Retry, or practice locally without JEV.`);setBoot('error','connect');return;
+  }
+  const request={get current(){if(!createRequest.peek())$('ranked').checked=Boolean(me?.user&&me?.jevConfigured);return createRequest.current;},clear:()=>createRequest.clear()};
+  const result=await resolveInitialMatch({me,api,request});
+  if(result.status==='error'){
+    if(result.match)await acceptMatch(result.match,{auto:false});
+    errorNote(`${bootStageText[result.stage]} ${describeBootError(result.error)} Your existing game is unchanged. Retry to continue.`);setBoot('error',result.stage);return;
+  }
+  await acceptMatch(result.match);setBoot('ready');
+  loadLeaderboard();
+}));
 async function startLocal(){
   const at=Date.now();match={local:true,id:newId(),schemaVersion:1,status:'human_turn',revision:0,board:Array(9).fill('.'),humanMark:$('human-mark').value,config:{difficulty:$('difficulty').value,modelId:null},configHash:'local-untrusted',actions:[],events:[],eligible:false,rankedStarted:false,startedAt:at};
   notice('The backend is unreachable. Playing a local perfect-play opponent, not JEV.');
@@ -270,15 +317,9 @@ async function initialize(){
     try{bearer=(await (await import('/activity.js')).signInWithDiscord(api)).token;}
     catch(e){notice(`Could not sign in through Discord. ${humanMessage(e)}`);}
   }
-  try{
-    me=await api('/api/me');backend=true;$('identity-name').textContent=me.user?.displayName??'Guest';$('login').hidden=Boolean(me.user);$('logout').hidden=!me.user;
-    $('service-status').textContent=me.jevConfigured?'Hosted JEV available':'Local fallback · JEV key not configured';$('service-dot').classList.add('is-live');
-    if(!me.discordConfigured){$('login').hidden=true;notice('Local-ready build. Add server-side JEV and Discord credentials to enable hosted inference and authentication.');}
-    if(me.pendingLaunch){try{me.context=(await api('/api/context/redeem',{method:'POST'})).context;notice('Discord channel context verified. Ranked results can be attributed to this community.');}catch(e){notice(humanMessage(e));}}
-    if(me.activeMatchId){await acceptMatch(await api(`/api/matches/${me.activeMatchId}`));if(Date.now()>=match.expiresAt)await resume(false);}
-    await loadLeaderboard();
-  }catch(e){backend=false;$('service-status').textContent='Backend unreachable · local practice available';$('service-dot').classList.add('is-off');$('login').hidden=true;notice('The game backend is unreachable. Playing a clearly labeled local opponent.');}
-  await autoStart();
+  $('boot-retry').addEventListener('click',()=>runBoot());
+  $('boot-local').addEventListener('click',()=>{if(match)return;backend=false;createRequest.clear();setBoot('ready');startLocal();renderGame();});
+  await runBoot();
   try{const reference=await fetch('/reference-audit.json').then(r=>r.json());$('audit-reference').replaceChildren(...[['Reachable boards',reference.reachableBoards],['Nonterminal boards',reference.nonterminalBoards],['Symmetry classes',reference.symmetryClasses],['Complete games',reference.completeGames]].map(([label,n])=>{const d=element('div');d.append(element('strong',fmt(n)),element('small',label));return d;}));}catch{$('audit-reference').textContent='Run npm run audit to generate the exhaustive reference report.';}
   renderGame();renderHeatmap();
 }

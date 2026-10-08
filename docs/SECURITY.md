@@ -12,7 +12,7 @@ Secrets are server environment values only. Model requests contain board state a
 - Seven-day absolute session life and one-day idle life. Session rotation after successful OAuth; one-use five-minute state bound to the initiating browser session.
 - Exact origin plus synchronizer-CSRF token for every browser mutation. State-changing match resumption is POST, not GET.
 - Discord Ed25519 signature verification over the timestamp and exact raw bytes; five-minute freshness bound; guild/application checks; duplicate interaction IDs; personal one-use launch redemption.
-- Revision compare-and-swap updates; one active ranked match per account; idempotency receipts; request preparation and decision leases; stale model responses cannot move the board twice.
+- Revision compare-and-swap updates; one active match per session or account, admitted atomically (conditional insert), and one active ranked match per account by unique index; idempotency receipts; request preparation and decision leases; stale model responses cannot move the board twice.
 - Rules-based replay and expected-version response verification; no trusted client score endpoint.
 - Restrictive CSP, no external client libraries or tracking calls, `textContent` for untrusted text, no arbitrary HTML rendering, no reflected request bodies in errors, no credential-bearing application logs.
 - Strict input/action/response sets, JSON byte limits, rate limits before costly work, request-attempt budgets, fixed provider endpoint and finite legal candidates.

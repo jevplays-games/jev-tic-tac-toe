@@ -1,204 +1,199 @@
 {
   "schemaVersion": 1,
-  "sourceHash": "de92f396e5e17907738b8cc828e9ffa51063889b930fa68d643de0c693af73e9",
+  "sourceHash": "144b0e67ff68c47d25001214d93d9f9c059d61b856f8b8b4e695230a81ef53fe",
   "files": [
     {
-      "path": "local\\database.js",
+      "path": "local/database.js",
       "sha256": "29ca05fd519ff836da289e8e9e19a51045a101775be18bf6bd003edab2a54fac",
       "bytes": 1349
     },
     {
-      "path": "local\\mode.js",
+      "path": "local/mode.js",
       "sha256": "9dc3b35d3983d073934baa44f00168556270d6794a6b0d805b9ebc308ebf50dc",
       "bytes": 419
     },
     {
-      "path": "local\\server.js",
+      "path": "local/server.js",
       "sha256": "f1f9ec0991c9d08a9189da0987ebb059022bdeb2656033176219332e282d0556",
       "bytes": 3978
     },
     {
-      "path": "migrations\\0001.sql",
+      "path": "migrations/0001.sql",
       "sha256": "b7335023f9fa7cdd58627ed0e40cb19f0e87b02343fb4efe26b3e0678a6c8781",
       "bytes": 3189
     },
     {
-      "path": "public\\_headers",
+      "path": "public/_headers",
       "sha256": "eef26a4531ccb9752c3578782b97086a0d13bb55651eba50c21948f78cbd82f5",
       "bytes": 379
     },
     {
-      "path": "public\\activity.js",
+      "path": "public/activity.js",
       "sha256": "bf03c65a5cc0a3ed3304e867c294775a41285470a09b8d4d6101ef7c31bd3d45",
       "bytes": 768
     },
     {
-      "path": "public\\app.js",
-      "sha256": "ecf81d10138d34f923c993af9ffd6b7c5144729041fca724d885417659090525",
-      "bytes": 31169
+      "path": "public/app.js",
+      "sha256": "ebdd51b9ab6aff7d884b8790c878891feddb72aba532cb4960d4da4cfd1cb67e",
+      "bytes": 34838
     },
     {
-      "path": "public\\art\\o.svg",
+      "path": "public/art/o.svg",
       "sha256": "63ebd18e0aed1ac643f289a0899948cbbff6564f6d19d55e8e65774678c7f1de",
       "bytes": 1153
     },
     {
-      "path": "public\\art\\x.svg",
+      "path": "public/art/x.svg",
       "sha256": "197db0ae794b3ef53bdbd5b5fcf76d7e5e4ec2879cb39d18fdbea9b642b8b9c7",
       "bytes": 1245
     },
     {
-      "path": "public\\brand\\OFL.txt",
+      "path": "public/brand/OFL.txt",
       "sha256": "262481e844521b326f5ecd053e59b98c8b2da78c8ee1bdbb6e8174305e54935a",
       "bytes": 4380
     },
     {
-      "path": "public\\brand\\apple-touch-icon.png",
+      "path": "public/brand/apple-touch-icon.png",
       "sha256": "351b47e6960ed68a407a826e0a972ef3e4ffda4d7fc8b03a4edf9cce67419153",
       "bytes": 20378
     },
     {
-      "path": "public\\brand\\brand.css",
+      "path": "public/brand/brand.css",
       "sha256": "9138ab8bc31bcd47ec1cbf003925a993b1bb63e2cd0c2f6d15ab77b12db2b404",
       "bytes": 25412
     },
     {
-      "path": "public\\brand\\brand.js",
+      "path": "public/brand/brand.js",
       "sha256": "661ed9c0cc676363d01fb330533cc09f1dfb5aa388eff1bf59c8a61836bcba66",
       "bytes": 3481
     },
     {
-      "path": "public\\brand\\favicon-32.png",
+      "path": "public/brand/favicon-32.png",
       "sha256": "760071fb810c1159a3cd4b23b983ab34f8a3fbd3e1b84aef1edb2b329815500e",
       "bytes": 2029
     },
     {
-      "path": "public\\brand\\icon.svg",
+      "path": "public/brand/icon.svg",
       "sha256": "a307ea34ba47a58e45b873d9fa194c0522a685536252d5f6e772bb90fed414c7",
       "bytes": 1380
     },
     {
-      "path": "public\\brand\\inter-var.woff2",
+      "path": "public/brand/inter-var.woff2",
       "sha256": "7ffd1096cc8918f9340f7b93a2a7b02dfc965f278420d5f9a18742ab959e5c6f",
       "bytes": 68320
     },
     {
-      "path": "public\\brand\\mark.svg",
+      "path": "public/brand/mark.svg",
       "sha256": "5032d2ba96bbed6102c14f18b4065554806a7e33709ee2b839d3bab83ab934cc",
       "bytes": 1363
     },
     {
-      "path": "public\\brand\\og.png",
+      "path": "public/brand/og.png",
       "sha256": "28baf2d8e0aeaa36ea00f05bdc0f2c7fbacdbecb85436a3ac7a250fd222245a4",
       "bytes": 170926
     },
     {
-      "path": "public\\brand\\result-draw.svg",
+      "path": "public/brand/result-draw.svg",
       "sha256": "c7c4069551fe2be380118c5379dd8f6ee0f80bc969d09c3b07c2e526a6609fe2",
       "bytes": 1004
     },
     {
-      "path": "public\\brand\\result-loss.svg",
+      "path": "public/brand/result-loss.svg",
       "sha256": "7759d7a48baf9a7a1502320036df8d98e8be435dd37d4aa3fcd509ae6a25eedc",
       "bytes": 1048
     },
     {
-      "path": "public\\brand\\result-win.svg",
+      "path": "public/brand/result-win.svg",
       "sha256": "80a744fdca06775cfca12fd8e00044471f9e2dbf3d1245b992b0463d4c51208a",
       "bytes": 1203
     },
     {
-      "path": "public\\game.css",
-      "sha256": "f45e9a7d4db4c0b4d5d20146fa7ce23e783b43a186d79445fa6608a15dcd7d17",
-      "bytes": 21203
+      "path": "public/game.css",
+      "sha256": "479da2cebb973b6fccbdfcdeb935bba8134af033cb8afaf6ddba6a98cbb21067",
+      "bytes": 22330
     },
     {
-      "path": "public\\game\\analytics.js",
+      "path": "public/game/analytics.js",
       "sha256": "46abb23367600d30f0f8a8ac0985a36e163a3f99ab6aac22469b0efecd38a370",
       "bytes": 10595
     },
     {
-      "path": "public\\game\\oracle.js",
+      "path": "public/game/boot.js",
+      "sha256": "d1846fca92dc7c80f28c047aa35649e96d5e88f9d1363579614e24685f9962c7",
+      "bytes": 3290
+    },
+    {
+      "path": "public/game/oracle.js",
       "sha256": "175ea4729938d324b5f3110655233ae15f8ed45bfd9869b24931d0574fd4b847",
       "bytes": 3182
     },
     {
-      "path": "public\\game\\policy.js",
+      "path": "public/game/policy.js",
       "sha256": "47c6617e74449267b3ddd14e552bb50fda7b34fb03eeabc1a0c4022b6bca4ac3",
       "bytes": 7497
     },
     {
-      "path": "public\\game\\rules.js",
+      "path": "public/game/rules.js",
       "sha256": "b4fe1d704c622e04673ed28ccfb245534093f06553c688173a9b0f14574fd128",
       "bytes": 4995
     },
     {
-      "path": "public\\index.html",
-      "sha256": "bab3f7fec9b9fc31a901127e3c8553ae7b5b1946c822735e868bf689c9b503ee",
-      "bytes": 15944
+      "path": "public/index.html",
+      "sha256": "0f8ee1050f46b41fe1f9a71396fde02d60d8a5358daf35adf87b64aeb841b0fb",
+      "bytes": 16138
     },
     {
-      "path": "public\\reference-audit.json",
-      "sha256": "8857ec1eb227e74c0ad30814a5852a31dd4dd5272998c62a4f4c72c5e871e17c",
-      "bytes": 1362
-    },
-    {
-      "path": "public\\vendor\\discord-embedded-app-sdk.js",
+      "path": "public/vendor/discord-embedded-app-sdk.js",
       "sha256": "c58611dd66e1294569561759aef0771cced023280e53be81cd00a9a5f641f0a3",
       "bytes": 158033
     },
     {
-      "path": "server\\activity.js",
+      "path": "server/activity.js",
       "sha256": "de9e4316d8ce516d7b8aecc6f8e1a6115728cbd989a1ea493c4bd383be751d36",
       "bytes": 1916
     },
     {
-      "path": "server\\auth.js",
+      "path": "server/auth.js",
       "sha256": "491417f02ac062cd6f2096df3aca16c6bd2eccd301f0b65e23636b8056e9eaff",
       "bytes": 7304
     },
     {
-      "path": "server\\build-info.js",
-      "sha256": "f1ecfe43d8448d06118b2247d64114934ab1a874f000abd4476a73d7ccaf7cf7",
-      "bytes": 203
-    },
-    {
-      "path": "server\\discord.js",
+      "path": "server/discord.js",
       "sha256": "ad79dfd20c1dcf86bda90223b1a37749713a1853a5c9ba7a0c26313409876de1",
       "bytes": 3848
     },
     {
-      "path": "server\\jev.js",
+      "path": "server/jev.js",
       "sha256": "5e0babc5589a99cc576e528639d538cef1edfd5788bcfcabaafd42fb07ec0594",
       "bytes": 3985
     },
     {
-      "path": "server\\matches.js",
-      "sha256": "2b137339829d7dcb555c45aef359f992ed839abc240a61f41ebeb056516e018f",
-      "bytes": 14692
+      "path": "server/matches.js",
+      "sha256": "67e73f604cea236f073ecacf3100a14f476a542f48d04f8acceab8b964b5ee5a",
+      "bytes": 15020
     },
     {
-      "path": "server\\operations.js",
+      "path": "server/operations.js",
       "sha256": "9ba9d71570e75aef0b6d44c643e35c7e6359ca452ccb05ca40ab15929c3203ba",
       "bytes": 2141
     },
     {
-      "path": "server\\reporting.js",
+      "path": "server/reporting.js",
       "sha256": "6a4f4d39f75a459b59e0ff6b1782b862afa8794bb2bf9ca88d670f9c8a7fa537",
       "bytes": 5393
     },
     {
-      "path": "server\\store.js",
-      "sha256": "6ce9f444abbb0215b3f6a8f16bfeca938e37e6e7886cd15052de3669a6663b59",
-      "bytes": 2121
+      "path": "server/store.js",
+      "sha256": "8f40e50bec43da57fb6f62ee6090f811c64a82cdef37e9b240c7e79206b9f98d",
+      "bytes": 2791
     },
     {
-      "path": "server\\util.js",
+      "path": "server/util.js",
       "sha256": "d9363cd04d253f37f768efd5cfdb7863bbcf33684d627f39603b24fdcb9f1000",
       "bytes": 4275
     },
     {
-      "path": "server\\worker.js",
+      "path": "server/worker.js",
       "sha256": "29fe1680d262e595aa5fce16f44050957e8bccdc32ab57fbd524ca9323d4963d",
       "bytes": 6369
     }

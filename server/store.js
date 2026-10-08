@@ -14,9 +14,16 @@ export async function saveMatch(env,doc,expectedRevision) {
   const result=await run(env,'UPDATE matches SET revision=?,status=?,eligible=?,outcome=?,termination=?,finished_at=?,doc=? WHERE id=? AND revision=?',...matchParams(doc),doc.id,expectedRevision);
   assert(result.meta.changes===1,409,'stale_revision');
 }
+export const ACTIVE_MATCH_SQL=`status IN ('human_turn','jev_pending') AND (owner_session=? OR (? IS NOT NULL AND user_id=?))`;
+export const activeMatchFor=(env,session)=>one(env,`SELECT id FROM matches WHERE ${ACTIVE_MATCH_SQL} LIMIT 1`,session.token_hash,session.user_id??null,session.user_id??null);
+// One statement checks for an active match and inserts, so concurrent creates cannot both be admitted. Returns false when
+// another active match or the same creation key already exists; the caller reads back which.
 export async function insertMatch(env,doc,session,fingerprint) {
   try{
-    await run(env,`INSERT INTO matches(id,owner_session,user_id,create_key,create_fingerprint,config_hash,difficulty,model_id,human_mark,guild_id,channel_id,revision,status,ranked_started,eligible,created_at,expires_at,doc) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
-      doc.id,session.token_hash,session.user_id,doc.createKey,fingerprint,doc.configHash,doc.config.difficulty,doc.config.modelId,doc.humanMark,doc.context?.guildId??null,doc.context?.channelId??null,doc.revision,doc.status,doc.rankedStarted?1:0,doc.eligible?1:0,doc.startedAt,doc.expiresAt,JSON.stringify(doc));
-  }catch(e){if(/UNIQUE|constraint/i.test(e.message))throw new HttpError(409,'active_match_or_duplicate');throw e;}
+    const result=await run(env,`INSERT INTO matches(id,owner_session,user_id,create_key,create_fingerprint,config_hash,difficulty,model_id,human_mark,guild_id,channel_id,revision,status,ranked_started,eligible,created_at,expires_at,doc)
+      SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM matches WHERE ${ACTIVE_MATCH_SQL})`,
+      doc.id,session.token_hash,session.user_id,doc.createKey,fingerprint,doc.configHash,doc.config.difficulty,doc.config.modelId,doc.humanMark,doc.context?.guildId??null,doc.context?.channelId??null,doc.revision,doc.status,doc.rankedStarted?1:0,doc.eligible?1:0,doc.startedAt,doc.expiresAt,JSON.stringify(doc),
+      session.token_hash,session.user_id??null,session.user_id??null);
+    return result.meta.changes===1;
+  }catch(e){if(/UNIQUE|constraint/i.test(e.message))return false;throw e;}
 }
