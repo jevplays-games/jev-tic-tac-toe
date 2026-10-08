@@ -12,6 +12,7 @@ import re
 import sqlite3
 import subprocess
 import sys
+import time
 import uuid
 from pathlib import Path
 from playwright.async_api import async_playwright
@@ -52,6 +53,20 @@ def owner_counts(match_id):
         active = con.execute(f"SELECT COUNT(*) FROM matches WHERE status IN ('human_turn','jev_pending') AND {who}", args).fetchone()[0]
         total = con.execute(f'SELECT COUNT(*) FROM matches WHERE {who}', args).fetchone()[0]
         return {'active': active, 'total': total}
+    finally:
+        con.close()
+
+
+def make_pending(match_id):
+    """Scratch-DB fixture only: rewind a just-created match to its unopened jev_pending state (no actions, no lease), the
+    state a server leaves behind when the opening was never driven. The empty model key makes the API fall back at once."""
+    con = sqlite3.connect(DB, timeout=10)
+    try:
+        doc = json.loads(con.execute('SELECT doc FROM matches WHERE id = ?', (match_id,)).fetchone()[0])
+        doc.update(actions=[], events=doc['events'][:1], receipts=[], status='jev_pending', revision=0, lease=None, eligible=False)
+        doc.pop('outcome', None)
+        con.execute("UPDATE matches SET status = 'jev_pending', revision = 0, eligible = 0, doc = ? WHERE id = ?", (json.dumps(doc), match_id))
+        con.commit()
     finally:
         con.close()
 
@@ -460,7 +475,10 @@ async def recovery_suite(launch_kwargs):
         session = await (await context.request.get(ORIGIN + '/api/me')).json()
         seeded = await context.request.post(ORIGIN + '/api/matches', headers={'x-csrf-token': session['csrf'], 'origin': ORIGIN}, data={'requestId': str(uuid.uuid4()), 'humanMark': 'O', 'difficulty': 'normal', 'ranked': False})
         pending = await seeded.json()
-        check('R3: fixture is a nonexpired pending (jev_pending) match', seeded.status == 202 and pending['status'] == 'jev_pending', (seeded.status, pending.get('status')))
+        make_pending(pending['id'])
+        fixture = await match_doc(context, pending['id'])
+        expires = sqlite3.connect(f'file:{DB}?mode=ro', uri=True).execute('SELECT expires_at FROM matches WHERE id = ?', (pending['id'],)).fetchone()[0]
+        check('R3: fixture is a nonexpired unopened pending (jev_pending) match, rewound in the scratch DB only', seeded.status in (201, 202) and fixture['status'] == 'jev_pending' and fixture['revision'] == 0 and fixture['board'] == '.........' and expires > time.time() * 1000, (seeded.status, fixture, expires))
         page = await context.new_page()
         resumes, creates3, gate_get = [], [], asyncio.Event()
         gate_get.set()
