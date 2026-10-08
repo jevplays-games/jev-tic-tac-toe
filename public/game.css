@@ -166,13 +166,19 @@ dialog::backdrop{background:#070810cf;backdrop-filter:blur(5px)}
      sign-in button stacked and spilled out of the 64px header wherever Discord is configured.) */
   .account-row{flex-direction:row;align-items:center;gap:var(--s2);padding:0}
   .account-identity{min-height:0;white-space:nowrap}
+  /* brand.css caps #jv-controls at min(50vw,46rem) and lets it scroll, but its items stay shrinkable and the identity was
+     unbounded: a long display name painted over the Analytics/Records tabs at 900-1099px. Items keep their natural size, and
+     only the identity gives way, with an ellipsis (the sheet below 900px shows the whole name). */
+  #jv-controls .jv-nav,#jv-controls .jv-sheet-item,.account-row{flex:none}
+  .account-identity{max-width:7.5rem;overflow:hidden;text-overflow:ellipsis}
   .wide-only{display:inline}
   .arena{grid-template-columns:minmax(0,1.4fr) minmax(18rem,1fr);gap:var(--s5)}
   .arena.without-evidence{grid-template-columns:1fr}.without-evidence .game-panel{max-width:48rem;margin:auto;width:100%}
   .analytics-grid{grid-template-columns:1fr 1fr}
   footer{padding-inline:var(--s5)}
 }
-@media(min-width:1280px){.arena{grid-template-columns:minmax(0,1.6fr) minmax(19rem,1fr)}.analytics-grid{grid-template-columns:1.45fr 1fr}}
+@media(min-width:1100px){.account-identity{max-width:13rem}}
+@media(min-width:1280px){.account-identity{max-width:16rem}.arena{grid-template-columns:minmax(0,1.6fr) minmax(19rem,1fr)}.analytics-grid{grid-template-columns:1.45fr 1fr}}
 /* Tall screens put the hero above the arena (brand.css), so it joins the reserve. */
 @media(min-width:601px) and (min-height:951px){.board-wrap{--fit-reserve:27.5rem}}
 /* Short frames: shrink the chrome, never the board's ability to fit. */

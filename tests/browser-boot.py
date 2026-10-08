@@ -281,7 +281,10 @@ def layout(browser, label, token, name):
           const box = e => { const r = e.getBoundingClientRect(); return {x: r.x, y: r.y, w: r.width, h: r.height, r: r.right, b: r.bottom}; };
           const c = document.getElementById('jv-controls'), header = document.querySelector('.jv-header');
           const items = [...document.querySelectorAll('#jv-controls a, #jv-controls button')].filter(e => e.getClientRects().length).map(e => ({id: e.id || e.textContent.trim(), ...box(e)}));
-          return {overflowX: document.documentElement.scrollWidth > innerWidth + 1, inHeader: header.contains(c), controls: box(c), controlsScroll: c.scrollWidth > c.clientWidth + 1, items,
+          const idEl = document.getElementById('identity-name');
+          const parts = [...document.querySelectorAll('#jv-controls a, #jv-controls button, #identity-name')].filter(e => e.getClientRects().length)
+            .map(e => ({id: e.id || e.textContent.trim(), ...box(e), clipped: e.id !== 'identity-name' && e.scrollWidth > e.clientWidth + 1}));
+          return {parts, overflowX: document.documentElement.scrollWidth > innerWidth + 1, inHeader: header.contains(c), controls: box(c), controlsScroll: c.scrollWidth > c.clientWidth + 1, items,
                   identity: (document.getElementById('identity-name') || {}).getBoundingClientRect ? box(document.getElementById('identity-name')) : null};
         }""")
         small = [i for i in info['items'] if i['h'] < 43.5 or i['w'] < 43.5]
@@ -289,6 +292,10 @@ def layout(browser, label, token, name):
         check(f'#10 {tag}: no horizontal page overflow', not info['overflowX'])
         check(f'#10 {tag}: controls {"in header" if desktop else "in sheet"}', info['inHeader'] == desktop)
         check(f'#10 {tag}: header/sheet targets >= 44px', not small, small)
+        overlaps = [(a['id'], b['id']) for i, a in enumerate(info['parts']) for b in info['parts'][i + 1:]
+                    if min(a['r'], b['r']) - max(a['x'], b['x']) > 1 and min(a['b'], b['b']) - max(a['y'], b['y']) > 1]
+        check(f'#10 {tag}: no control or identity text overlaps another', not overlaps, overlaps)
+        check(f'#10 {tag}: no control label is clipped by its own box', not [i['id'] for i in info['parts'] if i['clipped']], [i['id'] for i in info['parts'] if i['clipped']])
         action = '#logout' if token else '#login'
         if page.locator(action).is_visible():
             ident = info['identity']
@@ -296,7 +303,7 @@ def layout(browser, label, token, name):
             if desktop and ident and ident['w'] > 0:
                 check(f'#10 {tag}: identity and account action share a row', abs((ident['y'] + ident['h'] / 2) - (btn['y'] + btn['height'] / 2)) < 12, (ident, btn))
             if desktop:
-                check(f'#10 {tag}: account action reachable (inside controls box or scrollable)', btn['x'] + btn['width'] <= info['controls']['r'] + 1 or info['controlsScroll'], (btn, info['controls']))
+                check(f'#10 {tag}: account action fully inside the controls box without scrolling', btn['x'] >= info['controls']['x'] - 1 and btn['x'] + btn['width'] <= info['controls']['r'] + 1, (btn, info['controls']))
             page.locator(action).focus()
             page.keyboard.press('Shift+Tab')
             page.keyboard.press('Tab')
