@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceHash": "e1f096080b6aee4df9de5641583b94f9693adff65bac7bc1f4d637a3b20babb1",
+  "sourceHash": "978a6a5950aa7990d7299a946e8377254dc951b4b29d248f51e8d66ac8e6d2f8",
   "files": [
     {
       "path": "local/database.js",
@@ -109,8 +109,8 @@
     },
     {
       "path": "public/game.css",
-      "sha256": "a3260b441fe72670be358aac0a1b21cb2d97a4f34d74f90334d5114acf3bf357",
-      "bytes": 22008
+      "sha256": "479da2cebb973b6fccbdfcdeb935bba8134af033cb8afaf6ddba6a98cbb21067",
+      "bytes": 22330
     },
     {
       "path": "public/game/analytics.js",
@@ -139,8 +139,8 @@
     },
     {
       "path": "public/index.html",
-      "sha256": "36c18258b54c21bd3072d545abc010fca5faf1910534f709cc176f06e6e9cf6c",
-      "bytes": 16129
+      "sha256": "0f8ee1050f46b41fe1f9a71396fde02d60d8a5358daf35adf87b64aeb841b0fb",
+      "bytes": 16138
     },
     {
       "path": "public/vendor/discord-embedded-app-sdk.js",

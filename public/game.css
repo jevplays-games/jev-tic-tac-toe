@@ -170,7 +170,10 @@ dialog::backdrop{background:#070810cf;backdrop-filter:blur(5px)}
      unbounded: a long display name painted over the Analytics/Records tabs at 900-1099px. Items keep their natural size, and
      only the identity gives way, with an ellipsis (the sheet below 900px shows the whole name). */
   #jv-controls .jv-nav,#jv-controls .jv-sheet-item,.account-row{flex:none}
-  .account-identity{max-width:7.5rem;overflow:hidden;text-overflow:ellipsis}
+  /* display:flex (the sheet's layout) never ellipsizes its text; a block box does. */
+  .account-identity{display:block;line-height:var(--tap);max-width:7.5rem;overflow:hidden;text-overflow:ellipsis}
+  /* brand.css makes #jv-controls a scroll box, which clips the focus ring at its edges: pad it, and cancel the padding with margin. */
+  #jv-controls{padding:var(--s2);margin:calc(var(--s2) * -1)}
   .wide-only{display:inline}
   .arena{grid-template-columns:minmax(0,1.4fr) minmax(18rem,1fr);gap:var(--s5)}
   .arena.without-evidence{grid-template-columns:1fr}.without-evidence .game-panel{max-width:48rem;margin:auto;width:100%}

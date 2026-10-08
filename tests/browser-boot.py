@@ -231,8 +231,8 @@ async def overlap_suite(launch_kwargs):
         check('loader: visible while /api/me is pending', True)
         check('loader: New game disabled while loading', await page.locator('#new-game').is_disabled())
         gate.set()
-        await page.unroute('**/api/me')
         await page.locator('#game-status', has_text='Your turn').wait_for(timeout=15000)
+        await page.unroute('**/api/me')
         first = (await a_me(page))['activeMatchId']
         await page.locator('#board button').nth(4).click()
         await page.locator('#board button[aria-label$=", X"]').first.wait_for()
@@ -258,8 +258,8 @@ async def overlap_suite(launch_kwargs):
         await page.locator('#game-status', has_text='Loading your game').wait_for(timeout=10000)
         check('retry: loading state is shown again while the retry is in flight', await page.locator('#boot-actions').is_hidden())
         retry_gate.set()
-        await page.unroute('**/api/matches/*')
         await page.locator('#board button[aria-label$=", X"]').first.wait_for(timeout=15000)
+        await page.unroute('**/api/matches/*')
         check('retry: restores the same match with its move', (await a_me(page))['activeMatchId'] == first)
         await context.close()
         await browser.close()
@@ -283,7 +283,7 @@ def layout(browser, label, token, name):
           const items = [...document.querySelectorAll('#jv-controls a, #jv-controls button')].filter(e => e.getClientRects().length).map(e => ({id: e.id || e.textContent.trim(), ...box(e)}));
           const idEl = document.getElementById('identity-name');
           const parts = [...document.querySelectorAll('#jv-controls a, #jv-controls button, #identity-name')].filter(e => e.getClientRects().length)
-            .map(e => ({id: e.id || e.textContent.trim(), ...box(e), clipped: e.id !== 'identity-name' && e.scrollWidth > e.clientWidth + 1}));
+            .map(e => ({id: e.id || e.textContent.trim(), ...box(e), clipped: e.scrollWidth > e.clientWidth + 1 && !(e.id === 'identity-name' && getComputedStyle(e).textOverflow === 'ellipsis' && getComputedStyle(e).overflow === 'hidden' && ['block', 'inline-block'].includes(getComputedStyle(e).display))}));
           return {parts, overflowX: document.documentElement.scrollWidth > innerWidth + 1, inHeader: header.contains(c), controls: box(c), controlsScroll: c.scrollWidth > c.clientWidth + 1, items,
                   identity: (document.getElementById('identity-name') || {}).getBoundingClientRect ? box(document.getElementById('identity-name')) : null};
         }""")
@@ -307,8 +307,19 @@ def layout(browser, label, token, name):
             page.locator(action).focus()
             page.keyboard.press('Shift+Tab')
             page.keyboard.press('Tab')
-            ring = page.evaluate("() => { const s = getComputedStyle(document.activeElement); return {outline: s.outlineStyle, w: parseFloat(s.outlineWidth), shadow: s.boxShadow}; }")
+            ring = page.evaluate("""() => {
+              const el = document.activeElement, s = getComputedStyle(el), r = el.getBoundingClientRect();
+              const grow = parseFloat(s.outlineWidth) + parseFloat(s.outlineOffset || 0), clippedBy = [];
+              for (let a = el.parentElement; a && a !== document.documentElement; a = a.parentElement) {
+                const cs = getComputedStyle(a);
+                if (cs.overflowX === 'visible' && cs.overflowY === 'visible') continue;
+                const b = a.getBoundingClientRect();
+                if (r.left - grow < b.left - 0.5 || r.right + grow > b.right + 0.5 || r.top - grow < b.top - 0.5 || r.bottom + grow > b.bottom + 0.5) clippedBy.push(a.id || a.className);
+              }
+              return {outline: s.outlineStyle, w: parseFloat(s.outlineWidth), shadow: s.boxShadow, clippedBy};
+            }""")
             check(f'#10 {tag}: keyboard focus ring visible on account action', (ring['outline'] != 'none' and ring['w'] > 0) or ring['shadow'] != 'none', ring)
+            check(f'#10 {tag}: focus ring is not clipped by a scrolling or clipping ancestor', not ring['clippedBy'], ring)
         page.screenshot(path=str(OUT / f'layout-{label.replace(" ", "-")}-{width}x{height}.png'))
         context.close()
 
