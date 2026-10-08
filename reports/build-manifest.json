@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceHash": "863e847893296bac55987597bcbb97a4d78d8aedcf66433903f8aec0763c66e1",
+  "sourceHash": "144b0e67ff68c47d25001214d93d9f9c059d61b856f8b8b4e695230a81ef53fe",
   "files": [
     {
       "path": "local/database.js",
@@ -34,8 +34,8 @@
     },
     {
       "path": "public/app.js",
-      "sha256": "de161b2556db2121d7d092e3edcc9f98e1cef594a10d15e25b73b55dda79c84b",
-      "bytes": 33981
+      "sha256": "ebdd51b9ab6aff7d884b8790c878891feddb72aba532cb4960d4da4cfd1cb67e",
+      "bytes": 34838
     },
     {
       "path": "public/art/o.svg",

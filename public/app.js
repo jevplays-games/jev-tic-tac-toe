@@ -27,6 +27,12 @@ function readPreferences(){try{return JSON.parse(localStorage.getItem('jev-prefe
 function savePreferences(){try{localStorage.setItem('jev-preferences',JSON.stringify({difficulty:$('difficulty').value,humanMark:$('human-mark').value,analysis:$('analysis-toggle').checked}));}catch{/* Storage can be unavailable in private contexts. */}}
 function element(tag,text=null,className=null){const node=document.createElement(tag);if(text!==null)node.textContent=text;if(className)node.className=className;return node;}
 function notice(message){$('notice').textContent=message;$('notice').hidden=!message;}
+// A boot failure is shown as a suffix on any session/context notice from the current load. Retry retires only that
+// suffix, so an obsolete error never outlives a recovery while a session or context warning is never erased with it.
+let sessionNotice='',errorSuffix='';
+function sessionNote(message){sessionNotice=message;notice(message);}
+function errorNote(message){const shown=$('notice').textContent,base=sessionNotice&&shown.startsWith(sessionNotice)?sessionNotice:'';errorSuffix=message;notice(base?`${base} ${message}`:message);}
+function retireErrorNote(){if(!errorSuffix)return;const shown=$('notice').textContent;if(shown.endsWith(errorSuffix))notice(shown.slice(0,shown.length-errorSuffix.length).trimEnd());errorSuffix='';}
 function tableRow(values){const tr=element('tr');for(const value of values){const td=element('td');if(value instanceof Node)td.append(value);else td.textContent=String(value??'—');tr.append(td);}return tr;}
 function setBusy(value){busy=value;renderGame();}
 let bearer=null; // set only inside a Discord Activity, where cookies are not sent
@@ -182,13 +188,13 @@ async function resume(manual=true){
     // An authoritative answer for the displayed match proves the service is back: it clears a refresh error
     // (never a failed session load, which only Retry can repair), so the board, New game and polling resume.
     const recovered=boot.state==='error'&&boot.stage!=='connect'&&backend;
-    if(recovered)setBoot('ready');
+    if(recovered){retireErrorNote();setBoot('ready');}
     await acceptMatch(data);
     if(recovered)loadLeaderboard();
   }catch(e){
     if(!current())return;
-    if(manual)notice(humanMessage(e));
-    else{notice(`${bootStageText.resume} ${describeBootError(e)} Your game is unchanged. Retry to continue.`);setBoot('error','resume');}
+    if(manual){if(boot.state==='error')errorNote(humanMessage(e));else notice(humanMessage(e));}
+    else{errorNote(`${bootStageText.resume} ${describeBootError(e)} Your game is unchanged. Retry to continue.`);setBoot('error','resume');}
   }finally{setBusy(false);}
 }
 /* Boot: the board is playable as soon as the page is, with no click -- but only after the player's prior
@@ -203,22 +209,22 @@ const bootStageText={connect:'Could not reach the game service.',load:'Could not
 async function loadSession(){
   me=await api('/api/me');backend=true;$('identity-name').textContent=me.user?.displayName??'Guest';$('login').hidden=Boolean(me.user);$('logout').hidden=!me.user;
   $('service-status').textContent=me.jevConfigured?'Hosted JEV available':'Local fallback · JEV key not configured';$('service-dot').classList.remove('is-off');$('service-dot').classList.add('is-live');
-  if(!me.discordConfigured){$('login').hidden=true;notice('Local-ready build. Add server-side JEV and Discord credentials to enable hosted inference and authentication.');}
-  if(me.pendingLaunch){try{me.context=(await api('/api/context/redeem',{method:'POST'})).context;notice('Discord channel context verified. Ranked results can be attributed to this community.');}catch(e){notice(humanMessage(e));}}
+  if(!me.discordConfigured){$('login').hidden=true;sessionNote('Local-ready build. Add server-side JEV and Discord credentials to enable hosted inference and authentication.');}
+  if(me.pendingLaunch){try{me.context=(await api('/api/context/redeem',{method:'POST'})).context;sessionNote('Discord channel context verified. Ranked results can be attributed to this community.');}catch(e){sessionNote(humanMessage(e));}}
 }
 const runBoot=singleFlight(()=>withBootLock(async()=>{
-  bootEpoch++;autoPolls=0;clearTimeout(resumeTimer);
+  bootEpoch++;autoPolls=0;clearTimeout(resumeTimer);retireErrorNote();
   setBoot('loading');
   try{await loadSession();}
   catch(error){
     backend=false;$('service-status').textContent='Game service unreachable';$('service-dot').classList.remove('is-live');$('service-dot').classList.add('is-off');
-    notice(`${bootStageText.connect} ${describeBootError(error)} Retry, or practice locally without JEV.`);setBoot('error','connect');return;
+    errorNote(`${bootStageText.connect} ${describeBootError(error)} Retry, or practice locally without JEV.`);setBoot('error','connect');return;
   }
   const request={get current(){if(!createRequest.peek())$('ranked').checked=Boolean(me?.user&&me?.jevConfigured);return createRequest.current;},clear:()=>createRequest.clear()};
   const result=await resolveInitialMatch({me,api,request});
   if(result.status==='error'){
     if(result.match)await acceptMatch(result.match,{auto:false});
-    notice(`${bootStageText[result.stage]} ${describeBootError(result.error)} Your existing game is unchanged. Retry to continue.`);setBoot('error',result.stage);return;
+    errorNote(`${bootStageText[result.stage]} ${describeBootError(result.error)} Your existing game is unchanged. Retry to continue.`);setBoot('error',result.stage);return;
   }
   await acceptMatch(result.match);setBoot('ready');
   loadLeaderboard();

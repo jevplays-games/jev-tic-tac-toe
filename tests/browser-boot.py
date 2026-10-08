@@ -159,10 +159,13 @@ def boot_flows(browser, label, token):
     page.reload()
     page.locator('#boot-actions').wait_for(state='visible', timeout=15000)
     check(f'{label}: prior-match 500 shows retry and creates nothing', len(creates) == before)
+    check(f'{label}: R6 prior-match 500 shows the visible Could-not-load error notice', page.locator('#notice').is_visible() and 'Could not' in page.locator('#notice').inner_text(), page.locator('#notice').inner_text())
+    board_at_error = rendered_board(page)
     page.unroute('**/api/matches/*')
     page.locator('#boot-retry').click()
     ready(page)
     check(f'{label}: Retry after 500 restores the same match', me(page)['activeMatchId'] == first and len(creates) == before)
+    check(f'{label}: R6 after the successful Retry the obsolete error banner and Retry are hidden, the same match and board stay, controls are usable and nothing was created', page.locator('#notice').is_hidden() and page.locator('#boot-actions').is_hidden() and page.locator('#new-game').is_enabled() and page.locator('#reconnect').is_visible() and me(page)['activeMatchId'] == first and rendered_board(page) == board_at_error and len(creates) == before, (page.locator('#notice').inner_text(), len(creates), before))
     check(f'{label}: no page errors', not errors, errors)
 
     # Resign (ended match), then reload yields exactly one new playable match.
@@ -540,10 +543,14 @@ async def recovery_suite(launch_kwargs):
         check('R3: that Retry reloads the same match and makes one more resume attempt, which fails visibly again', len(resumes) == 2 and 'Could not' in await page.locator('#game-status').inner_text() and await match_doc(context, pending['id']) == base and not creates3, (len(resumes), creates3))
         await page.wait_for_timeout(3500)
         check('R3: still no repeated provider opening and still no replacement or local fallback', len(resumes) == 2 and not creates3 and 'LOCAL' not in await page.locator('#mode-badge').inner_text())
+        notice_text = await page.locator('#notice').inner_text()
+        check('R6 R3: the failed second recovery keeps exactly one visible Could-not-refresh notice (not stacked, not hidden)', await page.locator('#notice').is_visible() and notice_text.count('Could not refresh your saved game') == 1, notice_text)
         failing['resume'] = False
         await page.locator('#boot-retry').click()
         await page.locator('#game-status', has_text='Your turn').wait_for(timeout=20000)
         after = await match_doc(context, pending['id'])
+        check('R6 R3: after the successful third Retry and the automatic pending completion the older error banner and Retry are hidden, New game and Reconnect are usable, same match id, no create',
+              await page.locator('#notice').is_hidden() and await page.locator('#boot-actions').is_hidden() and await page.locator('#new-game').is_enabled() and await page.locator('#reconnect').is_visible() and (await a_me(page))['activeMatchId'] == pending['id'] and not creates3, (await page.locator('#notice').inner_text(), creates3))
         check('R3: a later Retry resumes the very same match (opponent has moved) with no create and a 1/1 scratch DB', len(resumes) == 3 and (await a_me(page))['activeMatchId'] == pending['id'] and after['revision'] > base['revision'] and after['board'].count('.') == 8 and await a_rendered_board(page) == after['board'] and not creates3 and owner_counts(pending['id']) == {'active': 1, 'total': 1}, (len(resumes), base, after, owner_counts(pending['id'])))
         await context.close()
 
@@ -615,6 +622,65 @@ async def recovery_suite(launch_kwargs):
 
         await reconnect_case('503-then-ok', None)
         await reconnect_case('503-then-pending-then-ok', 120000)
+
+        # R6: a session notice from the current load must survive a boot error and a successful Retry, while the boot error
+        # notice itself is retired. The session notice is produced by the app's own loadSession path; only the /api/me
+        # response body is rewritten in the route (discordConfigured=false, Set-Cookie preserved), so this is interception.
+        async def notice_case():
+            context = await browser.new_context(viewport={'width': 1280, 'height': 900}, reduced_motion='reduce')
+            page = await context.new_page()
+            creates6, gets = [], []
+            mode6 = {'fail': False}
+            page.on('request', lambda r: creates6.append(r.url) if r.method == 'POST' and r.url.endswith('/api/matches') else None)
+
+            async def me_route(route):
+                real = await route.fetch()
+                data = await real.json()
+                data['discordConfigured'] = False
+                headers = {k: v for k, v in real.headers.items() if k.lower() != 'content-length'}
+                await route.fulfill(status=real.status, headers=headers, body=json.dumps(data))
+
+            async def get_route(route):
+                if mode6['fail'] and route.request.method == 'GET':
+                    gets.append(1)
+                    await route.fulfill(status=500, content_type='application/json', body='{"error":"internal"}')
+                else:
+                    await route.continue_()
+
+            await page.route('**/api/me', me_route)
+            await page.route('**/api/matches/*', get_route)
+            await page.goto(ORIGIN)
+            await page.locator('#game-status', has_text='Your turn').wait_for(timeout=15000)
+            await page.locator('#board button').nth(4).click()
+            await page.locator('#board button[aria-label$=", O"]').first.wait_for(timeout=15000)
+            await page.locator('#game-status', has_text='Your turn').wait_for(timeout=15000)
+            first = (await a_me(page))['activeMatchId']
+            board6 = await a_rendered_board(page)
+            session_text = await page.locator('#notice').inner_text()
+            check('R6 notice: the app\'s own session notice (Local-ready build) is shown after the first load, one create so far', await page.locator('#notice').is_visible() and 'Local-ready build' in session_text and len(creates6) == 1 and board6.count('.') == 7, (session_text, len(creates6), board6))
+            mode6['fail'] = True
+            await page.reload()
+            await page.locator('#boot-actions').wait_for(state='visible', timeout=15000)
+            text1 = await page.locator('#notice').inner_text()
+            check('R6 notice: a prior-match 500 keeps the session notice AND adds the Could-not-load error notice', 'Local-ready build' in text1 and text1.count('Could not load your saved game') == 1 and len(creates6) == 1, text1)
+            await page.locator('#boot-retry').click()
+            for _ in range(100):
+                if len(gets) >= 2:
+                    break
+                await page.wait_for_timeout(100)
+            await page.locator('#boot-actions').wait_for(state='visible', timeout=15000)
+            await page.wait_for_timeout(300)
+            text2 = await page.locator('#notice').inner_text()
+            check('R6 notice: a failed Retry keeps the failure visible with exactly one error notice, the session notice intact, same board, no create', len(gets) >= 2 and 'Local-ready build' in text2 and text2.count('Could not load your saved game') == 1 and text2.count('Local-ready build') == 1 and await a_rendered_board(page) == board6 and len(creates6) == 1, (len(gets), text2))
+            mode6['fail'] = False
+            await page.locator('#boot-retry').click()
+            await page.locator('#game-status', has_text='Your turn').wait_for(timeout=15000)
+            text3 = await page.locator('#notice').inner_text()
+            check('R6 notice: after the successful Retry the error notice is gone, the current load\'s session notice remains, Retry is hidden, controls usable, same match and board, no create, scratch DB 1/1',
+                  'Could not' not in text3 and 'Local-ready build' in text3 and text3.count('Local-ready build') == 1 and await page.locator('#boot-actions').is_hidden() and await page.locator('#new-game').is_enabled() and await page.locator('#reconnect').is_visible() and (await a_me(page))['activeMatchId'] == first and await a_rendered_board(page) == board6 and len(creates6) == 1 and owner_counts(first) == {'active': 1, 'total': 1}, (text3, len(creates6), owner_counts(first)))
+            await context.close()
+
+        await notice_case()
 
         await browser.close()
 
