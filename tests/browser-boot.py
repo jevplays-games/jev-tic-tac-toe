@@ -175,7 +175,7 @@ async def overlap_suite(launch_kwargs):
             check(f'{tag}: all {count} pages show one match', len(ids) == 1, ids)
             if not locks:
                 check(f'{tag}: creates really overlapped at the server', len(arrived) == count, len(arrived))
-            check(f'{tag}: no page is in an error state', all(await page.locator('#boot-actions').is_hidden() for page in pages) and not errors, errors)
+            check(f'{tag}: no page is in an error state', all([await page.locator('#boot-actions').is_hidden() for page in pages]) and not errors, errors)
             await context.close()
 
         # Loader, error and Retry, observed while they are on screen.
