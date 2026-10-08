@@ -52,3 +52,5 @@ The package's offline benchmark directories contain full position-level baseline
 ## External checks not performed here
 
 No real TypeSafe inference, live Discord authorization/command installation, or Cloudflare deployment is asserted. Use your staged application and credentials to exercise those paths. No Apple/Safari or Firefox browser run, screen-reader user study, load test, penetration test or independent third-party audit was completed during packaging.
+
+`npm run verify-export` needs an export file: `node tests/make-export-fixture.js /tmp/export.json` writes a completed fixture match (no real provider) and `npm run verify-export -- /tmp/export.json` verifies it.
