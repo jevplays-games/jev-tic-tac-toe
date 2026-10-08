@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceHash": "978a6a5950aa7990d7299a946e8377254dc951b4b29d248f51e8d66ac8e6d2f8",
+  "sourceHash": "6b4553dea5a377485469e997844e380b8a3cb6d2c160a6814cfd174750bb5946",
   "files": [
     {
       "path": "local/database.js",
@@ -34,8 +34,8 @@
     },
     {
       "path": "public/app.js",
-      "sha256": "bb9d87c2ada8d8e988cd449d4779a753d6448994a1c98b341a27a1e5b1c782fa",
-      "bytes": 32703
+      "sha256": "bb8ef6a42d90456c07568278e210fed6ac215130d6c918299d40e12bbe14bf78",
+      "bytes": 33202
     },
     {
       "path": "public/art/o.svg",
@@ -119,8 +119,8 @@
     },
     {
       "path": "public/game/boot.js",
-      "sha256": "befae5e7f6ed1ff8971611cd9ff01bfdc372208d1578e5862512f6cc2f89fc45",
-      "bytes": 2673
+      "sha256": "d1846fca92dc7c80f28c047aa35649e96d5e88f9d1363579614e24685f9962c7",
+      "bytes": 3290
     },
     {
       "path": "public/game/oracle.js",

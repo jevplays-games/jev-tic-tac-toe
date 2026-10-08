@@ -161,3 +161,57 @@ test('server: an expired human turn is resumed to its final state, then replaced
   const old=await getMatch(env,m.id);assert.equal(old.status,'complete');assert.equal(old.termination,'expired');
   assert.equal((await env.DB.prepare("SELECT COUNT(*) n FROM matches WHERE status NOT IN ('complete','void')").first()).n,1);
 });
+
+// R2: the create key is retired once the server's answer is known, and kept only while the outcome is unknown.
+test('resolving to an existing live match retires a retained create key; failed loads and resumes keep it',async()=>{
+  const retained=holder(),key=retained.current.requestId;
+  const live1=fakeApi({'GET /api/matches/m1':live()});
+  assert.equal((await resolveInitialMatch({me:{activeMatchId:'m1'},api:live1,request:retained})).status,'resumed');
+  assert.equal(retained.peek(),null);assert.notEqual(retained.current.requestId,key);
+  const kept=holder(),keptKey=kept.current.requestId;
+  const failing=fakeApi({'GET /api/matches/m1':httpError(502,'bad_gateway')});
+  assert.equal((await resolveInitialMatch({me:{activeMatchId:'m1'},api:failing,request:kept})).status,'error');
+  assert.equal(kept.peek().requestId,keptKey);
+  const expired=fakeApi({'GET /api/matches/m1':live({expiresAt:Date.now()-5}),'POST /api/matches/m1/resume':httpError(502,'bad_gateway')});
+  assert.equal((await resolveInitialMatch({me:{activeMatchId:'m1'},api:expired,request:kept})).stage,'resume');
+  assert.equal(kept.peek().requestId,keptKey);
+});
+test('a retained key whose create replays an ended match is retired and one fresh game is created',async()=>{
+  const request=holder(),first=request.current.requestId,sent=[];
+  const api=fakeApi({'POST /api/matches':b=>{sent.push(b.requestId);return b.requestId===first?live({id:'old',status:'complete',termination:'resign'}):live({id:'fresh'});}});
+  const r=await resolveInitialMatch({me:{},api,request});
+  assert.equal(r.status,'created');assert.equal(r.match.id,'fresh');assert.equal(sent.length,2);assert.notEqual(sent[0],sent[1]);assert.equal(request.peek(),null);
+  const stubborn=fakeApi({'POST /api/matches':()=>live({id:'ended',status:'complete'})}),again=await resolveInitialMatch({me:{},api:stubborn,request:holder()});
+  assert.equal(again.match.id,'ended');assert.equal(stubborn.calls.filter(c=>c==='POST /api/matches').length,2,'at most one extra create, never a loop');
+});
+const count=async(env,where='1=1')=>(await env.DB.prepare(`SELECT COUNT(*) n FROM matches WHERE ${where}`).first()).n;
+const active=env=>count(env,"status IN ('human_turn','jev_pending')");
+async function lostCommittedCreate(t){
+  const {env,client}=await setup(t);const api=apiFor(client),request=holder();
+  const committed=await api('/api/matches',{method:'POST',body:request.current});
+  // The response was lost: the page only knows the create outcome is unknown, so it keeps the key.
+  assert.ok(request.peek());
+  return {env,client,api,request,committed};
+}
+test('server: a lost committed create, Retry, then one New game resigns it and creates exactly one fresh playable match',async t=>{
+  const {env,client,api,request,committed}=await lostCommittedCreate(t);
+  const key=request.peek().requestId,me=await meOf(client);assert.equal(me.activeMatchId,committed.id);
+  const retry=await resolveInitialMatch({me,api,request});
+  assert.equal(retry.status,'resumed');assert.equal(retry.match.id,committed.id);assert.deepEqual(retry.match.board,committed.board);assert.equal(retry.match.revision,committed.revision);
+  assert.equal(await active(env),1);assert.equal(await count(env),1,'Retry made no duplicate');
+  // The intentional New game: resign the old match, then create with the holder's current request.
+  const resigned=await api(`/api/matches/${committed.id}/actions`,{method:'POST',body:{requestId:crypto.randomUUID(),expectedRevision:retry.match.revision,action:{type:'resign'}}});
+  assert.equal(resigned.status,'complete');
+  const fresh=await api('/api/matches',{method:'POST',body:request.current});request.clear();
+  assert.notEqual(request.current.requestId,key);
+  assert.notEqual(fresh.id,committed.id);assert.notEqual(fresh.status,'complete');
+  assert.equal(await active(env),1);assert.equal(await count(env),2);
+});
+test('server: a lost committed create whose match ended elsewhere yields one fresh playable match, not the ended replay',async t=>{
+  const {env,client,api,request,committed}=await lostCommittedCreate(t);
+  await api(`/api/matches/${committed.id}/actions`,{method:'POST',body:{requestId:crypto.randomUUID(),expectedRevision:committed.revision,action:{type:'resign'}}});
+  const me=await meOf(client);assert.equal(me.activeMatchId??null,null);
+  const r=await resolveInitialMatch({me,api,request});
+  assert.equal(r.status,'created');assert.notEqual(r.match.id,committed.id);assert.notEqual(r.match.status,'complete');
+  assert.equal(await active(env),1);assert.equal(await count(env),2);
+});

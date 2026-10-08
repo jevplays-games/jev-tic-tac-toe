@@ -21,21 +21,29 @@ export async function loadPriorMatch({me,api,now=Date.now}) {
   return {status:'resumed',match};
 }
 
-// request is the caller-owned create body; it is reused on retry so an ambiguous failure replays idempotently.
+// request is the caller-owned create body holder. Its key is kept only while a create outcome is genuinely unknown
+// (a network or 5xx failure), so a retry replays that create idempotently. Once the server has told us what became of
+// it -- an adopted live match, an active-match conflict, any definite answer -- the key is retired, so a later
+// intentional New game gets a fresh key instead of replaying (and returning) the match it just resigned.
 export async function resolveInitialMatch({me,api,request,now=Date.now}) {
   const prior=await loadPriorMatch({me,api,now});
-  if(prior.status==='resumed'||prior.status==='error')return prior;
-  try{
-    const match=await api('/api/matches',{method:'POST',body:request.current});
-    request.clear();
-    return {status:'created',match};
-  }catch(error){
-    if(error?.status&&error.status<500)request.clear();
-    if(error?.message==='active_match_exists'&&error.detail?.matchId){
-      try{return {status:'resumed',match:await api(`/api/matches/${encodeURIComponent(error.detail.matchId)}`)};}
-      catch(loadError){return {status:'error',stage:'load',error:loadError,match:null};}
+  if(prior.status==='resumed'){request.clear();return prior;}
+  if(prior.status==='error')return prior;
+  for(let attempt=0;attempt<2;attempt++){
+    try{
+      const match=await api('/api/matches',{method:'POST',body:request.current});
+      request.clear();
+      // A retained key can replay a match that has since ended; that is a replay, not a new game, so make one fresh game.
+      if(isEnded(match)&&attempt===0)continue;
+      return {status:'created',match};
+    }catch(error){
+      if(error?.status&&error.status<500)request.clear();
+      if(error?.message==='active_match_exists'&&error.detail?.matchId){
+        try{return {status:'resumed',match:await api(`/api/matches/${encodeURIComponent(error.detail.matchId)}`)};}
+        catch(loadError){return {status:'error',stage:'load',error:loadError,match:null};}
+      }
+      return {status:'error',stage:'create',error,match:null};
     }
-    return {status:'error',stage:'create',error,match:null};
   }
 }
 

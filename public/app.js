@@ -83,6 +83,9 @@ function renderGame(){
     else if(busy&&pendingCell!==null)text='Move submitted · waiting for opponent';
     else if(match.status==='jev_pending'||busy)text=match.local?'Local opponent is selecting a move…':'JEV is evaluating legal actions…';
     else text=`Your turn · place ${human}`;
+    // A refresh in flight or failed on a displayed game is said plainly; the board itself stays as it was.
+    if(replayPly===null&&boot.state==='loading')text='Loading your game…';
+    else if(replayPly===null&&boot.state==='error')text='Could not refresh your game.';
   }
   $('game-status').textContent=text;
   // End state: the status line becomes the result plaque in place, so the final board stays in view.
@@ -119,10 +122,10 @@ function renderEvidence(){
   if(!$('factors').childNodes.length)$('factors').append(element('p','No immediate tactical factors flagged.','empty'));
   $('evidence-note').textContent=d.source==='jev'?'Confidence describes the model’s answer distribution, not a calibrated probability of winning.':d.source==='forced'?'A forced legal action is not an inference result.':'This move was not selected by JEV. It cannot contribute to official JEV rankings.';
 }
-async function acceptMatch(data){
+async function acceptMatch(data,{auto=true}={}){
   match=data;replayPly=null;pendingCell=null;renderGame();renderPostgame();
   clearTimeout(resumeTimer);
-  if(match.status==='jev_pending'&&!match.local)resumeTimer=setTimeout(()=>resume(false),1800);
+  if(auto&&match.status==='jev_pending'&&!match.local)resumeTimer=setTimeout(()=>{if(boot.state==='ready')resume(false);},1800);
   if(['complete','void'].includes(match.status)&&!match.local){loadLeaderboard();loadAnalytics();}
 }
 async function startGame(){
@@ -169,7 +172,10 @@ async function resume(manual=true){
     if(pendingAction){data=await api(`/api/matches/${id}/actions`,{method:'POST',body:pendingAction});pendingAction=null;}
     else data=await api(`/api/matches/${id}/resume`,{method:'POST'});
     if(match.id===id)await acceptMatch(data);
-  }catch(e){if(manual)notice(humanMessage(e));}finally{setBusy(false);}
+  }catch(e){
+    if(manual)notice(humanMessage(e));
+    else if(match?.id===id){notice(`${bootStageText.resume} ${describeBootError(e)} Your game is unchanged. Retry to continue.`);setBoot('error','resume');}
+  }finally{setBusy(false);}
 }
 /* Boot: the board is playable as soon as the page is, with no click -- but only after the player's prior
    match is resolved. A live match is restored (never a second one beside it), an expired one is resumed
@@ -196,7 +202,7 @@ const runBoot=singleFlight(()=>withBootLock(async()=>{
   const request={get current(){if(!createRequest.peek())$('ranked').checked=Boolean(me?.user&&me?.jevConfigured);return createRequest.current;},clear:()=>createRequest.clear()};
   const result=await resolveInitialMatch({me,api,request});
   if(result.status==='error'){
-    if(result.match)await acceptMatch(result.match);
+    if(result.match)await acceptMatch(result.match,{auto:false});
     notice(`${bootStageText[result.stage]} ${describeBootError(result.error)} Your existing game is unchanged. Retry to continue.`);setBoot('error',result.stage);return;
   }
   await acceptMatch(result.match);setBoot('ready');

@@ -37,6 +37,18 @@ python tests/browser-smoke.py
 
 Set `CHROMIUM_PATH` when using a separately installed Chromium executable. The browser suite checks game controls, keyboard navigation, rules dialog, full-game completion, accurate fallback labeling, replay reconstruction, export downloads, analytics, private history, evidence toggling, mobile overflow and uncaught JavaScript exceptions.
 
+### Initial-match and header browser suite (`tests/browser-boot.py`)
+
+Run it only against a scratch database on a loopback server with an empty `TYPESAFE_API_KEY` and inert Discord placeholders, so the signed-out Sign in control exists without any provider or Discord call:
+
+```sh
+TYPESAFE_API_KEY= DISCORD_APPLICATION_ID=111111111111111111 DISCORD_CLIENT_SECRET=inert-dummy-not-a-credential \
+HOST=127.0.0.1 PORT=18842 PUBLIC_ORIGIN=http://127.0.0.1:18842 DATABASE_PATH=/scratch/ttt.sqlite node local/server.js
+TEST_ORIGIN=http://127.0.0.1:18842 DATABASE_PATH=/scratch/ttt.sqlite OUT=/evidence/dir python3 tests/browser-boot.py
+```
+
+The values are fixtures: the suite blocks and counts `/api/auth` requests and never clicks Sign in, and it fails loudly if `me.discordConfigured` is not true. It covers: the 30-case header/account matrix (signed-in, signed-in long name and signed-out at ten widths, each asserting the expected Sign in or Sign out control is visible, its target size, grouping, placement, focus ring and clipping); initial load, reload and Retry flows; overlapping tabs (strict established-session and cold-cookie-jar cases, with per-page response codes, adopted/read match id, revision and board, the final rendered board, and a read-only scratch-database active/total count for the final owner); a committed-but-lost create followed by Retry, a cancelled New game and one accepted New game; and an automatic resume failure on a nonexpired pending match with its Retry, loading state and attempt counts. Diagnostics record safe response facts only, never cookies or CSRF tokens. These are fixture/offline runs: they say nothing about a live provider or Discord.
+
 ### Packaging environment limitation
 
 This container's managed Chromium blocks all URL navigation. Its policy was not changed. The recorded packaging run therefore uses `EMBEDDED_BROWSER=1`: the known application HTML/CSS/modules are supplied in memory, while an explicit test bridge forwards API requests to the actual local Node/SQLite server. This exercises rendering, actual application JavaScript, backend integration and exports, **but not normal browser navigation, same-origin transport behavior, browser cookie isolation or production CSP enforcement**.
