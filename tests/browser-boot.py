@@ -2,11 +2,13 @@
 Start the server first on a scratch database with an empty TYPESAFE_API_KEY (see docs/TESTING.md), then:
   TEST_ORIGIN=http://127.0.0.1:18842 DATABASE_PATH=/scratch/ttt.sqlite OUT=/evidence/dir python3 tests/browser-boot.py
 Failure injection uses page.route on this app's own /api paths only; no provider is involved."""
+import asyncio
 import json
 import os
 import subprocess
 import sys
 from pathlib import Path
+from playwright.async_api import async_playwright
 from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -122,6 +124,112 @@ def tabs(browser):
     context.close()
 
 
+NO_LOCKS = "Object.defineProperty(navigator, 'locks', {value: undefined, configurable: true})"
+
+
+async def a_me(page):
+    return await page.evaluate("() => fetch('/api/me', {credentials: 'same-origin'}).then(r => r.json())")
+
+
+async def overlap_suite(launch_kwargs):
+    """Genuinely overlapping initialisation: several pages of one browser boot at once. Without Web Locks every page's
+    create is held at a barrier until all have arrived, so the server sees them simultaneously."""
+    async with async_playwright() as p:
+        browser = await p.chromium.launch(**launch_kwargs)
+        for label, token, locks in [('guest', None, True), ('guest', None, False), ('signed-in', seed('Overlap Player') if DB else None, False)]:
+            if label == 'signed-in' and not DB:
+                continue
+            tag = f'overlap {label} {"with" if locks else "without"} Web Locks'
+            context = await browser.new_context(viewport={'width': 1280, 'height': 900}, reduced_motion='reduce')
+            if token:
+                await context.add_cookies([{'name': COOKIE, 'value': token, 'domain': HOST, 'path': '/', 'httpOnly': True, 'sameSite': 'Lax'}])
+            if not locks:
+                await context.add_init_script(NO_LOCKS)
+            count, arrived, posts = 4, [], []
+            released = asyncio.Event()
+
+            async def hold(route):
+                request = route.request
+                if request.method != 'POST' or locks:
+                    await route.continue_()
+                    return
+                posts.append(request.post_data)
+                arrived.append(1)
+                if len(arrived) >= count:
+                    released.set()
+                try:
+                    await asyncio.wait_for(released.wait(), 5)
+                except asyncio.TimeoutError:
+                    pass
+                await route.continue_()
+
+            await context.route('**/api/matches', hold)
+            pages = [await context.new_page() for _ in range(count)]
+            errors = []
+            for page in pages:
+                page.on('pageerror', lambda e: errors.append(str(e)))
+            await asyncio.gather(*[page.goto(ORIGIN, wait_until='commit') for page in pages])
+            for page in pages:
+                await page.locator('#game-status', has_text='Your turn').wait_for(timeout=20000)
+            ids = {(await a_me(page))['activeMatchId'] for page in pages}
+            check(f'{tag}: all {count} pages show one match', len(ids) == 1, ids)
+            if not locks:
+                check(f'{tag}: creates really overlapped at the server', len(arrived) == count, len(arrived))
+            check(f'{tag}: no page is in an error state', all(await page.locator('#boot-actions').is_hidden() for page in pages) and not errors, errors)
+            await context.close()
+
+        # Loader, error and Retry, observed while they are on screen.
+        token = seed('Loader Player') if DB else None
+        context = await browser.new_context(viewport={'width': 390, 'height': 844}, reduced_motion='reduce')
+        if token:
+            await context.add_cookies([{'name': COOKIE, 'value': token, 'domain': HOST, 'path': '/', 'httpOnly': True, 'sameSite': 'Lax'}])
+        page = await context.new_page()
+        gate = asyncio.Event()
+
+        async def slow_me(route):
+            await gate.wait()
+            await route.continue_()
+
+        await page.route('**/api/me', slow_me)
+        await page.goto(ORIGIN, wait_until='commit')
+        await page.locator('#game-status', has_text='Loading your game').wait_for(timeout=10000)
+        check('loader: visible while /api/me is pending', True)
+        check('loader: New game disabled while loading', await page.locator('#new-game').is_disabled())
+        gate.set()
+        await page.unroute('**/api/me')
+        await page.locator('#game-status', has_text='Your turn').wait_for(timeout=15000)
+        first = (await a_me(page))['activeMatchId']
+        await page.locator('#board button').nth(4).click()
+        await page.locator('#board button[aria-label$=", X"]').first.wait_for()
+
+        failing = {'on': True}
+        retry_gate = asyncio.Event()
+
+        async def flaky(route):
+            if route.request.method == 'GET' and failing['on']:
+                await route.fulfill(status=503, content_type='application/json', body='{"error":"unavailable"}')
+            elif route.request.method == 'GET':
+                await retry_gate.wait()
+                await route.continue_()
+            else:
+                await route.continue_()
+
+        await page.route('**/api/matches/*', flaky)
+        await page.reload()
+        await page.locator('#boot-actions').wait_for(state='visible', timeout=15000)
+        check('error: shown with Retry and the page offers no replacement match', await page.locator('#boot-retry').is_visible() and await page.locator('#new-game').is_disabled())
+        failing['on'] = False
+        await page.locator('#boot-retry').click()
+        await page.locator('#game-status', has_text='Loading your game').wait_for(timeout=10000)
+        check('retry: loading state is shown again while the retry is in flight', await page.locator('#boot-actions').is_hidden())
+        retry_gate.set()
+        await page.unroute('**/api/matches/*')
+        await page.locator('#board button[aria-label$=", X"]').first.wait_for(timeout=15000)
+        check('retry: restores the same match with its move', (await a_me(page))['activeMatchId'] == first)
+        await context.close()
+        await browser.close()
+
+
 WIDTHS = [(320, 568), (390, 844), (768, 1024), (899, 800), (900, 800), (1000, 800), (1099, 800), (1100, 800), (1280, 720), (1920, 1080)]
 
 
@@ -175,6 +283,8 @@ with sync_playwright() as p:
         check('signed-in checks skipped: DATABASE_PATH not set', False)
     layout(browser, 'signed-out', None, None)
     browser.close()
+
+asyncio.run(overlap_suite({'executable_path': os.environ.get('CHROMIUM_PATH') or None, 'headless': True, 'args': ['--no-sandbox']}))
 
 (OUT / 'browser-boot.json').write_text(json.dumps({'origin': ORIGIN, 'results': results}, indent=2) + '\n')
 failed = [r for r in results if not r['ok']]

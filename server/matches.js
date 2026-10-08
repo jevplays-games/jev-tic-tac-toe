@@ -3,7 +3,7 @@ import {DIFFICULTIES,POLICY_VERSION,buildJevRequest,validateJevResponse,selectJe
 import {inspectMove,ANALYTICS_VERSION} from '../public/game/analytics.js';
 import {minimaxAction} from '../public/game/oracle.js';
 import {assert,HttpError,sha256,canonical,addEvent,verifyEvents,randomToken} from './util.js';
-import {one,all,quota,getMatch,insertMatch,saveMatch} from './store.js';
+import {one,all,quota,getMatch,insertMatch,activeMatchFor,saveMatch} from './store.js';
 import {userFor,contextFor} from './auth.js';
 import {chooseJevAction} from './jev.js';
 import {SOURCE_REVISION} from './build-info.js';
@@ -38,19 +38,30 @@ export async function createMatch(env,session,input) {
   assert(input && typeof input.requestId==='string' && /^[a-zA-Z0-9_-]{16,80}$/.test(input.requestId),400,'request_id_required');
   assert(['X','O'].includes(input.humanMark) && typeof input.ranked==='boolean',400,'invalid_match_options');
   const config=configuration(env,input.difficulty), fingerprint=await sha256({humanMark:input.humanMark,ranked:input.ranked,config});
-  const existing=await one(env,'SELECT doc,create_fingerprint FROM matches WHERE owner_session=? AND create_key=?',session.token_hash,input.requestId);
-  if(existing){assert(existing.create_fingerprint===fingerprint,409,'idempotency_conflict');return JSON.parse(existing.doc);}
+  const replay=async()=>{
+    const existing=await one(env,'SELECT doc,create_fingerprint FROM matches WHERE owner_session=? AND create_key=?',session.token_hash,input.requestId);
+    if(!existing)return null;
+    assert(existing.create_fingerprint===fingerprint,409,'idempotency_conflict');return JSON.parse(existing.doc);
+  };
+  const replayed=await replay();
+  if(replayed)return replayed;
   const user=await userFor(env,session);
   if(user)assert(user.moderation_state==='active',403,'account_restricted');
   if(input.ranked){assert(user,401,'discord_login_required');assert(env.TYPESAFE_API_KEY,503,'jev_not_configured');}
-  const active=await one(env,`SELECT id FROM matches WHERE status IN ('human_turn','jev_pending') AND (owner_session=? OR (? IS NOT NULL AND user_id=?)) LIMIT 1`,session.token_hash,session.user_id??null,session.user_id??null);
+  const active=await activeMatchFor(env,session);
   assert(!active,409,'active_match_exists',active?{matchId:active.id}:undefined);
   await quota(env,`create:${session.user_id??session.token_hash}`,Number(env.MATCHES_PER_HOUR??60),3600000);
   const at=Date.now(),doc={schemaVersion:1,id:crypto.randomUUID(),ownerSession:session.token_hash,userId:session.user_id??null,createKey:input.requestId,
     config,configHash:await sha256(config),humanMark:input.humanMark,context:contextFor(session),rankedStarted:input.ranked,eligible:input.ranked,
     revision:0,status:input.humanMark==='X'?'human_turn':'jev_pending',actions:[],events:[],receipts:[],lease:null,startedAt:at,turnSince:at,expiresAt:at+(input.ranked?900000:86400000)};
   await addEvent(doc,'match_started',{config,configHash:doc.configHash,humanMark:doc.humanMark,ranked:doc.rankedStarted,expiresAt:doc.expiresAt});
-  await insertMatch(env,doc,session,fingerprint);
+  if(!await insertMatch(env,doc,session,fingerprint)){
+    // Lost an admission race: adopt the same-key match (never driving the provider a second time) or report the active one.
+    const adopted=await replay();
+    if(adopted)return adopted;
+    const winner=await activeMatchFor(env,session);
+    throw new HttpError(409,winner?'active_match_exists':'active_match_or_duplicate',winner?{matchId:winner.id}:undefined);
+  }
   return driveJev(env,doc);
 }
 export async function verifyMatch(doc) {

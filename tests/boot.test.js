@@ -132,14 +132,11 @@ test('withBootLock runs directly when Web Locks is unavailable',async()=>{
   assert.equal(await withBootLock(async()=>'ran',null),'ran');
   assert.equal(await withBootLock(async()=>'ran',{}),'ran');
 });
-test('server: unserialised concurrent creates never fail the player, but the server alone cannot dedupe casual matches',async t=>{
-  const {client}=await setup(t);const api=apiFor(client),me=await meOf(client);
-  const [a,b]=await Promise.all([resolveInitialMatch({me,api,request:holder()}),resolveInitialMatch({me,api,request:holder()})]);
-  assert.ok(['created','resumed'].includes(a.status)&&['created','resumed'].includes(b.status));
-});
-test('server: concurrent casual creates from one session leave a single active match',{todo:'needs server extension: unique active-match index for casual sessions'},async t=>{
+test('server: without Web Locks, overlapping initializations still end with one active match both tabs show',async t=>{
   const {env,client}=await setup(t);const api=apiFor(client),me=await meOf(client);
-  await Promise.all([resolveInitialMatch({me,api,request:holder()}),resolveInitialMatch({me,api,request:holder()})]);
+  const runs=await Promise.all([1,2,3,4].map(()=>withBootLock(()=>resolveInitialMatch({me,api,request:holder()}),null)));
+  assert.equal(new Set(runs.map(r=>r.match.id)).size,1);
+  assert.deepEqual(runs.map(r=>r.status).sort(),['created','resumed','resumed','resumed']);
   assert.equal((await env.DB.prepare("SELECT COUNT(*) n FROM matches WHERE status IN ('human_turn','jev_pending')").first()).n,1);
 });
 test('server: replaying the same requestId after a lost response returns the same match',async t=>{
