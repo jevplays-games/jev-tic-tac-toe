@@ -85,6 +85,10 @@ sequenceDiagram
 
 OAuth alone does not establish a channel. `/play tic-tac-toe` must arrive as a valid signed guild interaction. An opaque launch code is bound to its invoking Discord user and can be redeemed by that user's authenticated session only.
 
+## Initial match on page load
+
+`public/game/boot.js` resolves the player's starting match; `public/app.js` drives it. The sequence is: read `/api/me`; if it names an `activeMatchId`, load that match and, when `expiresAt` has passed, `POST .../resume` it; only an absent (404/400), ended or just-expired prior match is replaced by `POST /api/matches`. The create body (and its `requestId`) is held across retries, so an ambiguous failure replays idempotently, and an `active_match_exists` reply adopts the existing match. Any connection or server failure leaves the page in a visible error state with Retry; it never starts local practice on its own and never replaces the match already on screen. Local practice is an explicit choice offered only when no match is shown. Concurrent runs in one page share a single flight, and tabs of one browser are serialised with a Web Lock so the second sees the first's match. The server alone does not dedupe two simultaneous casual creates from one session (its unique index covers ranked matches only), which is why the client serialises.
+
 ## Result verification
 
 ```mermaid

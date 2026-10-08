@@ -43,7 +43,8 @@
       <div class="game-top jv-pip-hide"><span class="pill" id="mode-badge">CASUAL PLAY</span><button class="jv-link-btn" id="show-rules">How to play <span aria-hidden="true">↗</span></button></div>
       <div class="competitors jv-pip-hide"><div class="competitor"><span class="mark x" id="human-symbol">×</span><div><strong>You</strong><small id="human-label">Play as X · goes first</small></div></div><span class="versus">VS</span><div class="competitor right"><div><strong id="opponent-name">JEV</strong><small id="opponent-label">Structured decision model</small></div><span class="mark o" id="jev-symbol">○</span></div></div>
       <div class="board-wrap jv-fit"><div id="board" class="board jv-tray" role="group" aria-label="Tic-Tac-Toe board. Use arrow keys or keys 1 to 9."></div></div>
-      <div class="turn-row"><span id="turn-dot" class="turn-dot" aria-hidden="true"></span><p id="game-status" role="status" aria-live="polite">Choose your settings and start a game.</p></div>
+      <div class="turn-row"><span id="turn-dot" class="turn-dot" aria-hidden="true"></span><p id="game-status" role="status" aria-live="polite">Loading your game…</p></div>
+      <div id="boot-actions" class="boot-actions" hidden><button id="boot-retry" type="button">Retry</button><button id="boot-local" type="button" class="quiet">Practice locally (not JEV)</button></div>
       <p id="eligibility" class="muted centered jv-pip-hide">Guest matches are unranked.</p>
       <div class="game-controls">
         <label class="jv-pip-hide">Opponent profile<select id="difficulty"><option value="easy">Easy</option><option value="normal">Normal</option><option value="hard">Hard</option><option value="jev" selected>JEV · full evaluation</option></select></label>
