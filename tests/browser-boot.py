@@ -57,16 +57,40 @@ def owner_counts(match_id):
         con.close()
 
 
-def make_pending(match_id):
+def make_pending(match_id, lease_ms=None):
     """Scratch-DB fixture only: rewind a just-created match to its unopened jev_pending state (no actions, no lease), the
-    state a server leaves behind when the opening was never driven. The empty model key makes the API fall back at once."""
+    state a server leaves behind when the opening was never driven. The empty model key makes the API fall back at once.
+    With lease_ms, the match instead carries a LIVE lease of that length, the state while another request is driving the
+    opening: the server's own driveJev then returns it pending without any provider call until the lease expires."""
     con = sqlite3.connect(DB, timeout=10)
     try:
         doc = json.loads(con.execute('SELECT doc FROM matches WHERE id = ?', (match_id,)).fetchone()[0])
-        doc.update(actions=[], events=doc['events'][:1], receipts=[], status='jev_pending', revision=0, lease=None, eligible=False)
+        doc.update(actions=[], events=doc['events'][:1], receipts=[], status='jev_pending', revision=0, lease=({'token': 'fixture-live-lease', 'expiresAt': int(time.time() * 1000) + lease_ms} if lease_ms else None), eligible=False)
         doc.pop('outcome', None)
         con.execute("UPDATE matches SET status = 'jev_pending', revision = 0, eligible = 0, doc = ? WHERE id = ?", (json.dumps(doc), match_id))
         con.commit()
+    finally:
+        con.close()
+
+
+def abandon_lease(match_id):
+    """Scratch-DB fixture only: expire the live lease, as a driver that died would leave it. The server then recovers the
+    opening itself with the perfect-play fallback and no provider call."""
+    con = sqlite3.connect(DB, timeout=10)
+    try:
+        doc = json.loads(con.execute('SELECT doc FROM matches WHERE id = ?', (match_id,)).fetchone()[0])
+        doc['lease']['expiresAt'] = int(time.time() * 1000) - 1000
+        con.execute('UPDATE matches SET doc = ? WHERE id = ?', (json.dumps(doc), match_id))
+        con.commit()
+    finally:
+        con.close()
+
+
+def event_types(match_id):
+    con = sqlite3.connect(f'file:{DB}?mode=ro', uri=True)
+    try:
+        doc = json.loads(con.execute('SELECT doc FROM matches WHERE id = ?', (match_id,)).fetchone()[0])
+        return [e['type'] for e in doc['events']], [a.get('decision', {}).get('source') for a in doc['actions']]
     finally:
         con.close()
 
@@ -522,6 +546,76 @@ async def recovery_suite(launch_kwargs):
         after = await match_doc(context, pending['id'])
         check('R3: a later Retry resumes the very same match (opponent has moved) with no create and a 1/1 scratch DB', len(resumes) == 3 and (await a_me(page))['activeMatchId'] == pending['id'] and after['revision'] > base['revision'] and after['board'].count('.') == 8 and await a_rendered_board(page) == after['board'] and not creates3 and owner_counts(pending['id']) == {'active': 1, 'total': 1}, (len(resumes), base, after, owner_counts(pending['id'])))
         await context.close()
+
+        # R5: a SUCCESSFUL manual Reconnect must clear the boot error raised by the automatic resume (503), with the
+        # same match, board and revision progression, no replacement create and a bounded, lease-aware poll.
+        async def reconnect_case(tag, lease_ms):
+            context = await browser.new_context(viewport={'width': 1280, 'height': 900}, reduced_motion='reduce')
+            await context.add_init_script(WATCH_BOOT_ERRORS)
+            session = await (await context.request.get(ORIGIN + '/api/me')).json()
+            seeded = await context.request.post(ORIGIN + '/api/matches', headers={'x-csrf-token': session['csrf'], 'origin': ORIGIN}, data={'requestId': str(uuid.uuid4()), 'humanMark': 'O', 'difficulty': 'normal', 'ranked': False})
+            mid = (await seeded.json())['id']
+            make_pending(mid, lease_ms)
+            base = await match_doc(context, mid)
+            check(f'R5 {tag}: fixture is an unopened nonexpired jev_pending match' + (' with a live lease' if lease_ms else ' without a lease') + ' in the scratch DB only', base['status'] == 'jev_pending' and base['revision'] == 0 and base['board'] == '.........', base)
+            page = await context.new_page()
+            seen, creates5, mode5 = [], [], {'fail': True}
+            page.on('request', lambda r: creates5.append(r.url) if r.method == 'POST' and r.url.endswith('/api/matches') else None)
+
+            async def route5(route):
+                if mode5['fail']:
+                    seen.append({'fail': True})
+                    await route.fulfill(status=503, content_type='application/json', body='{"error":"unavailable"}')
+                    return
+                real = await route.fetch()
+                data = await real.json()
+                seen.append({'fail': False, 'http': real.status, 'status': data.get('status'), 'revision': data.get('revision'), 'id': data.get('id')})
+                await route.fulfill(response=real)
+
+            async def wait_seen(n, timeout=30):
+                for _ in range(timeout * 10):
+                    if len(seen) >= n:
+                        return True
+                    await page.wait_for_timeout(100)
+                return False
+
+            await page.route('**/api/matches/*/resume', route5)
+            await page.goto(ORIGIN + '/#reconnect')
+            await page.locator('#boot-actions').wait_for(state='visible', timeout=15000)
+            check(f'R5 {tag}: the automatic resume failed with a 503 and left a visible error, Retry and a disabled New game', len(seen) == 1 and 'Could not' in await page.locator('#game-status').inner_text() and await page.locator('#new-game').is_disabled() and await page.locator('#reconnect').is_visible(), len(seen))
+            await page.locator('#reconnect').click()
+            await wait_seen(2)
+            await page.wait_for_timeout(500)
+            failed_text = await page.locator('#game-status').inner_text()
+            check(f'R5 {tag}: a FAILED manual Reconnect keeps the visible error, the same board, a disabled New game and no false ready', len(seen) == 2 and await page.locator('#notice').is_visible() and bool((await page.locator('#notice').inner_text()).strip()) and await page.locator('#boot-actions').is_visible() and 'Could not' in failed_text and await a_rendered_board(page) == base['board'] and await page.locator('#new-game').is_disabled() and 'LOCAL' not in await page.locator('#mode-badge').inner_text() and await match_doc(context, mid) == base and not creates5, (len(seen), failed_text, creates5))
+            mode5['fail'] = False
+            await page.locator('#reconnect').click()
+            await wait_seen(3)
+            ok_resp = seen[2]
+            if lease_ms:
+                await page.locator('#game-status', has_text='evaluating').wait_for(timeout=10000)
+                check(f'R5 {tag}: the successful manual response is still jev_pending (202) and it already cleared the stale error and Retry', ok_resp['http'] == 202 and ok_resp['status'] == 'jev_pending' and ok_resp['id'] == mid and await page.locator('#boot-actions').is_hidden() and 'Could not' not in await page.locator('#game-status').inner_text() and not (await page.locator('#notice').is_visible() and 'unavailable' in await page.locator('#notice').inner_text()) and await a_rendered_board(page) == base['board'] and await page.locator('#new-game').is_disabled(), (ok_resp, await page.locator('#game-status').inner_text()))
+                await wait_seen(5)
+                check(f'R5 {tag}: the page keeps polling the live lease on its own (lease-aware: the server answers pending, no new decision)', all(x.get('status') == 'jev_pending' and x['revision'] == 0 for x in seen[2:5]) and await page.locator('#boot-actions').is_hidden() and not creates5, seen[2:5])
+                abandon_lease(mid)
+                await page.locator('#game-status', has_text='Your turn').wait_for(timeout=30000)
+            else:
+                await page.locator('#game-status', has_text='Your turn').wait_for(timeout=15000)
+            after = await match_doc(context, mid)
+            check(f'R5 {tag}: after the successful Reconnect the stale error and Retry are gone and the same match shows the opponent\'s move at a later revision', await page.locator('#boot-actions').is_hidden() and await page.locator('#boot-retry').is_hidden() and not await page.locator('#notice').is_visible() and 'Could not' not in await page.locator('#game-status').inner_text() and (await a_me(page))['activeMatchId'] == mid and after['revision'] > base['revision'] and after['board'].count('.') == 8 and await a_rendered_board(page) == after['board'], (base, after))
+            check(f'R5 {tag}: New game is enabled on human_turn, there was zero replacement create, and the scratch DB has 1 active / 1 total', await page.locator('#new-game').is_enabled() and not creates5 and owner_counts(mid) == {'active': 1, 'total': 1} and 'LOCAL' not in await page.locator('#mode-badge').inner_text(), (creates5, owner_counts(mid)))
+            n = len(seen)
+            await page.wait_for_timeout(4000)
+            check(f'R5 {tag}: polling stops once the match is no longer pending', len(seen) == n, (n, len(seen)))
+            if lease_ms:
+                types, sources = event_types(mid)
+                check(f'R5 {tag}: the abandoned lease was recovered by the server with its perfect-play fallback (no blind provider request was prepared)', 'decision_recovery' in types and 'jev_request_prepared' not in types and 'fallback-minimax' in sources, (types, sources))
+            (OUT / f'recovery-reconnect-{tag}.json').write_text(json.dumps({'base': base, 'after': after, 'resume_attempts': seen, 'creates': len(creates5), 'owner_counts': owner_counts(mid)}, indent=2) + '\n')
+            await context.close()
+
+        await reconnect_case('503-then-ok', None)
+        await reconnect_case('503-then-pending-then-ok', 120000)
+
         await browser.close()
 
 
@@ -605,7 +699,7 @@ def layout(browser, label, token, name):
 
 
 with sync_playwright() as p:
-    browser = p.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or None, headless=True, args=['--no-sandbox'])
+    browser = p.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH') or None, headless=True, args=['--no-sandbox', '--renderer-process-limit=2'])
     boot_flows(browser, 'guest', None)
     tabs(browser)
     if DB:
@@ -619,7 +713,7 @@ with sync_playwright() as p:
 check('#10 layout matrix: all 30 cases (3 labels x 10 widths) ran with Discord configured and the expected account action visible',
       len(LAYOUT_CASES) == 30 and all(c['configured'] and c['visible'] for c in LAYOUT_CASES), [c for c in LAYOUT_CASES if not (c['configured'] and c['visible'])] or len(LAYOUT_CASES))
 
-LAUNCH = {'executable_path': os.environ.get('CHROMIUM_PATH') or None, 'headless': True, 'args': ['--no-sandbox']}
+LAUNCH = {'executable_path': os.environ.get('CHROMIUM_PATH') or None, 'headless': True, 'args': ['--no-sandbox', '--renderer-process-limit=2']}
 asyncio.run(overlap_suite(LAUNCH))
 asyncio.run(recovery_suite(LAUNCH))
 

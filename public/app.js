@@ -20,7 +20,8 @@ let me=null,match=null,busy=false,pendingCell=null,pendingAction=null,replayPly=
 let boot={state:'loading',stage:null};
 const createRequest=createRequestHolder(()=>({requestId:newId(),humanMark:$('human-mark').value,difficulty:$('difficulty').value,ranked:$('ranked').checked}));
 let backend=false,scope='world',leaderNext=null,historyNext=null,summary=null;
-let resumeTimer=null;
+let resumeTimer=null,bootEpoch=0,autoPolls=0;
+const maxAutoPolls=30;
 const preferences=readPreferences();
 function readPreferences(){try{return JSON.parse(localStorage.getItem('jev-preferences')??'{}');}catch{return {};}}
 function savePreferences(){try{localStorage.setItem('jev-preferences',JSON.stringify({difficulty:$('difficulty').value,humanMark:$('human-mark').value,analysis:$('analysis-toggle').checked}));}catch{/* Storage can be unavailable in private contexts. */}}
@@ -99,7 +100,7 @@ function renderGame(){
   $('ranked').disabled=Boolean(active)||!me?.user||!me?.jevConfigured;
   document.body.classList.toggle('busy',busy||boot.state==='loading');
   $('new-game').disabled=busy||boot.state!=='ready'||Boolean(active&&match.status==='jev_pending');
-  $('boot-actions').hidden=boot.state!=='error';$('boot-retry').disabled=boot.state==='loading';$('boot-local').hidden=Boolean(match);
+  $('boot-actions').hidden=boot.state!=='error';$('boot-retry').disabled=boot.state==='loading'||busy;$('boot-local').hidden=Boolean(match);
   $('new-game').textContent=active?'New game':match?'Play again ↗':'Start game ↗';
   $('resign').hidden=!active;$('resign').disabled=busy||match?.status==='jev_pending';
   $('reconnect').hidden=!active||Boolean(match?.local);
@@ -125,7 +126,11 @@ function renderEvidence(){
 async function acceptMatch(data,{auto=true}={}){
   match=data;replayPly=null;pendingCell=null;renderGame();renderPostgame();
   clearTimeout(resumeTimer);
-  if(auto&&match.status==='jev_pending'&&!match.local)resumeTimer=setTimeout(()=>{if(boot.state==='ready')resume(false);},1800);
+  if(match.status!=='jev_pending')autoPolls=0;
+  if(auto&&match.status==='jev_pending'&&!match.local){
+    if(autoPolls>=maxAutoPolls)notice('JEV is still working on this move. Use Reconnect to check again.');
+    else resumeTimer=setTimeout(()=>{if(boot.state==='ready')resume(false);},1800);
+  }
   if(['complete','void'].includes(match.status)&&!match.local){loadLeaderboard();loadAnalytics();}
 }
 async function startGame(){
@@ -165,16 +170,25 @@ async function resign(ask=true){
   }catch(e){notice(humanMessage(e));}finally{setBusy(false);}
 }
 async function resume(manual=true){
-  if(busy||!match||match.local)return;
-  const id=match.id;if(manual)notice('');setBusy(true);
+  if(busy||!match||match.local||boot.state==='loading')return;
+  const id=match.id,epoch=bootEpoch,current=()=>epoch===bootEpoch&&match?.id===id;
+  if(manual){notice('');autoPolls=0;}else autoPolls++;
+  setBusy(true);
   try{
     let data;
     if(pendingAction){data=await api(`/api/matches/${id}/actions`,{method:'POST',body:pendingAction});pendingAction=null;}
     else data=await api(`/api/matches/${id}/resume`,{method:'POST'});
-    if(match.id===id)await acceptMatch(data);
+    if(!current())return;
+    // An authoritative answer for the displayed match proves the service is back: it clears a refresh error
+    // (never a failed session load, which only Retry can repair), so the board, New game and polling resume.
+    const recovered=boot.state==='error'&&boot.stage!=='connect'&&backend;
+    if(recovered)setBoot('ready');
+    await acceptMatch(data);
+    if(recovered)loadLeaderboard();
   }catch(e){
+    if(!current())return;
     if(manual)notice(humanMessage(e));
-    else if(match?.id===id){notice(`${bootStageText.resume} ${describeBootError(e)} Your game is unchanged. Retry to continue.`);setBoot('error','resume');}
+    else{notice(`${bootStageText.resume} ${describeBootError(e)} Your game is unchanged. Retry to continue.`);setBoot('error','resume');}
   }finally{setBusy(false);}
 }
 /* Boot: the board is playable as soon as the page is, with no click -- but only after the player's prior
@@ -193,6 +207,7 @@ async function loadSession(){
   if(me.pendingLaunch){try{me.context=(await api('/api/context/redeem',{method:'POST'})).context;notice('Discord channel context verified. Ranked results can be attributed to this community.');}catch(e){notice(humanMessage(e));}}
 }
 const runBoot=singleFlight(()=>withBootLock(async()=>{
+  bootEpoch++;autoPolls=0;clearTimeout(resumeTimer);
   setBoot('loading');
   try{await loadSession();}
   catch(error){
