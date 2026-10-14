@@ -35,6 +35,21 @@ test('allowed origins are PUBLIC_ORIGIN plus the legacy host; unknown hosts fall
   assert.deepEqual(allowedOrigins({PUBLIC_ORIGIN:NEW}),[NEW]);
 });
 
+test('a malformed LEGACY_PUBLIC_ORIGINS entry is skipped and logged, never a 500 on moves or sign-in',async t=>{
+  const logged=[],error=console.error;console.error=(...a)=>logged.push(a.join(' '));t.after(()=>{console.error=error;});
+  const env=hosted(t,{LEGACY_PUBLIC_ORIGINS:`not a url, ${OLD} ,javascript:alert(1)`});
+  assert.deepEqual(allowedOrigins(env),[NEW,OLD]);
+  assert.ok(logged.some(l=>l.includes('legacy_origin_ignored')&&l.includes('not a url')));
+  for(const host of [NEW,OLD]){
+    const me=await handle(new Request(host+'/api/me'),env),cookie=cookieOf(me),{csrf}=await me.json();
+    const body=JSON.stringify({requestId:crypto.randomUUID(),humanMark:'X',difficulty:'normal',ranked:false});
+    const created=await handle(new Request(host+'/api/matches',{method:'POST',headers:{cookie,origin:host,'x-csrf-token':csrf,'content-type':'application/json'},body}),env);
+    assert.equal(created.status,201,host);
+    const begin=await handle(new Request(host+'/api/auth/discord',{headers:{cookie}}),env);
+    assert.equal(begin.status,302);assert.equal(new URL(begin.headers.get('location')).searchParams.get('redirect_uri'),`${host}/api/auth/discord/callback`);
+  }
+});
+
 test('/play tic-tac-typed and the legacy /play tic-tac-toe both issue a launch on the host Discord called',async t=>{
   const {keys,publicKey}=await signing(),env=hosted(t,{DISCORD_PUBLIC_KEY:publicKey});
   assert.deepEqual(PLAY_SUBCOMMANDS,['tic-tac-typed','tic-tac-toe']);

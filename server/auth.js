@@ -6,7 +6,14 @@ export function cookie(env,token,age=604800){return `${cookieName(env)}=${token}
 // One Worker answers on PUBLIC_ORIGIN and, until the legacy host is 301-redirected, on each LEGACY_PUBLIC_ORIGINS entry
 // (comma-separated). A request on an allowed host is answered on that host, so its __Host- cookie, OAuth callback and
 // Origin check stay on one origin; any other host (e.g. workers.dev) falls back to PUBLIC_ORIGIN.
-export function allowedOrigins(env){return [env.PUBLIC_ORIGIN,...String(env.LEGACY_PUBLIC_ORIGINS??'').split(',')].map(s=>s.trim()).filter(Boolean).map(s=>new URL(s).origin);}
+// An unparsable legacy entry is skipped and logged once, so a config typo cannot turn moves or sign-in into 500s.
+const badLegacyOrigins=new Set();
+function legacyOrigin(value){
+  try{const url=new URL(value);if(['http:','https:'].includes(url.protocol))return url.origin;}catch{}
+  if(!badLegacyOrigins.has(value)){badLegacyOrigins.add(value);console.error(JSON.stringify({type:'legacy_origin_ignored',value:value.slice(0,200)}));}
+  return null;
+}
+export function allowedOrigins(env){return [new URL(env.PUBLIC_ORIGIN).origin,...String(env.LEGACY_PUBLIC_ORIGINS??'').split(',').map(s=>s.trim()).filter(Boolean).map(legacyOrigin).filter(Boolean)];}
 export function originFor(request,env){const own=new URL(request.url).origin;return allowedOrigins(env).includes(own)?own:new URL(env.PUBLIC_ORIGIN).origin;}
 export const activityOrigin=env=>/^\d{5,25}$/.test(env.DISCORD_APPLICATION_ID??'')?`https://${env.DISCORD_APPLICATION_ID}.discordsays.com`:null;
 // Inside a Discord Activity the browser will not send our SameSite cookie, so the game holds the session token in memory.

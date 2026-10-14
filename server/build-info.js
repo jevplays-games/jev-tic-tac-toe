@@ -1,2 +1,2 @@
 // Generated from public/server/local/migrations sources, excluding this file and reference-audit.json.
-export const SOURCE_REVISION = '84b1114325c301c72afd7f654eecf10856c5e2d5be0805fae1b7c400b8f15558';
+export const SOURCE_REVISION = '125ec45c064082ef1cd99b7f7e1341308d96c2e34cbaadb1529d01cacc2cc953';
