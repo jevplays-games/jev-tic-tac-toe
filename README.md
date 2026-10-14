@@ -1,4 +1,4 @@
-<p align="center"><img src="assets/banner.jpg" alt="Pixel-art robot Jev playing a game of Tic-Tac-Typed with glowing cyan X and magenta O marks in a neon arcade" width="100%"></p>
+<p align="center"><img src="assets/banner.png" alt="Pink pixel-window banner reading Tic-Tac-Typed, with a 3x3 board window where ink Xs win the top row under a magenta line, a Jev choice window listing move probabilities, and the boxy robot Jev beside them." width="100%"></p>
 
 <div align="center">
 
@@ -198,6 +198,7 @@ scripts/                export verification, source manifest, Discord command se
 tests/                  exhaustive rules, API/security, adapter, analytics, browser
 reports/                generated audits, baseline runs, tests and screenshots
 docs/                   architecture, analytics, API, deployment and sources
+assets/                 README banner, GitHub social preview and their HTML sources (assets/src/)
 wrangler.jsonc          Cloudflare deployment configuration
 ```
 

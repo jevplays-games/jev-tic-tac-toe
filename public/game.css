@@ -4,7 +4,9 @@
    heatmap ramp steps that brand.css does not name.
    X and O differ by shape, so the game keeps the default ink accent; magenta marks
    the winning line (a highlight, never a fill behind text). */
-:root{--x:var(--magenta);--o:var(--magenta);--cell-line:var(--ink)}
+/* Chart colours (orchestrator decision D8): the snapshot brand.css blue/amber fail on #DEDEDE, so the game
+   defines darker series colours here. Fills and swatches only; text stays ink. */
+:root{--x:var(--magenta);--o:var(--magenta);--cell-line:var(--ink);--chart-jev:#7A4E0B;--chart-human:#155A80}
 body{font-size:var(--fs-sm);line-height:1.6}
 button,.button{cursor:pointer;text-decoration:none;border:1px solid var(--ink);border-radius:var(--radius-sm);padding:var(--s2) var(--s4);min-height:var(--tap);color:var(--text);background:var(--raised);display:inline-flex;align-items:center;justify-content:center;gap:var(--s2);white-space:nowrap}
 button:disabled,select:disabled{cursor:not-allowed;opacity:.48}
@@ -47,7 +49,7 @@ h2{font-size:var(--fs-lg);letter-spacing:-.3px;font-weight:600;margin:0}h3{font-
    --fit-reserve is everything that shares the viewport with it: the panel chrome
    above and the status line below. */
 .board-wrap{--fit-max:26rem;--fit-reserve:14.5rem;--fit-ratio:1}
-/* A lacquer tray (.jv-tray) holding nine wells. Percentages, so the art scales
+/* A pixel-window tray (.jv-tray) holding nine wells. Percentages, so the art scales
    with the board from a 100px picture-in-picture frame to a 4K display. */
 .board{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);aspect-ratio:1;gap:3%;padding:3.4%}
 .cell{--focus-offset:-3px;position:relative;min-width:0;min-height:0;width:100%;height:100%;padding:0;border:1px solid var(--cell-line);border-radius:0;background:var(--sunken);box-shadow:var(--well);transition:border-color .12s,box-shadow .12s}
@@ -107,7 +109,7 @@ select{color:var(--text);background:var(--sunken);border:1px solid var(--line);b
 .probability-row{display:grid;grid-template-columns:26px 1fr 34px;align-items:center;gap:var(--s2);margin:var(--s2) 0;font-family:var(--mono);font-size:var(--fs-2xs);color:var(--muted)}
 .probability-row.selected{color:var(--ink);font-weight:700}
 .probability-row.selected>span:first-child::before{content:"▸"}
-meter{width:100%;height:8px;border:1px solid var(--ink);border-radius:0;background:var(--paper)}meter::-webkit-meter-bar{background:var(--paper);border:0;border-radius:0;height:6px}meter::-webkit-meter-optimum-value{background:var(--human);border-radius:0}meter::-moz-meter-bar{background:var(--human)}
+meter{width:100%;height:8px;border:1px solid var(--ink);border-radius:0;background:var(--paper)}meter::-webkit-meter-bar{background:var(--paper);border:0;border-radius:0;height:6px}meter::-webkit-meter-optimum-value{background:var(--chart-human);border-radius:0}meter::-moz-meter-bar{background:var(--chart-human)}
 .empty{font-size:var(--fs-xs);color:var(--muted);padding:var(--s4) 0;margin:0}
 .factors-heading{margin:var(--s2) 0}
 .factor{font-size:var(--fs-2xs);margin:var(--s2) 0;padding-left:var(--s4);position:relative;color:var(--text)}.factor:before{content:"+";position:absolute;left:0;color:var(--ink);font-family:var(--mono)}
@@ -151,7 +153,7 @@ pre{white-space:pre-wrap;word-break:break-word;font-size:var(--fs-2xs);font-fami
 .view{display:flex;flex-direction:column;gap:var(--s5)}
 footer{font-family:var(--font-pixel);display:flex;align-items:center;justify-content:space-between;gap:var(--s4);width:100%;max-width:var(--shell);margin:0 auto;padding:var(--s5) var(--s4) calc(var(--s5) + var(--sa-b));border-top:1px solid var(--line);font-size:var(--fs-2xs);color:var(--muted);letter-spacing:.5px;flex-wrap:wrap}
 .footer-separator{margin:0 var(--s2);color:var(--ink)}footer .jv-link-btn{font-size:var(--fs-2xs)}
-.notice{margin:0;padding:var(--s3) var(--s4);border:1px solid var(--ink);border-left:6px solid var(--amber);border-radius:0;background:var(--paper);color:var(--ink);font-size:var(--fs-xs)}
+.notice{margin:0;padding:var(--s3) var(--s4);border:1px solid var(--ink);border-left:6px solid var(--chart-jev);border-radius:0;background:var(--paper);color:var(--ink);font-size:var(--fs-xs)}
 dialog{color:var(--text);background:var(--surface);border:1px solid var(--line);border-radius:0;box-shadow:var(--raise);max-width:min(37rem,calc(100% - 2rem));max-height:85vh;max-height:85dvh;padding:0}
 dialog::backdrop{background:rgba(30,30,30,.6)}
 .dialog-content{padding:var(--s6)}

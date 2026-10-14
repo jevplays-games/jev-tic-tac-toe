@@ -1,17 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" shape-rendering="crispEdges">
   <title>Loss</title>
-  <defs>
-    <linearGradient id="coin" x1="0.15" y1="0.1" x2="0.85" y2="0.95">
-      <stop offset="0" stop-color="#4a4f66"/>
-      <stop offset="0.45" stop-color="#2c3243"/>
-      <stop offset="1" stop-color="#171a24"/>
-    </linearGradient>
-  </defs>
-  <circle cx="33.5" cy="35" r="26" fill="#05060c" fill-opacity="0.4"/>
-  <circle cx="32" cy="33.5" r="26" fill="#0e1017"/>
-  <circle cx="32" cy="31" r="26" fill="url(#coin)"/>
-  <circle cx="32" cy="31" r="20.5" fill="none" stroke="#f79aa4" stroke-opacity="0.45" stroke-width="1.6"/>
-  <path d="M22 26.5l10 10 10-10" fill="none" stroke="#0e1017" stroke-width="5.6" stroke-linecap="round" stroke-linejoin="round" transform="translate(0.8 1.6)"/>
-  <path d="M22 26.5l10 10 10-10" fill="none" stroke="#f79aa4" stroke-width="5.6" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M13 22A21 21 0 0 1 30 8.6" fill="none" stroke="#ffffff" stroke-opacity="0.3" stroke-width="2.4" stroke-linecap="round"/>
+  <path fill="#1E1E1E" d="M7 13h54v44H7z"/>
+  <path fill="#1E1E1E" d="M4 10h54v44H4z"/>
+  <path fill="#FEFEFE" d="M6 22h50v30H6z"/>
+  <path fill="#1E1E1E" d="M8 24h46v26H8z"/>
+  <!-- Pixel title-bar controls: _ x -->
+  <path fill="#FEFEFE" d="M38 18h6v2h-6z M48 14h2v2h-2z M52 14h2v2h-2z M50 16h2v2h-2z M48 18h2v2h-2z M52 18h2v2h-2z"/>
+  <!-- LOSS: font-independent pixel lettering. -->
+  <path fill="#FEFEFE" d="M11 30h2v2h-2z M11 32h2v2h-2z M11 34h2v2h-2z M11 36h2v2h-2z M11 38h2v2h-2z M11 40h2v2h-2z M11 42h9v2h-9z M23 30h5v2h-5z M21 32h2v2h-2z M28 32h2v2h-2z M21 34h2v2h-2z M28 34h2v2h-2z M21 36h2v2h-2z M28 36h2v2h-2z M21 38h2v2h-2z M28 38h2v2h-2z M21 40h2v2h-2z M28 40h2v2h-2z M23 42h5v2h-5z M33 30h7v2h-7z M31 32h2v2h-2z M31 34h2v2h-2z M33 36h5v2h-5z M38 38h2v2h-2z M38 40h2v2h-2z M31 42h7v2h-7z M43 30h7v2h-7z M41 32h2v2h-2z M41 34h2v2h-2z M43 36h5v2h-5z M48 38h2v2h-2z M48 40h2v2h-2z M41 42h7v2h-7z"/>
 </svg>
