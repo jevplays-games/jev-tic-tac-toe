@@ -100,4 +100,7 @@ export function canonicalBoard(state) {
   }
   return best;
 }
-export const game = { id:'tic-tac-toe', rulesVersion:RULES_VERSION, createInitialState, getLegalActions, applyAction, getOutcome, serialize, deserialize, replay };
+// Matches created before the rename carry gameId 'tic-tac-toe'; readers accept both (GAME_IDS). See docs/ARCHITECTURE.md.
+export const GAME_ID = 'tic-tac-typed';
+export const GAME_IDS = Object.freeze([GAME_ID, 'tic-tac-toe']);
+export const game = { id:GAME_ID, rulesVersion:RULES_VERSION, createInitialState, getLegalActions, applyAction, getOutcome, serialize, deserialize, replay };

@@ -35,6 +35,6 @@ const server=http.createServer(async(req,res)=>{
     const response=await handle(request,env);res.writeHead(response.status,Object.fromEntries(response.headers));res.end(Buffer.from(await response.arrayBuffer()));
   }catch{res.writeHead(500);res.end('Internal error');}
 });
-server.listen(port,host,()=>console.log(`JEV Arcade: ${env.PUBLIC_ORIGIN} (${production?'production':'local dev'}, ${host}:${port})\n${env.TYPESAFE_API_KEY?'Hosted JEV enabled':'No API key: clearly labeled local perfect-play fallback'}\nSQLite: ${dbPath}`));
+server.listen(port,host,()=>console.log(`jevplay.games / Tic-Tac-Typed: ${env.PUBLIC_ORIGIN} (${production?'production':'local dev'}, ${host}:${port})\n${env.TYPESAFE_API_KEY?'Hosted Jev enabled':'No API key: clearly labeled local perfect-play fallback'}\nSQLite: ${dbPath}`));
 const timer=setInterval(()=>maintenance(env).catch(()=>console.error('Maintenance failed')),60000);timer.unref();
 for(const signal of ['SIGINT','SIGTERM'])process.on(signal,()=>{clearInterval(timer);server.close(()=>{env.DB.close();process.exit(0);});});

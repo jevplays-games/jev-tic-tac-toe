@@ -3,6 +3,11 @@ import {one,run,quota} from './store.js';
 export function isLocal(env) {return env.DEV_LOCAL==='1' && ['localhost','127.0.0.1','[::1]'].includes(new URL(env.PUBLIC_ORIGIN).hostname);}
 export function cookieName(env){return isLocal(env)?'jev_dev_session':'__Host-jev_session';}
 export function cookie(env,token,age=604800){return `${cookieName(env)}=${token}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${age}${isLocal(env)?'':'; Secure'}`;}
+// One Worker answers on PUBLIC_ORIGIN and, until the legacy host is 301-redirected, on each LEGACY_PUBLIC_ORIGINS entry
+// (comma-separated). A request on an allowed host is answered on that host, so its __Host- cookie, OAuth callback and
+// Origin check stay on one origin; any other host (e.g. workers.dev) falls back to PUBLIC_ORIGIN.
+export function allowedOrigins(env){return [env.PUBLIC_ORIGIN,...String(env.LEGACY_PUBLIC_ORIGINS??'').split(',')].map(s=>s.trim()).filter(Boolean).map(s=>new URL(s).origin);}
+export function originFor(request,env){const own=new URL(request.url).origin;return allowedOrigins(env).includes(own)?own:new URL(env.PUBLIC_ORIGIN).origin;}
 export const activityOrigin=env=>/^\d{5,25}$/.test(env.DISCORD_APPLICATION_ID??'')?`https://${env.DISCORD_APPLICATION_ID}.discordsays.com`:null;
 // Inside a Discord Activity the browser will not send our SameSite cookie, so the game holds the session token in memory.
 function bearerToken(request){const m=/^Bearer ([a-f0-9]{64})$/.exec(request.headers.get('authorization')??'');return m?m[1]:null;}
@@ -26,7 +31,7 @@ export async function sessionFor(request,env,create=false) {
 export async function userFor(env,session){return session.user_id?await one(env,'SELECT id,discord_id,display_name,avatar_hash,moderation_state FROM users WHERE id=?',session.user_id):null;}
 export function requireMutation(request,env,session) {
   const origin=request.headers.get('origin'),framed=session.via==='bearer'?activityOrigin(env):null;
-  assert(origin===new URL(env.PUBLIC_ORIGIN).origin||(framed&&origin===framed),403,'origin_rejected');
+  assert(origin===originFor(request,env)||(framed&&origin===framed),403,'origin_rejected');
   assert(safeEqual(request.headers.get('x-csrf-token'),session.csrf),403,'csrf_rejected');
 }
 export function contextFor(session) {
@@ -38,7 +43,7 @@ export async function beginLogin(request,env) {
   const launch=url.searchParams.get('launch');
   assert(!launch||/^[a-f0-9]{64}$/.test(launch),400,'invalid_launch');
   await run(env,'UPDATE sessions SET oauth_state_hash=?,oauth_expires=?,pending_launch=? WHERE token_hash=?',await sha256(state),Date.now()+300000,launch?await sha256(launch):null,session.token_hash);
-  const params=new URLSearchParams({client_id:env.DISCORD_APPLICATION_ID,redirect_uri:`${env.PUBLIC_ORIGIN}/api/auth/discord/callback`,response_type:'code',scope:'identify',state});
+  const params=new URLSearchParams({client_id:env.DISCORD_APPLICATION_ID,redirect_uri:`${originFor(request,env)}/api/auth/discord/callback`,response_type:'code',scope:'identify',state});
   return new Response(null,{status:302,headers:{...headers,Location:`https://discord.com/oauth2/authorize?${params}`}});
 }
 export async function discordIdentity(env,code,redirectUri) {
@@ -65,7 +70,7 @@ export async function completeLogin(request,env) {
   assert(state && /^[a-f0-9]{64}$/.test(state) && session.oauth_expires>Date.now() && safeEqual(await sha256(state),session.oauth_state_hash),403,'oauth_state_rejected');
   const consumed=await run(env,'UPDATE sessions SET oauth_state_hash=NULL,oauth_expires=NULL WHERE token_hash=? AND oauth_state_hash=?',session.token_hash,session.oauth_state_hash);
   assert(consumed.meta.changes===1,403,'oauth_state_reused');assert(code && code.length<2048,400,'oauth_denied_or_missing_code');
-  const {identity}=await discordIdentity(env,code,`${env.PUBLIC_ORIGIN}/api/auth/discord/callback`);
+  const {identity}=await discordIdentity(env,code,`${originFor(request,env)}/api/auth/discord/callback`);
   const user=await upsertDiscordUser(env,identity),at=Date.now();
   const raw=randomToken(),newHash=await sha256(raw);
   await env.DB.batch([

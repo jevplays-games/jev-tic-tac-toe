@@ -15,13 +15,13 @@ flowchart LR
     API[Worker-style HTTP router]
     Rules[Same pure rules]
     Matches[Versioned authoritative match document]
-    JEV[JEV transport adapter]
+    Jev[Jev transport adapter]
     Auth[Discord identity and launch verification]
     Metrics[Post-decision exact analytics]
     DB[(D1 or local SQLite)]
     API --> Rules
     API --> Matches
-    Matches --> JEV
+    Matches --> Jev
     Matches --> Metrics
     API --> Auth
     Matches --> DB
@@ -30,7 +30,7 @@ flowchart LR
   Provider[TypeSafe service]
   Discord[Discord]
   UI -->|HTTPS and CSRF| API
-  JEV -->|Private API key| Provider
+  Jev -->|Private API key| Provider
   Auth --> Discord
 ```
 
@@ -45,9 +45,9 @@ flowchart TD
   S[Authoritative state] --> L[Generate all legal placements]
   L --> F[Profile-specific tactical features]
   F --> P[Persist prepared request and lease]
-  P --> Q[Typed Choice questions to JEV]
+  P --> Q[Typed Choice questions to Jev]
   Q --> V{Expected model and valid response?}
-  V -->|Yes| D[Select from JEV distributions]
+  V -->|Yes| D[Select from Jev distributions]
   V -->|No / deadline| B[Explicit minimax fallback · unranked]
   D --> C[Revision and lease still current?]
   B --> C
@@ -83,7 +83,7 @@ sequenceDiagram
   W-->>B: Short-lived verified channel and guild grant
 ```
 
-OAuth alone does not establish a channel. `/play tic-tac-toe` must arrive as a valid signed guild interaction. An opaque launch code is bound to its invoking Discord user and can be redeemed by that user's authenticated session only.
+OAuth alone does not establish a channel. `/play tic-tac-typed` (or the legacy `/play tic-tac-toe`) must arrive as a valid signed guild interaction. An opaque launch code is bound to its invoking Discord user and can be redeemed by that user's authenticated session only.
 
 ## Initial match on page load
 
@@ -111,7 +111,18 @@ The verifier also binds duplicated decision data to its event and binds completi
 
 The six tables are `users`, `sessions`, `launches`, `matches`, `quotas`, and `operational_counters`. The latter two are the small additions required for request-budget safety and extensive operational analytics.
 
-Tic-Tac-Toe has at most nine placements, so a single bounded JSON match document holds the moves, decision evidence, receipts and event chain. Indexed scalar columns support ownership, active-match restrictions, expiry, history and leaderboard queries. Updating a match uses a conditional `WHERE revision = expected` statement; state and associated events are committed together. No separate leaderboard cache/table can drift from accepted results.
+Tic-Tac-Typed has at most nine placements, so a single bounded JSON match document holds the moves, decision evidence, receipts and event chain. Indexed scalar columns support ownership, active-match restrictions, expiry, history and leaderboard queries. Updating a match uses a conditional `WHERE revision = expected` statement; state and associated events are committed together. No separate leaderboard cache/table can drift from accepted results.
+
+## Game identifiers after the rename
+
+The game was renamed from Tic-Tac-Toe to Tic-Tac-Typed in October 2026. The identifiers are handled as follows:
+
+- **`config.gameId`.** New matches record `tic-tac-typed` (`GAME_ID` in `public/game/rules.js`). Matches stored or exported before the rename carry `tic-tac-toe`, and they stay valid. `GAME_IDS` lists both values, and any code that reads `gameId` (verify-export, analytics, a future hub aggregation) must accept both. No current code filters on `gameId`. `tests/rename.test.js` checks that a pre-rename export (`tests/fixtures/pre-rename-export.json`) still passes `verifyMatch`.
+- **Jev request `state.game`.** This stays `tic-tac-toe`. It names the rules, not the brand. `verifyMatch` rebuilds the request for every stored match, so changing it would void pre-rename matches and change request hashes and model input.
+- **`rulesVersion`.** This stays `ttt/1`. It is a rules version, and changing it would reject every stored snapshot.
+- **Leaderboards.** Cohorts are keyed by the configuration hash, which includes `gameId` and `sourceRevision`. Any release starts new cohorts, and this one is no exception. Older matches stay in history, analytics and exports, and their cohort stays reachable with `?config=<hash>`.
+- **Discord.** `/play tic-tac-typed` is the command. `/play tic-tac-toe` is still accepted and registered for one release.
+- **Hostnames.** The Worker serves `PUBLIC_ORIGIN` (`tic-tac-typed.jevplay.games`) and every `LEGACY_PUBLIC_ORIGINS` entry (`tic-tac-toe.jevplay.games`). Each request is answered on its own host. That host is used for the Origin check, the OAuth `redirect_uri` and Discord launch links. A request on any other host falls back to `PUBLIC_ORIGIN`. See `docs/DEPLOYMENT.md`.
 
 ## Leaderboards
 

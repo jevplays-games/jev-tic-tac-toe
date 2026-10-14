@@ -94,7 +94,7 @@ with sync_playwright() as p:
     assert page.locator('#postgame').is_visible()
     assert page.locator('#move-table tr').count() >= 5
     assert page.locator('#opponent-name').inner_text() == 'Local oracle'
-    assert 'not selected by JEV' in page.locator('#evidence-note').inner_text()
+    assert 'not selected by Jev' in page.locator('#evidence-note').inner_text()
     checks.append('Complete game against visibly labeled local fallback with move analytics')
     page.locator('#replay-step').fill('0')
     assert 'Replay' in page.locator('#game-status').inner_text()

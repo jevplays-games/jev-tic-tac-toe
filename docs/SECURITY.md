@@ -21,7 +21,7 @@ Secrets are server environment values only. Model requests contain board state a
 
 ## What is not established
 
-1. An exact solver's analytics do not establish JEV quality. Live inference must be measured separately. Model version pinning does not prove deterministic remote inference.
+1. An exact solver's analytics do not establish Jev quality. Live inference must be measured separately. Model version pinning does not prove deterministic remote inference.
 2. A valid export hash chain is not a provider signature and does not prevent a party from rewriting every link. Original server data or a separately retained trusted head is required for authenticity comparisons.
 3. Server ownership prevents trivial score/AI forgery, not human use of an external solver, bots controlling a browser, multiple accounts, or collusion. No monetary competitions should rely on this prototype's anti-cheat model.
 4. A launch grant proves launch-time guild/channel participation, not continuously checked membership. Short expiry limits but does not eliminate revocation lag.

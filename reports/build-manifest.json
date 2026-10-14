@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceHash": "144b0e67ff68c47d25001214d93d9f9c059d61b856f8b8b4e695230a81ef53fe",
+  "sourceHash": "84b1114325c301c72afd7f654eecf10856c5e2d5be0805fae1b7c400b8f15558",
   "files": [
     {
       "path": "local/database.js",
@@ -14,8 +14,8 @@
     },
     {
       "path": "local/server.js",
-      "sha256": "f1f9ec0991c9d08a9189da0987ebb059022bdeb2656033176219332e282d0556",
-      "bytes": 3978
+      "sha256": "9cca4bcc1455961b96b190250ed2d20a6b8b3ceac2439352de31e193307c24a9",
+      "bytes": 3997
     },
     {
       "path": "migrations/0001.sql",
@@ -34,8 +34,8 @@
     },
     {
       "path": "public/app.js",
-      "sha256": "ebdd51b9ab6aff7d884b8790c878891feddb72aba532cb4960d4da4cfd1cb67e",
-      "bytes": 34838
+      "sha256": "2ff347ff5a8efe524e2327b54fe1643ca5eba6aa867a88b2787d6b27b01f5988",
+      "bytes": 34870
     },
     {
       "path": "public/art/o.svg",
@@ -46,6 +46,11 @@
       "path": "public/art/x.svg",
       "sha256": "197db0ae794b3ef53bdbd5b5fcf76d7e5e4ec2879cb39d18fdbea9b642b8b9c7",
       "bytes": 1245
+    },
+    {
+      "path": "public/brand/OFL-VT323.txt",
+      "sha256": "27d9af34210253e7ca1251fbace86c6f65b40031d6ce1a75493a1b2093631298",
+      "bytes": 4367
     },
     {
       "path": "public/brand/OFL.txt",
@@ -59,13 +64,13 @@
     },
     {
       "path": "public/brand/brand.css",
-      "sha256": "9138ab8bc31bcd47ec1cbf003925a993b1bb63e2cd0c2f6d15ab77b12db2b404",
-      "bytes": 25412
+      "sha256": "55744adbcefb36c65f35cad77994ab0c3436ec5de524fd9a57cfb3b7194e38e7",
+      "bytes": 24879
     },
     {
       "path": "public/brand/brand.js",
-      "sha256": "661ed9c0cc676363d01fb330533cc09f1dfb5aa388eff1bf59c8a61836bcba66",
-      "bytes": 3481
+      "sha256": "34a9382ddc340f1e67ac26b42c6949eff5bd4df3f41562524986a4ad273b80ae",
+      "bytes": 3484
     },
     {
       "path": "public/brand/favicon-32.png",
@@ -74,8 +79,8 @@
     },
     {
       "path": "public/brand/icon.svg",
-      "sha256": "a307ea34ba47a58e45b873d9fa194c0522a685536252d5f6e772bb90fed414c7",
-      "bytes": 1380
+      "sha256": "c1b642a8d77d6f3d30aeeb85fb9f4d5692bc963f0ad12c8cd3cf0f6a721f91bc",
+      "bytes": 1382
     },
     {
       "path": "public/brand/inter-var.woff2",
@@ -108,9 +113,14 @@
       "bytes": 1203
     },
     {
+      "path": "public/brand/vt323.woff2",
+      "sha256": "8ddbebcc1048154132e1d78eb9b1f7850bca1b7d857035ccf1cb4318ebc615b6",
+      "bytes": 17936
+    },
+    {
       "path": "public/game.css",
-      "sha256": "479da2cebb973b6fccbdfcdeb935bba8134af033cb8afaf6ddba6a98cbb21067",
-      "bytes": 22330
+      "sha256": "a9e7415b2616e0b7af0f899ecc6802df7e78eda4b5aebe2cfd942d7f19899519",
+      "bytes": 22413
     },
     {
       "path": "public/game/analytics.js",
@@ -124,23 +134,23 @@
     },
     {
       "path": "public/game/oracle.js",
-      "sha256": "175ea4729938d324b5f3110655233ae15f8ed45bfd9869b24931d0574fd4b847",
+      "sha256": "b5d3eb8d3b95dc0702302089cc519d2934550921bf9a3703e91724a52517deb6",
       "bytes": 3182
     },
     {
       "path": "public/game/policy.js",
-      "sha256": "47c6617e74449267b3ddd14e552bb50fda7b34fb03eeabc1a0c4022b6bca4ac3",
-      "bytes": 7497
+      "sha256": "342b9836a6f4de5c77f4594db097d1def813ea7b571d1d9f2996e7a4229405cb",
+      "bytes": 7923
     },
     {
       "path": "public/game/rules.js",
-      "sha256": "b4fe1d704c622e04673ed28ccfb245534093f06553c688173a9b0f14574fd128",
-      "bytes": 4995
+      "sha256": "2e5bb06cdd2c9dd0466bc3788f2e74772a2e709b344bcbf386f7ea9c49923f7b",
+      "bytes": 5217
     },
     {
       "path": "public/index.html",
-      "sha256": "0f8ee1050f46b41fe1f9a71396fde02d60d8a5358daf35adf87b64aeb841b0fb",
-      "bytes": 16138
+      "sha256": "6b4bfacfd57990ccf17f4bd1e315ccb35a38aa704b996eb10c2e3177e82680a6",
+      "bytes": 16274
     },
     {
       "path": "public/vendor/discord-embedded-app-sdk.js",
@@ -149,28 +159,28 @@
     },
     {
       "path": "server/activity.js",
-      "sha256": "de9e4316d8ce516d7b8aecc6f8e1a6115728cbd989a1ea493c4bd383be751d36",
-      "bytes": 1916
+      "sha256": "d5d7d74d191a5f037f9cf67d0dcf3673c7bfcfaf3d46daff2f10ea574a7712aa",
+      "bytes": 1915
     },
     {
       "path": "server/auth.js",
-      "sha256": "491417f02ac062cd6f2096df3aca16c6bd2eccd301f0b65e23636b8056e9eaff",
-      "bytes": 7304
+      "sha256": "32f6746ec0dfe24044e83dfa5f458af9b8835f7f20db3257c5a10b0f6c79a1b0",
+      "bytes": 7976
     },
     {
       "path": "server/discord.js",
-      "sha256": "ad79dfd20c1dcf86bda90223b1a37749713a1853a5c9ba7a0c26313409876de1",
-      "bytes": 3848
+      "sha256": "999ed4803e5334fb3941e701ccd8a7c37238fc1ef47d26ffab1f491ed11d9f80",
+      "bytes": 4258
     },
     {
       "path": "server/jev.js",
-      "sha256": "5e0babc5589a99cc576e528639d538cef1edfd5788bcfcabaafd42fb07ec0594",
+      "sha256": "58109bed02417b0f7c6321e4a1bd3b3929a08f38ed976fe82ddd22153fbf3b36",
       "bytes": 3985
     },
     {
       "path": "server/matches.js",
-      "sha256": "67e73f604cea236f073ecacf3100a14f476a542f48d04f8acceab8b964b5ee5a",
-      "bytes": 15020
+      "sha256": "9e0a40e601f51e5dfa310b2f5fad2618cbbbc2ee32c7dd12561d58335592257c",
+      "bytes": 15022
     },
     {
       "path": "server/operations.js",

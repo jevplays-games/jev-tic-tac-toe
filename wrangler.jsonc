@@ -1,12 +1,15 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "jev-tic-tac-toe",
+  "name": "jev-tic-tac-typed",
   "main": "server/worker.js",
   "compatibility_date": "2026-09-22",
   "assets": { "directory": "./public", "binding": "ASSETS", "run_worker_first": ["/api/*", "/"] },
+  // D1 keeps its existing name "jev-arcade" (owner decision 2026-10-14): it binds by database_id, so no recreate or migration.
   "d1_databases": [{ "binding": "DB", "database_name": "jev-arcade", "database_id": "0c48a885-1d59-4e5a-a327-399be4c654d2", "migrations_dir": "migrations" }],
-  "vars": { "PUBLIC_ORIGIN": "https://tic-tac-toe.jevplay.games", "PINNED_JEV_MODEL": "jev-1.13.0", "MAX_JEV_CALLS_PER_DAY": "5000", "JEV_CALLS_PER_HOUR": "300", "MATCHES_PER_HOUR": "60", "SESSION_CREATIONS_PER_HOUR": "60" },
-  "routes": [{ "pattern": "tic-tac-toe.jevplay.games", "custom_domain": true }],
+  "vars": { "PUBLIC_ORIGIN": "https://tic-tac-typed.jevplay.games", "LEGACY_PUBLIC_ORIGINS": "https://tic-tac-toe.jevplay.games", "PINNED_JEV_MODEL": "jev-1.13.0", "MAX_JEV_CALLS_PER_DAY": "5000", "JEV_CALLS_PER_HOUR": "300", "MATCHES_PER_HOUR": "60", "SESSION_CREATIONS_PER_HOUR": "60" },
+  // Both hosts are served until the orchestrator adds the tic-tac-toe -> tic-tac-typed 301; then drop the legacy route
+  // and LEGACY_PUBLIC_ORIGINS together.
+  "routes": [{ "pattern": "tic-tac-typed.jevplay.games", "custom_domain": true }, { "pattern": "tic-tac-toe.jevplay.games", "custom_domain": true }],
   "triggers": { "crons": ["* * * * *"] },
   "observability": { "enabled": false }
 }

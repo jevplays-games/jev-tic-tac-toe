@@ -6,7 +6,7 @@ import {sha256,boundedJson} from './util.js';
 export const JEV_ENDPOINT='https://api.typesafe.ai/v1/systemone';
 export async function chooseJevAction({state,difficulty,modelId,apiKey,fetchFn=fetch,budgetMs=3000,beforeAttempt=async()=>{},inputPricePerMillion=null,outputPricePerMillion=null}) {
   const start=performance.now(),legal=getLegalActions(state);
-  if(!legal.length)throw new Error('No legal JEV action');
+  if(!legal.length)throw new Error('No legal Jev action');
   if(legal.length===1)return {action:legal[0],source:'forced',latencyMs:performance.now()-start,attempts:[],request:null,response:null,fallbackReason:null};
   const request=buildJevRequest(state,difficulty,modelId),inputHash=await sha256(request),attempts=[];
   let reason=apiKey?null:'missing_api_key';

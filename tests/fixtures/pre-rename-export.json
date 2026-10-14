@@ -1,0 +1,3277 @@
+{
+  "matches": [
+    {
+      "id": "669e9533-8d98-4367-8db5-b552cab19616",
+      "schemaVersion": 1,
+      "revision": 13,
+      "status": "complete",
+      "humanMark": "X",
+      "board": [
+        "O",
+        "O",
+        "X",
+        "X",
+        "X",
+        "O",
+        "O",
+        "X",
+        "X"
+      ],
+      "config": {
+        "gameId": "tic-tac-toe",
+        "rulesVersion": "ttt/1",
+        "difficulty": "normal",
+        "modelId": "jev-1.13.0",
+        "policyVersion": "policy/1",
+        "analyticsVersion": "analytics/1",
+        "sourceRevision": "144b0e67ff68c47d25001214d93d9f9c059d61b856f8b8b4e695230a81ef53fe",
+        "fallback": "minimax-unranked/v1",
+        "budgetMs": 3000
+      },
+      "configHash": "c2bcea7f3c114e14a9c60bea126ebeba93cac1b2c6d97bed1a31a01f3688f0c4",
+      "rankedStarted": false,
+      "eligible": false,
+      "opponent": "JEV",
+      "context": null,
+      "outcome": "draw",
+      "termination": "board",
+      "startedAt": 1792016138105,
+      "finishedAt": 1792016138115,
+      "expiresAt": 1792102538105,
+      "actions": [
+        {
+          "cell": 4,
+          "mark": "X",
+          "actor": "human",
+          "acceptedAt": 1792016138108,
+          "serverDwellMs": 3,
+          "analysis": {
+            "board": ".........",
+            "canonicalBoard": ".........",
+            "ply": 1,
+            "mark": "X",
+            "cell": 4,
+            "valueBefore": 0,
+            "valueAfter": 0,
+            "regret": 0,
+            "optimal": true,
+            "optimalCells": [
+              4,
+              0,
+              2,
+              6,
+              8,
+              1,
+              3,
+              5,
+              7
+            ],
+            "candidates": [
+              {
+                "cell": 4,
+                "value": 0
+              },
+              {
+                "cell": 0,
+                "value": 0
+              },
+              {
+                "cell": 2,
+                "value": 0
+              },
+              {
+                "cell": 6,
+                "value": 0
+              },
+              {
+                "cell": 8,
+                "value": 0
+              },
+              {
+                "cell": 1,
+                "value": 0
+              },
+              {
+                "cell": 3,
+                "value": 0
+              },
+              {
+                "cell": 5,
+                "value": 0
+              },
+              {
+                "cell": 7,
+                "value": 0
+              }
+            ],
+            "errorType": null,
+            "winOpportunity": false,
+            "missedImmediateWin": false,
+            "necessaryBlockOpportunity": false,
+            "missedNecessaryBlock": false,
+            "forkOpportunity": false,
+            "createsFork": false,
+            "forkCells": [],
+            "factors": [
+              "Occupies the center"
+            ],
+            "afterBoard": "....X...."
+          }
+        },
+        {
+          "cell": 0,
+          "mark": "O",
+          "actor": "jev",
+          "acceptedAt": 1792016138109,
+          "serverDwellMs": null,
+          "analysis": {
+            "board": "....X....",
+            "canonicalBoard": "....X....",
+            "ply": 2,
+            "mark": "O",
+            "cell": 0,
+            "valueBefore": 0,
+            "valueAfter": 0,
+            "regret": 0,
+            "optimal": true,
+            "optimalCells": [
+              0,
+              2,
+              6,
+              8
+            ],
+            "candidates": [
+              {
+                "cell": 0,
+                "value": 0
+              },
+              {
+                "cell": 2,
+                "value": 0
+              },
+              {
+                "cell": 6,
+                "value": 0
+              },
+              {
+                "cell": 8,
+                "value": 0
+              },
+              {
+                "cell": 1,
+                "value": -1
+              },
+              {
+                "cell": 3,
+                "value": -1
+              },
+              {
+                "cell": 5,
+                "value": -1
+              },
+              {
+                "cell": 7,
+                "value": -1
+              }
+            ],
+            "errorType": null,
+            "winOpportunity": false,
+            "missedImmediateWin": false,
+            "necessaryBlockOpportunity": false,
+            "missedNecessaryBlock": false,
+            "forkOpportunity": false,
+            "createsFork": false,
+            "forkCells": [],
+            "factors": [],
+            "afterBoard": "O...X...."
+          },
+          "decision": {
+            "action": {
+              "type": "place",
+              "cell": 0
+            },
+            "source": "jev",
+            "modelId": "jev-1.13.0",
+            "inputHash": "2484cb88cb21745c5b5083ee567c7838d8be86e2e0ae3fa725383eaf890eba4f",
+            "request": {
+              "model": "jev-1.13.0",
+              "state": {
+                "game": "tic-tac-toe",
+                "rulesVersion": "ttt/1",
+                "board": [
+                  ".",
+                  ".",
+                  ".",
+                  ".",
+                  "X",
+                  ".",
+                  ".",
+                  ".",
+                  "."
+                ],
+                "jevMark": "O",
+                "humanMark": "X",
+                "toMove": "O",
+                "candidates": [
+                  {
+                    "actionId": "cell_0",
+                    "cell": 0,
+                    "coordinate": "A1",
+                    "boardAfter": [
+                      "O",
+                      ".",
+                      ".",
+                      ".",
+                      "X",
+                      ".",
+                      ".",
+                      ".",
+                      "."
+                    ],
+                    "features": {
+                      "winsNow": false,
+                      "opponentImmediateWinningReplies": 0,
+                      "isCenter": false,
+                      "isCorner": true
+                    }
+                  },
+                  {
+                    "actionId": "cell_2",
+                    "cell": 2,
+                    "coordinate": "C1",
+                    "boardAfter": [
+                      ".",
+                      ".",
+                      "O",
+                      ".",
+                      "X",
+                      ".",
+                      ".",
+                      ".",
+                      "."
+                    ],
+                    "features": {
+                      "winsNow": false,
+                      "opponentImmediateWinningReplies": 0,
+                      "isCenter": false,
+                      "isCorner": true
+                    }
+                  },
+                  {
+                    "actionId": "cell_6",
+                    "cell": 6,
+                    "coordinate": "A3",
+                    "boardAfter": [
+                      ".",
+                      ".",
+                      ".",
+                      ".",
+                      "X",
+                      ".",
+                      "O",
+                      ".",
+                      "."
+                    ],
+                    "features": {
+                      "winsNow": false,
+                      "opponentImmediateWinningReplies": 0,
+                      "isCenter": false,
+                      "isCorner": true
+                    }
+                  },
+                  {
+                    "actionId": "cell_8",
+                    "cell": 8,
+                    "coordinate": "C3",
+                    "boardAfter": [
+                      ".",
+                      ".",
+                      ".",
+                      ".",
+                      "X",
+                      ".",
+                      ".",
+                      ".",
+                      "O"
+                    ],
+                    "features": {
+                      "winsNow": false,
+                      "opponentImmediateWinningReplies": 0,
+                      "isCenter": false,
+                      "isCorner": true
+                    }
+                  },
+                  {
+                    "actionId": "cell_1",
+                    "cell": 1,
+                    "coordinate": "B1",
+                    "boardAfter": [
+                      ".",
+                      "O",
+                      ".",
+                      ".",
+                      "X",
+                      ".",
+                      ".",
+                      ".",
+                      "."
+                    ],
+                    "features": {
+                      "winsNow": false,
+                      "opponentImmediateWinningReplies": 0,
+                      "isCenter": false,
+                      "isCorner": false
+                    }
+                  },
+                  {
+                    "actionId": "cell_3",
+                    "cell": 3,
+                    "coordinate": "A2",
+                    "boardAfter": [
+                      ".",
+                      ".",
+                      ".",
+                      "O",
+                      "X",
+                      ".",
+                      ".",
+                      ".",
+                      "."
+                    ],
+                    "features": {
+                      "winsNow": false,
+                      "opponentImmediateWinningReplies": 0,
+                      "isCenter": false,
+                      "isCorner": false
+                    }
+                  },
+                  {
+                    "actionId": "cell_5",
+                    "cell": 5,
+                    "coordinate": "C2",
+                    "boardAfter": [
+                      ".",
+                      ".",
+                      ".",
+                      ".",
+                      "X",
+                      "O",
+                      ".",
+                      ".",
+                      "."
+                    ],
+                    "features": {
+                      "winsNow": false,
+                      "opponentImmediateWinningReplies": 0,
+                      "isCenter": false,
+                      "isCorner": false
+                    }
+                  },
+                  {
+                    "actionId": "cell_7",
+                    "cell": 7,
+                    "coordinate": "B3",
+                    "boardAfter": [
+                      ".",
+                      ".",
+                      ".",
+                      ".",
+                      "X",
+                      ".",
+                      ".",
+                      "O",
+                      "."
+                    ],
+                    "features": {
+                      "winsNow": false,
+                      "opponentImmediateWinningReplies": 0,
+                      "isCenter": false,
+                      "isCorner": false
+                    }
+                  }
+                ]
+              },
+              "questions": {
+                "preference": {
+                  "type": "choice",
+                  "instructions": "Select the legal placement giving JEV the best eventual result against optimal opposition. Prefer win to draw to loss. X moves first. Three matching marks in a row wins. All candidates are legal.",
+                  "criteria": {
+                    "cell_0": {
+                      "cell": 0,
+                      "coordinate": "A1"
+                    },
+                    "cell_2": {
+                      "cell": 2,
+                      "coordinate": "C1"
+                    },
+                    "cell_6": {
+                      "cell": 6,
+                      "coordinate": "A3"
+                    },
+                    "cell_8": {
+                      "cell": 8,
+                      "coordinate": "C3"
+                    },
+                    "cell_1": {
+                      "cell": 1,
+                      "coordinate": "B1"
+                    },
+                    "cell_3": {
+                      "cell": 3,
+                      "coordinate": "A2"
+                    },
+                    "cell_5": {
+                      "cell": 5,
+                      "coordinate": "C2"
+                    },
+                    "cell_7": {
+                      "cell": 7,
+                      "coordinate": "B3"
+                    }
+                  }
+                }
+              }
+            },
+            "response": {
+              "model": "jev-1.13.0",
+              "answers": {
+                "preference": {
+                  "type": "choice",
+                  "choice": "cell_0",
+                  "probabilities": {
+                    "cell_0": 1,
+                    "cell_2": 0,
+                    "cell_6": 0,
+                    "cell_8": 0,
+                    "cell_1": 0,
+                    "cell_3": 0,
+                    "cell_5": 0,
+                    "cell_7": 0
+                  },
+                  "confidence": 1
+                }
+              },
+              "usage": {
+                "input_tokens": 100,
+                "output_tokens": 20
+              }
+            },
+            "attempts": [
+              {
+                "index": 1,
+                "startedAt": "2026-10-14T22:15:38.109Z",
+                "httpStatus": 200,
+                "latencyMs": 0.5733330000000052,
+                "result": "valid"
+              }
+            ],
+            "latencyMs": 0.7985000000000042,
+            "inputBytes": 2343,
+            "probabilities": {
+              "cell_0": 1,
+              "cell_2": 0,
+              "cell_6": 0,
+              "cell_8": 0,
+              "cell_1": 0,
+              "cell_3": 0,
+              "cell_5": 0,
+              "cell_7": 0
+            },
+            "distribution": {
+              "entropyBits": 0,
+              "normalizedEntropy": 0,
+              "topMargin": 1
+            },
+            "fallbackReason": null,
+            "estimatedCostUsd": null,
+            "costBasis": "not_configured"
+          }
+        },
+        {
+          "cell": 2,
+          "mark": "X",
+          "actor": "human",
+          "acceptedAt": 1792016138110,
+          "serverDwellMs": 1,
+          "analysis": {
+            "board": "O...X....",
+            "canonicalBoard": "....X...O",
+            "ply": 3,
+            "mark": "X",
+            "cell": 2,
+            "valueBefore": 0,
+            "valueAfter": 0,
+            "regret": 0,
+            "optimal": true,
+            "optimalCells": [
+              2,
+              6,
+              8,
+              1,
+              3,
+              5,
+              7
+            ],
+            "candidates": [
+              {
+                "cell": 2,
+                "value": 0
+              },
+              {
+                "cell": 6,
+                "value": 0
+              },
+              {
+                "cell": 8,
+                "value": 0
+              },
+              {
+                "cell": 1,
+                "value": 0
+              },
+              {
+                "cell": 3,
+                "value": 0
+              },
+              {
+                "cell": 5,
+                "value": 0
+              },
+              {
+                "cell": 7,
+                "value": 0
+              }
+            ],
+            "errorType": null,
+            "winOpportunity": false,
+            "missedImmediateWin": false,
+            "necessaryBlockOpportunity": false,
+            "missedNecessaryBlock": false,
+            "forkOpportunity": false,
+            "createsFork": false,
+            "forkCells": [],
+            "factors": [],
+            "afterBoard": "O.X.X...."
+          }
+        },
+        {
+          "cell": 6,
+          "mark": "O",
+          "actor": "jev",
+          "acceptedAt": 1792016138111,
+          "serverDwellMs": null,
+          "analysis": {
+            "board": "O.X.X....",
+            "canonicalBoard": "....X.O.X",
+            "ply": 4,
+            "mark": "O",
+            "cell": 6,
+            "valueBefore": 0,
+            "valueAfter": 0,
+            "regret": 0,
+            "optimal": true,
+            "optimalCells": [
+              6
+            ],
+            "candidates": [
+              {
+                "cell": 6,
+                "value": 0
+              },
+              {
+                "cell": 8,
+                "value": -1
+              },
+              {
+                "cell": 1,
+                "value": -1
+              },
+              {
+                "cell": 3,
+                "value": -1
+              },
+              {
+                "cell": 5,
+                "value": -1
+              },
+              {
+                "cell": 7,
+                "value": -1
+              }
+            ],
+            "errorType": null,
+            "winOpportunity": false,
+            "missedImmediateWin": false,
+            "necessaryBlockOpportunity": true,
+            "missedNecessaryBlock": false,
+            "forkOpportunity": false,
+            "createsFork": false,
+            "forkCells": [],
+            "factors": [
+              "Occupies an immediate opponent winning square"
+            ],
+            "afterBoard": "O.X.X.O.."
+          },
+          "decision": {
+            "action": {
+              "type": "place",
+              "cell": 6
+            },
+            "source": "jev",
+            "modelId": "jev-1.13.0",
+            "inputHash": "4a9e0c7eb074098e0f7591afd35ec51af5f468f4858aa6389d8b6979bd415d45",
+            "request": {
+              "model": "jev-1.13.0",
+              "state": {
+                "game": "tic-tac-toe",
+                "rulesVersion": "ttt/1",
+                "board": [
+                  "O",
+                  ".",
+                  "X",
+                  ".",
+                  "X",
+                  ".",
+                  ".",
+                  ".",
+                  "."
+                ],
+                "jevMark": "O",
+                "humanMark": "X",
+                "toMove": "O",
+                "candidates": [
+                  {
+                    "actionId": "cell_6",
+                    "cell": 6,
+                    "coordinate": "A3",
+                    "boardAfter": [
+                      "O",
+                      ".",
+                      "X",
+                      ".",
+                      "X",
+                      ".",
+                      "O",
+                      ".",
+                      "."
+                    ],
+                    "features": {
+                      "winsNow": false,
+                      "opponentImmediateWinningReplies": 0,
+                      "isCenter": false,
+                      "isCorner": true
+                    }
+                  },
+                  {
+                    "actionId": "cell_8",
+                    "cell": 8,
+                    "coordinate": "C3",
+                    "boardAfter": [
+                      "O",
+                      ".",
+                      "X",
+                      ".",
+                      "X",
+                      ".",
+                      ".",
+                      ".",
+                      "O"
+                    ],
+                    "features": {
+                      "winsNow": false,
+                      "opponentImmediateWinningReplies": 1,
+                      "isCenter": false,
+                      "isCorner": true
+                    }
+                  },
+                  {
+                    "actionId": "cell_1",
+                    "cell": 1,
+                    "coordinate": "B1",
+                    "boardAfter": [
+                      "O",
+                      "O",
+                      "X",
+                      ".",
+                      "X",
+                      ".",
+                      ".",
+                      ".",
+                      "."
+                    ],
+                    "features": {
+                      "winsNow": false,
+                      "opponentImmediateWinningReplies": 1,
+                      "isCenter": false,
+                      "isCorner": false
+                    }
+                  },
+                  {
+                    "actionId": "cell_3",
+                    "cell": 3,
+                    "coordinate": "A2",
+                    "boardAfter": [
+                      "O",
+                      ".",
+                      "X",
+                      "O",
+                      "X",
+                      ".",
+                      ".",
+                      ".",
+                      "."
+                    ],
+                    "features": {
+                      "winsNow": false,
+                      "opponentImmediateWinningReplies": 1,
+                      "isCenter": false,
+                      "isCorner": false
+                    }
+                  },
+                  {
+                    "actionId": "cell_5",
+                    "cell": 5,
+                    "coordinate": "C2",
+                    "boardAfter": [
+                      "O",
+                      ".",
+                      "X",
+                      ".",
+                      "X",
+                      "O",
+                      ".",
+                      ".",
+                      "."
+                    ],
+                    "features": {
+                      "winsNow": false,
+                      "opponentImmediateWinningReplies": 1,
+                      "isCenter": false,
+                      "isCorner": false
+                    }
+                  },
+                  {
+                    "actionId": "cell_7",
+                    "cell": 7,
+                    "coordinate": "B3",
+                    "boardAfter": [
+                      "O",
+                      ".",
+                      "X",
+                      ".",
+                      "X",
+                      ".",
+                      ".",
+                      "O",
+                      "."
+                    ],
+                    "features": {
+                      "winsNow": false,
+                      "opponentImmediateWinningReplies": 1,
+                      "isCenter": false,
+                      "isCorner": false
+                    }
+                  }
+                ]
+              },
+              "questions": {
+                "preference": {
+                  "type": "choice",
+                  "instructions": "Select the legal placement giving JEV the best eventual result against optimal opposition. Prefer win to draw to loss. X moves first. Three matching marks in a row wins. All candidates are legal.",
+                  "criteria": {
+                    "cell_6": {
+                      "cell": 6,
+                      "coordinate": "A3"
+                    },
+                    "cell_8": {
+                      "cell": 8,
+                      "coordinate": "C3"
+                    },
+                    "cell_1": {
+                      "cell": 1,
+                      "coordinate": "B1"
+                    },
+                    "cell_3": {
+                      "cell": 3,
+                      "coordinate": "A2"
+                    },
+                    "cell_5": {
+                      "cell": 5,
+                      "coordinate": "C2"
+                    },
+                    "cell_7": {
+                      "cell": 7,
+                      "coordinate": "B3"
+                    }
+                  }
+                }
+              }
+            },
+            "response": {
+              "model": "jev-1.13.0",
+              "answers": {
+                "preference": {
+                  "type": "choice",
+                  "choice": "cell_6",
+                  "probabilities": {
+                    "cell_6": 1,
+                    "cell_8": 0,
+                    "cell_1": 0,
+                    "cell_3": 0,
+                    "cell_5": 0,
+                    "cell_7": 0
+                  },
+                  "confidence": 1
+                }
+              },
+              "usage": {
+                "input_tokens": 100,
+                "output_tokens": 20
+              }
+            },
+            "attempts": [
+              {
+                "index": 1,
+                "startedAt": "2026-10-14T22:15:38.111Z",
+                "httpStatus": 200,
+                "latencyMs": 0.1231250000000017,
+                "result": "valid"
+              }
+            ],
+            "latencyMs": 0.29816600000000903,
+            "inputBytes": 1871,
+            "probabilities": {
+              "cell_6": 1,
+              "cell_8": 0,
+              "cell_1": 0,
+              "cell_3": 0,
+              "cell_5": 0,
+              "cell_7": 0
+            },
+            "distribution": {
+              "entropyBits": 0,
+              "normalizedEntropy": 0,
+              "topMargin": 1
+            },
+            "fallbackReason": null,
+            "estimatedCostUsd": null,
+            "costBasis": "not_configured"
+          }
+        },
+        {
+          "cell": 3,
+          "mark": "X",
+          "actor": "human",
+          "acceptedAt": 1792016138112,
+          "serverDwellMs": 1,
+          "analysis": {
+            "board": "O.X.X.O..",
+            "canonicalBoard": "..O.X.X.O",
+            "ply": 5,
+            "mark": "X",
+            "cell": 3,
+            "valueBefore": 0,
+            "valueAfter": 0,
+            "regret": 0,
+            "optimal": true,
+            "optimalCells": [
+              3
+            ],
+            "candidates": [
+              {
+                "cell": 8,
+                "value": -1
+              },
+              {
+                "cell": 1,
+                "value": -1
+              },
+              {
+                "cell": 3,
+                "value": 0
+              },
+              {
+                "cell": 5,
+                "value": -1
+              },
+              {
+                "cell": 7,
+                "value": -1
+              }
+            ],
+            "errorType": null,
+            "winOpportunity": false,
+            "missedImmediateWin": false,
+            "necessaryBlockOpportunity": true,
+            "missedNecessaryBlock": false,
+            "forkOpportunity": true,
+            "createsFork": false,
+            "forkCells": [
+              5
+            ],
+            "factors": [
+              "Occupies an immediate opponent winning square"
+            ],
+            "afterBoard": "O.XXX.O.."
+          }
+        },
+        {
+          "cell": 5,
+          "mark": "O",
+          "actor": "jev",
+          "acceptedAt": 1792016138113,
+          "serverDwellMs": null,
+          "analysis": {
+            "board": "O.XXX.O..",
+            "canonicalBoard": "..O.XXX.O",
+            "ply": 6,
+            "mark": "O",
+            "cell": 5,
+            "valueBefore": 0,
+            "valueAfter": 0,
+            "regret": 0,
+            "optimal": true,
+            "optimalCells": [
+              5
+            ],
+            "candidates": [
+              {
+                "cell": 8,
+                "value": -1
+              },
+              {
+                "cell": 1,
+                "value": -1
+              },
+              {
+                "cell": 5,
+                "value": 0
+              },
+              {
+                "cell": 7,
+                "value": -1
+              }
+            ],
+            "errorType": null,
+            "winOpportunity": false,
+            "missedImmediateWin": false,
+            "necessaryBlockOpportunity": true,
+            "missedNecessaryBlock": false,
+            "forkOpportunity": false,
+            "createsFork": false,
+            "forkCells": [],
+            "factors": [
+              "Occupies an immediate opponent winning square"
+            ],
+            "afterBoard": "O.XXXOO.."
+          },
+          "decision": {
+            "action": {
+              "type": "place",
+              "cell": 5
+            },
+            "source": "jev",
+            "modelId": "jev-1.13.0",
+            "inputHash": "24098c44ff580fe6ae7d3fde2e564a6abbbfa2708a5cfa8f698e5f7f6342de06",
+            "request": {
+              "model": "jev-1.13.0",
+              "state": {
+                "game": "tic-tac-toe",
+                "rulesVersion": "ttt/1",
+                "board": [
+                  "O",
+                  ".",
+                  "X",
+                  "X",
+                  "X",
+                  ".",
+                  "O",
+                  ".",
+                  "."
+                ],
+                "jevMark": "O",
+                "humanMark": "X",
+                "toMove": "O",
+                "candidates": [
+                  {
+                    "actionId": "cell_8",
+                    "cell": 8,
+                    "coordinate": "C3",
+                    "boardAfter": [
+                      "O",
+                      ".",
+                      "X",
+                      "X",
+                      "X",
+                      ".",
+                      "O",
+                      ".",
+                      "O"
+                    ],
+                    "features": {
+                      "winsNow": false,
+                      "opponentImmediateWinningReplies": 1,
+                      "isCenter": false,
+                      "isCorner": true
+                    }
+                  },
+                  {
+                    "actionId": "cell_1",
+                    "cell": 1,
+                    "coordinate": "B1",
+                    "boardAfter": [
+                      "O",
+                      "O",
+                      "X",
+                      "X",
+                      "X",
+                      ".",
+                      "O",
+                      ".",
+                      "."
+                    ],
+                    "features": {
+                      "winsNow": false,
+                      "opponentImmediateWinningReplies": 1,
+                      "isCenter": false,
+                      "isCorner": false
+                    }
+                  },
+                  {
+                    "actionId": "cell_5",
+                    "cell": 5,
+                    "coordinate": "C2",
+                    "boardAfter": [
+                      "O",
+                      ".",
+                      "X",
+                      "X",
+                      "X",
+                      "O",
+                      "O",
+                      ".",
+                      "."
+                    ],
+                    "features": {
+                      "winsNow": false,
+                      "opponentImmediateWinningReplies": 0,
+                      "isCenter": false,
+                      "isCorner": false
+                    }
+                  },
+                  {
+                    "actionId": "cell_7",
+                    "cell": 7,
+                    "coordinate": "B3",
+                    "boardAfter": [
+                      "O",
+                      ".",
+                      "X",
+                      "X",
+                      "X",
+                      ".",
+                      "O",
+                      "O",
+                      "."
+                    ],
+                    "features": {
+                      "winsNow": false,
+                      "opponentImmediateWinningReplies": 1,
+                      "isCenter": false,
+                      "isCorner": false
+                    }
+                  }
+                ]
+              },
+              "questions": {
+                "preference": {
+                  "type": "choice",
+                  "instructions": "Select the legal placement giving JEV the best eventual result against optimal opposition. Prefer win to draw to loss. X moves first. Three matching marks in a row wins. All candidates are legal.",
+                  "criteria": {
+                    "cell_8": {
+                      "cell": 8,
+                      "coordinate": "C3"
+                    },
+                    "cell_1": {
+                      "cell": 1,
+                      "coordinate": "B1"
+                    },
+                    "cell_5": {
+                      "cell": 5,
+                      "coordinate": "C2"
+                    },
+                    "cell_7": {
+                      "cell": 7,
+                      "coordinate": "B3"
+                    }
+                  }
+                }
+              }
+            },
+            "response": {
+              "model": "jev-1.13.0",
+              "answers": {
+                "preference": {
+                  "type": "choice",
+                  "choice": "cell_5",
+                  "probabilities": {
+                    "cell_8": 0,
+                    "cell_1": 0,
+                    "cell_5": 1,
+                    "cell_7": 0
+                  },
+                  "confidence": 1
+                }
+              },
+              "usage": {
+                "input_tokens": 100,
+                "output_tokens": 20
+              }
+            },
+            "attempts": [
+              {
+                "index": 1,
+                "startedAt": "2026-10-14T22:15:38.112Z",
+                "httpStatus": 200,
+                "latencyMs": 0.10620900000000688,
+                "result": "valid"
+              }
+            ],
+            "latencyMs": 0.23308400000000518,
+            "inputBytes": 1398,
+            "probabilities": {
+              "cell_8": 0,
+              "cell_1": 0,
+              "cell_5": 1,
+              "cell_7": 0
+            },
+            "distribution": {
+              "entropyBits": 0,
+              "normalizedEntropy": 0,
+              "topMargin": 1
+            },
+            "fallbackReason": null,
+            "estimatedCostUsd": null,
+            "costBasis": "not_configured"
+          }
+        },
+        {
+          "cell": 8,
+          "mark": "X",
+          "actor": "human",
+          "acceptedAt": 1792016138114,
+          "serverDwellMs": 1,
+          "analysis": {
+            "board": "O.XXXOO..",
+            "canonicalBoard": "..OOXXX.O",
+            "ply": 7,
+            "mark": "X",
+            "cell": 8,
+            "valueBefore": 0,
+            "valueAfter": 0,
+            "regret": 0,
+            "optimal": true,
+            "optimalCells": [
+              8,
+              1,
+              7
+            ],
+            "candidates": [
+              {
+                "cell": 8,
+                "value": 0
+              },
+              {
+                "cell": 1,
+                "value": 0
+              },
+              {
+                "cell": 7,
+                "value": 0
+              }
+            ],
+            "errorType": null,
+            "winOpportunity": false,
+            "missedImmediateWin": false,
+            "necessaryBlockOpportunity": false,
+            "missedNecessaryBlock": false,
+            "forkOpportunity": false,
+            "createsFork": false,
+            "forkCells": [],
+            "factors": [],
+            "afterBoard": "O.XXXOO.X"
+          }
+        },
+        {
+          "cell": 1,
+          "mark": "O",
+          "actor": "jev",
+          "acceptedAt": 1792016138114,
+          "serverDwellMs": null,
+          "analysis": {
+            "board": "O.XXXOO.X",
+            "canonicalBoard": "O.XXXOO.X",
+            "ply": 8,
+            "mark": "O",
+            "cell": 1,
+            "valueBefore": 0,
+            "valueAfter": 0,
+            "regret": 0,
+            "optimal": true,
+            "optimalCells": [
+              1,
+              7
+            ],
+            "candidates": [
+              {
+                "cell": 1,
+                "value": 0
+              },
+              {
+                "cell": 7,
+                "value": 0
+              }
+            ],
+            "errorType": null,
+            "winOpportunity": false,
+            "missedImmediateWin": false,
+            "necessaryBlockOpportunity": false,
+            "missedNecessaryBlock": false,
+            "forkOpportunity": false,
+            "createsFork": false,
+            "forkCells": [],
+            "factors": [],
+            "afterBoard": "OOXXXOO.X"
+          },
+          "decision": {
+            "action": {
+              "type": "place",
+              "cell": 1
+            },
+            "source": "jev",
+            "modelId": "jev-1.13.0",
+            "inputHash": "402e0231f2c2c0ef9606b77c562334e4ee6b7bc459d80ac06997a0201d5bc983",
+            "request": {
+              "model": "jev-1.13.0",
+              "state": {
+                "game": "tic-tac-toe",
+                "rulesVersion": "ttt/1",
+                "board": [
+                  "O",
+                  ".",
+                  "X",
+                  "X",
+                  "X",
+                  "O",
+                  "O",
+                  ".",
+                  "X"
+                ],
+                "jevMark": "O",
+                "humanMark": "X",
+                "toMove": "O",
+                "candidates": [
+                  {
+                    "actionId": "cell_1",
+                    "cell": 1,
+                    "coordinate": "B1",
+                    "boardAfter": [
+                      "O",
+                      "O",
+                      "X",
+                      "X",
+                      "X",
+                      "O",
+                      "O",
+                      ".",
+                      "X"
+                    ],
+                    "features": {
+                      "winsNow": false,
+                      "opponentImmediateWinningReplies": 0,
+                      "isCenter": false,
+                      "isCorner": false
+                    }
+                  },
+                  {
+                    "actionId": "cell_7",
+                    "cell": 7,
+                    "coordinate": "B3",
+                    "boardAfter": [
+                      "O",
+                      ".",
+                      "X",
+                      "X",
+                      "X",
+                      "O",
+                      "O",
+                      "O",
+                      "X"
+                    ],
+                    "features": {
+                      "winsNow": false,
+                      "opponentImmediateWinningReplies": 0,
+                      "isCenter": false,
+                      "isCorner": false
+                    }
+                  }
+                ]
+              },
+              "questions": {
+                "preference": {
+                  "type": "choice",
+                  "instructions": "Select the legal placement giving JEV the best eventual result against optimal opposition. Prefer win to draw to loss. X moves first. Three matching marks in a row wins. All candidates are legal.",
+                  "criteria": {
+                    "cell_1": {
+                      "cell": 1,
+                      "coordinate": "B1"
+                    },
+                    "cell_7": {
+                      "cell": 7,
+                      "coordinate": "B3"
+                    }
+                  }
+                }
+              }
+            },
+            "response": {
+              "model": "jev-1.13.0",
+              "answers": {
+                "preference": {
+                  "type": "choice",
+                  "choice": "cell_1",
+                  "probabilities": {
+                    "cell_1": 1,
+                    "cell_7": 0
+                  },
+                  "confidence": 1
+                }
+              },
+              "usage": {
+                "input_tokens": 100,
+                "output_tokens": 20
+              }
+            },
+            "attempts": [
+              {
+                "index": 1,
+                "startedAt": "2026-10-14T22:15:38.114Z",
+                "httpStatus": 200,
+                "latencyMs": 0.07108300000000156,
+                "result": "valid"
+              }
+            ],
+            "latencyMs": 0.15895799999999838,
+            "inputBytes": 925,
+            "probabilities": {
+              "cell_1": 1,
+              "cell_7": 0
+            },
+            "distribution": {
+              "entropyBits": 0,
+              "normalizedEntropy": 0,
+              "topMargin": 1
+            },
+            "fallbackReason": null,
+            "estimatedCostUsd": null,
+            "costBasis": "not_configured"
+          }
+        },
+        {
+          "cell": 7,
+          "mark": "X",
+          "actor": "human",
+          "acceptedAt": 1792016138115,
+          "serverDwellMs": 1,
+          "analysis": {
+            "board": "OOXXXOO.X",
+            "canonicalBoard": "O.XXXOOOX",
+            "ply": 9,
+            "mark": "X",
+            "cell": 7,
+            "valueBefore": 0,
+            "valueAfter": 0,
+            "regret": 0,
+            "optimal": true,
+            "optimalCells": [
+              7
+            ],
+            "candidates": [
+              {
+                "cell": 7,
+                "value": 0
+              }
+            ],
+            "errorType": null,
+            "winOpportunity": false,
+            "missedImmediateWin": false,
+            "necessaryBlockOpportunity": false,
+            "missedNecessaryBlock": false,
+            "forkOpportunity": false,
+            "createsFork": false,
+            "forkCells": [],
+            "factors": [],
+            "afterBoard": "OOXXXOOXX"
+          }
+        }
+      ],
+      "events": [
+        {
+          "schemaVersion": 1,
+          "matchId": "669e9533-8d98-4367-8db5-b552cab19616",
+          "seq": 1,
+          "type": "match_started",
+          "at": "2026-10-14T22:15:38.105Z",
+          "causedBy": null,
+          "payload": {
+            "config": {
+              "gameId": "tic-tac-toe",
+              "rulesVersion": "ttt/1",
+              "difficulty": "normal",
+              "modelId": "jev-1.13.0",
+              "policyVersion": "policy/1",
+              "analyticsVersion": "analytics/1",
+              "sourceRevision": "144b0e67ff68c47d25001214d93d9f9c059d61b856f8b8b4e695230a81ef53fe",
+              "fallback": "minimax-unranked/v1",
+              "budgetMs": 3000
+            },
+            "configHash": "c2bcea7f3c114e14a9c60bea126ebeba93cac1b2c6d97bed1a31a01f3688f0c4",
+            "humanMark": "X",
+            "ranked": false,
+            "expiresAt": 1792102538105
+          },
+          "previousHash": "0000000000000000000000000000000000000000000000000000000000000000",
+          "hash": "8e459c67b11ebb760ee277d079e88801cdd623991e72364da8788f1c4b393f9a"
+        },
+        {
+          "schemaVersion": 1,
+          "matchId": "669e9533-8d98-4367-8db5-b552cab19616",
+          "seq": 2,
+          "type": "action_applied",
+          "at": "2026-10-14T22:15:38.108Z",
+          "causedBy": null,
+          "payload": {
+            "ply": 1,
+            "cell": 4,
+            "mark": "X",
+            "actor": "human",
+            "source": "human",
+            "before": ".........",
+            "after": "....X...."
+          },
+          "previousHash": "8e459c67b11ebb760ee277d079e88801cdd623991e72364da8788f1c4b393f9a",
+          "hash": "2149159fea832d0f97fb7fb5647fc0a930daf71e0f1f0704e72c178558fce306"
+        },
+        {
+          "schemaVersion": 1,
+          "matchId": "669e9533-8d98-4367-8db5-b552cab19616",
+          "seq": 3,
+          "type": "jev_request_prepared",
+          "at": "2026-10-14T22:15:38.108Z",
+          "causedBy": null,
+          "payload": {
+            "basisBoard": "....X....",
+            "request": {
+              "model": "jev-1.13.0",
+              "state": {
+                "game": "tic-tac-toe",
+                "rulesVersion": "ttt/1",
+                "board": [
+                  ".",
+                  ".",
+                  ".",
+                  ".",
+                  "X",
+                  ".",
+                  ".",
+                  ".",
+                  "."
+                ],
+                "jevMark": "O",
+                "humanMark": "X",
+                "toMove": "O",
+                "candidates": [
+                  {
+                    "actionId": "cell_0",
+                    "cell": 0,
+                    "coordinate": "A1",
+                    "boardAfter": [
+                      "O",
+                      ".",
+                      ".",
+                      ".",
+                      "X",
+                      ".",
+                      ".",
+                      ".",
+                      "."
+                    ],
+                    "features": {
+                      "winsNow": false,
+                      "opponentImmediateWinningReplies": 0,
+                      "isCenter": false,
+                      "isCorner": true
+                    }
+                  },
+                  {
+                    "actionId": "cell_2",
+                    "cell": 2,
+                    "coordinate": "C1",
+                    "boardAfter": [
+                      ".",
+                      ".",
+                      "O",
+                      ".",
+                      "X",
+                      ".",
+                      ".",
+                      ".",
+                      "."
+                    ],
+                    "features": {
+                      "winsNow": false,
+                      "opponentImmediateWinningReplies": 0,
+                      "isCenter": false,
+                      "isCorner": true
+                    }
+                  },
+                  {
+                    "actionId": "cell_6",
+                    "cell": 6,
+                    "coordinate": "A3",
+                    "boardAfter": [
+                      ".",
+                      ".",
+                      ".",
+                      ".",
+                      "X",
+                      ".",
+                      "O",
+                      ".",
+                      "."
+                    ],
+                    "features": {
+                      "winsNow": false,
+                      "opponentImmediateWinningReplies": 0,
+                      "isCenter": false,
+                      "isCorner": true
+                    }
+                  },
+                  {
+                    "actionId": "cell_8",
+                    "cell": 8,
+                    "coordinate": "C3",
+                    "boardAfter": [
+                      ".",
+                      ".",
+                      ".",
+                      ".",
+                      "X",
+                      ".",
+                      ".",
+                      ".",
+                      "O"
+                    ],
+                    "features": {
+                      "winsNow": false,
+                      "opponentImmediateWinningReplies": 0,
+                      "isCenter": false,
+                      "isCorner": true
+                    }
+                  },
+                  {
+                    "actionId": "cell_1",
+                    "cell": 1,
+                    "coordinate": "B1",
+                    "boardAfter": [
+                      ".",
+                      "O",
+                      ".",
+                      ".",
+                      "X",
+                      ".",
+                      ".",
+                      ".",
+                      "."
+                    ],
+                    "features": {
+                      "winsNow": false,
+                      "opponentImmediateWinningReplies": 0,
+                      "isCenter": false,
+                      "isCorner": false
+                    }
+                  },
+                  {
+                    "actionId": "cell_3",
+                    "cell": 3,
+                    "coordinate": "A2",
+                    "boardAfter": [
+                      ".",
+                      ".",
+                      ".",
+                      "O",
+                      "X",
+                      ".",
+                      ".",
+                      ".",
+                      "."
+                    ],
+                    "features": {
+                      "winsNow": false,
+                      "opponentImmediateWinningReplies": 0,
+                      "isCenter": false,
+                      "isCorner": false
+                    }
+                  },
+                  {
+                    "actionId": "cell_5",
+                    "cell": 5,
+                    "coordinate": "C2",
+                    "boardAfter": [
+                      ".",
+                      ".",
+                      ".",
+                      ".",
+                      "X",
+                      "O",
+                      ".",
+                      ".",
+                      "."
+                    ],
+                    "features": {
+                      "winsNow": false,
+                      "opponentImmediateWinningReplies": 0,
+                      "isCenter": false,
+                      "isCorner": false
+                    }
+                  },
+                  {
+                    "actionId": "cell_7",
+                    "cell": 7,
+                    "coordinate": "B3",
+                    "boardAfter": [
+                      ".",
+                      ".",
+                      ".",
+                      ".",
+                      "X",
+                      ".",
+                      ".",
+                      "O",
+                      "."
+                    ],
+                    "features": {
+                      "winsNow": false,
+                      "opponentImmediateWinningReplies": 0,
+                      "isCenter": false,
+                      "isCorner": false
+                    }
+                  }
+                ]
+              },
+              "questions": {
+                "preference": {
+                  "type": "choice",
+                  "instructions": "Select the legal placement giving JEV the best eventual result against optimal opposition. Prefer win to draw to loss. X moves first. Three matching marks in a row wins. All candidates are legal.",
+                  "criteria": {
+                    "cell_0": {
+                      "cell": 0,
+                      "coordinate": "A1"
+                    },
+                    "cell_2": {
+                      "cell": 2,
+                      "coordinate": "C1"
+                    },
+                    "cell_6": {
+                      "cell": 6,
+                      "coordinate": "A3"
+                    },
+                    "cell_8": {
+                      "cell": 8,
+                      "coordinate": "C3"
+                    },
+                    "cell_1": {
+                      "cell": 1,
+                      "coordinate": "B1"
+                    },
+                    "cell_3": {
+                      "cell": 3,
+                      "coordinate": "A2"
+                    },
+                    "cell_5": {
+                      "cell": 5,
+                      "coordinate": "C2"
+                    },
+                    "cell_7": {
+                      "cell": 7,
+                      "coordinate": "B3"
+                    }
+                  }
+                }
+              }
+            },
+            "inputHash": "2484cb88cb21745c5b5083ee567c7838d8be86e2e0ae3fa725383eaf890eba4f",
+            "reason": null
+          },
+          "previousHash": "2149159fea832d0f97fb7fb5647fc0a930daf71e0f1f0704e72c178558fce306",
+          "hash": "70bf781057b2f5accaa5f225db8e61da976cb3b2ffe20a0ad952e993ff2f368d"
+        },
+        {
+          "schemaVersion": 1,
+          "matchId": "669e9533-8d98-4367-8db5-b552cab19616",
+          "seq": 4,
+          "type": "jev_result",
+          "at": "2026-10-14T22:15:38.109Z",
+          "causedBy": 3,
+          "payload": {
+            "decision": {
+              "action": {
+                "type": "place",
+                "cell": 0
+              },
+              "source": "jev",
+              "modelId": "jev-1.13.0",
+              "inputHash": "2484cb88cb21745c5b5083ee567c7838d8be86e2e0ae3fa725383eaf890eba4f",
+              "request": {
+                "model": "jev-1.13.0",
+                "state": {
+                  "game": "tic-tac-toe",
+                  "rulesVersion": "ttt/1",
+                  "board": [
+                    ".",
+                    ".",
+                    ".",
+                    ".",
+                    "X",
+                    ".",
+                    ".",
+                    ".",
+                    "."
+                  ],
+                  "jevMark": "O",
+                  "humanMark": "X",
+                  "toMove": "O",
+                  "candidates": [
+                    {
+                      "actionId": "cell_0",
+                      "cell": 0,
+                      "coordinate": "A1",
+                      "boardAfter": [
+                        "O",
+                        ".",
+                        ".",
+                        ".",
+                        "X",
+                        ".",
+                        ".",
+                        ".",
+                        "."
+                      ],
+                      "features": {
+                        "winsNow": false,
+                        "opponentImmediateWinningReplies": 0,
+                        "isCenter": false,
+                        "isCorner": true
+                      }
+                    },
+                    {
+                      "actionId": "cell_2",
+                      "cell": 2,
+                      "coordinate": "C1",
+                      "boardAfter": [
+                        ".",
+                        ".",
+                        "O",
+                        ".",
+                        "X",
+                        ".",
+                        ".",
+                        ".",
+                        "."
+                      ],
+                      "features": {
+                        "winsNow": false,
+                        "opponentImmediateWinningReplies": 0,
+                        "isCenter": false,
+                        "isCorner": true
+                      }
+                    },
+                    {
+                      "actionId": "cell_6",
+                      "cell": 6,
+                      "coordinate": "A3",
+                      "boardAfter": [
+                        ".",
+                        ".",
+                        ".",
+                        ".",
+                        "X",
+                        ".",
+                        "O",
+                        ".",
+                        "."
+                      ],
+                      "features": {
+                        "winsNow": false,
+                        "opponentImmediateWinningReplies": 0,
+                        "isCenter": false,
+                        "isCorner": true
+                      }
+                    },
+                    {
+                      "actionId": "cell_8",
+                      "cell": 8,
+                      "coordinate": "C3",
+                      "boardAfter": [
+                        ".",
+                        ".",
+                        ".",
+                        ".",
+                        "X",
+                        ".",
+                        ".",
+                        ".",
+                        "O"
+                      ],
+                      "features": {
+                        "winsNow": false,
+                        "opponentImmediateWinningReplies": 0,
+                        "isCenter": false,
+                        "isCorner": true
+                      }
+                    },
+                    {
+                      "actionId": "cell_1",
+                      "cell": 1,
+                      "coordinate": "B1",
+                      "boardAfter": [
+                        ".",
+                        "O",
+                        ".",
+                        ".",
+                        "X",
+                        ".",
+                        ".",
+                        ".",
+                        "."
+                      ],
+                      "features": {
+                        "winsNow": false,
+                        "opponentImmediateWinningReplies": 0,
+                        "isCenter": false,
+                        "isCorner": false
+                      }
+                    },
+                    {
+                      "actionId": "cell_3",
+                      "cell": 3,
+                      "coordinate": "A2",
+                      "boardAfter": [
+                        ".",
+                        ".",
+                        ".",
+                        "O",
+                        "X",
+                        ".",
+                        ".",
+                        ".",
+                        "."
+                      ],
+                      "features": {
+                        "winsNow": false,
+                        "opponentImmediateWinningReplies": 0,
+                        "isCenter": false,
+                        "isCorner": false
+                      }
+                    },
+                    {
+                      "actionId": "cell_5",
+                      "cell": 5,
+                      "coordinate": "C2",
+                      "boardAfter": [
+                        ".",
+                        ".",
+                        ".",
+                        ".",
+                        "X",
+                        "O",
+                        ".",
+                        ".",
+                        "."
+                      ],
+                      "features": {
+                        "winsNow": false,
+                        "opponentImmediateWinningReplies": 0,
+                        "isCenter": false,
+                        "isCorner": false
+                      }
+                    },
+                    {
+                      "actionId": "cell_7",
+                      "cell": 7,
+                      "coordinate": "B3",
+                      "boardAfter": [
+                        ".",
+                        ".",
+                        ".",
+                        ".",
+                        "X",
+                        ".",
+                        ".",
+                        "O",
+                        "."
+                      ],
+                      "features": {
+                        "winsNow": false,
+                        "opponentImmediateWinningReplies": 0,
+                        "isCenter": false,
+                        "isCorner": false
+                      }
+                    }
+                  ]
+                },
+                "questions": {
+                  "preference": {
+                    "type": "choice",
+                    "instructions": "Select the legal placement giving JEV the best eventual result against optimal opposition. Prefer win to draw to loss. X moves first. Three matching marks in a row wins. All candidates are legal.",
+                    "criteria": {
+                      "cell_0": {
+                        "cell": 0,
+                        "coordinate": "A1"
+                      },
+                      "cell_2": {
+                        "cell": 2,
+                        "coordinate": "C1"
+                      },
+                      "cell_6": {
+                        "cell": 6,
+                        "coordinate": "A3"
+                      },
+                      "cell_8": {
+                        "cell": 8,
+                        "coordinate": "C3"
+                      },
+                      "cell_1": {
+                        "cell": 1,
+                        "coordinate": "B1"
+                      },
+                      "cell_3": {
+                        "cell": 3,
+                        "coordinate": "A2"
+                      },
+                      "cell_5": {
+                        "cell": 5,
+                        "coordinate": "C2"
+                      },
+                      "cell_7": {
+                        "cell": 7,
+                        "coordinate": "B3"
+                      }
+                    }
+                  }
+                }
+              },
+              "response": {
+                "model": "jev-1.13.0",
+                "answers": {
+                  "preference": {
+                    "type": "choice",
+                    "choice": "cell_0",
+                    "probabilities": {
+                      "cell_0": 1,
+                      "cell_2": 0,
+                      "cell_6": 0,
+                      "cell_8": 0,
+                      "cell_1": 0,
+                      "cell_3": 0,
+                      "cell_5": 0,
+                      "cell_7": 0
+                    },
+                    "confidence": 1
+                  }
+                },
+                "usage": {
+                  "input_tokens": 100,
+                  "output_tokens": 20
+                }
+              },
+              "attempts": [
+                {
+                  "index": 1,
+                  "startedAt": "2026-10-14T22:15:38.109Z",
+                  "httpStatus": 200,
+                  "latencyMs": 0.5733330000000052,
+                  "result": "valid"
+                }
+              ],
+              "latencyMs": 0.7985000000000042,
+              "inputBytes": 2343,
+              "probabilities": {
+                "cell_0": 1,
+                "cell_2": 0,
+                "cell_6": 0,
+                "cell_8": 0,
+                "cell_1": 0,
+                "cell_3": 0,
+                "cell_5": 0,
+                "cell_7": 0
+              },
+              "distribution": {
+                "entropyBits": 0,
+                "normalizedEntropy": 0,
+                "topMargin": 1
+              },
+              "fallbackReason": null,
+              "estimatedCostUsd": null,
+              "costBasis": "not_configured"
+            }
+          },
+          "previousHash": "70bf781057b2f5accaa5f225db8e61da976cb3b2ffe20a0ad952e993ff2f368d",
+          "hash": "8056073b97dedda70d4289a66340bb429b6fe4612fb1b5dbeda23ba0367921bc"
+        },
+        {
+          "schemaVersion": 1,
+          "matchId": "669e9533-8d98-4367-8db5-b552cab19616",
+          "seq": 5,
+          "type": "action_applied",
+          "at": "2026-10-14T22:15:38.110Z",
+          "causedBy": null,
+          "payload": {
+            "ply": 2,
+            "cell": 0,
+            "mark": "O",
+            "actor": "jev",
+            "source": "jev",
+            "before": "....X....",
+            "after": "O...X...."
+          },
+          "previousHash": "8056073b97dedda70d4289a66340bb429b6fe4612fb1b5dbeda23ba0367921bc",
+          "hash": "57995aa6d013b75273d923e648f6278a85e3caacbab97384e072f47653fc5782"
+        },
+        {
+          "schemaVersion": 1,
+          "matchId": "669e9533-8d98-4367-8db5-b552cab19616",
+          "seq": 6,
+          "type": "action_applied",
+          "at": "2026-10-14T22:15:38.110Z",
+          "causedBy": null,
+          "payload": {
+            "ply": 3,
+            "cell": 2,
+            "mark": "X",
+            "actor": "human",
+            "source": "human",
+            "before": "O...X....",
+            "after": "O.X.X...."
+          },
+          "previousHash": "57995aa6d013b75273d923e648f6278a85e3caacbab97384e072f47653fc5782",
+          "hash": "f7e3d70cac1b5091bb2f2cef573f0223c49a9ae0f50fe14d919288a7e36a2768"
+        },
+        {
+          "schemaVersion": 1,
+          "matchId": "669e9533-8d98-4367-8db5-b552cab19616",
+          "seq": 7,
+          "type": "jev_request_prepared",
+          "at": "2026-10-14T22:15:38.111Z",
+          "causedBy": null,
+          "payload": {
+            "basisBoard": "O.X.X....",
+            "request": {
+              "model": "jev-1.13.0",
+              "state": {
+                "game": "tic-tac-toe",
+                "rulesVersion": "ttt/1",
+                "board": [
+                  "O",
+                  ".",
+                  "X",
+                  ".",
+                  "X",
+                  ".",
+                  ".",
+                  ".",
+                  "."
+                ],
+                "jevMark": "O",
+                "humanMark": "X",
+                "toMove": "O",
+                "candidates": [
+                  {
+                    "actionId": "cell_6",
+                    "cell": 6,
+                    "coordinate": "A3",
+                    "boardAfter": [
+                      "O",
+                      ".",
+                      "X",
+                      ".",
+                      "X",
+                      ".",
+                      "O",
+                      ".",
+                      "."
+                    ],
+                    "features": {
+                      "winsNow": false,
+                      "opponentImmediateWinningReplies": 0,
+                      "isCenter": false,
+                      "isCorner": true
+                    }
+                  },
+                  {
+                    "actionId": "cell_8",
+                    "cell": 8,
+                    "coordinate": "C3",
+                    "boardAfter": [
+                      "O",
+                      ".",
+                      "X",
+                      ".",
+                      "X",
+                      ".",
+                      ".",
+                      ".",
+                      "O"
+                    ],
+                    "features": {
+                      "winsNow": false,
+                      "opponentImmediateWinningReplies": 1,
+                      "isCenter": false,
+                      "isCorner": true
+                    }
+                  },
+                  {
+                    "actionId": "cell_1",
+                    "cell": 1,
+                    "coordinate": "B1",
+                    "boardAfter": [
+                      "O",
+                      "O",
+                      "X",
+                      ".",
+                      "X",
+                      ".",
+                      ".",
+                      ".",
+                      "."
+                    ],
+                    "features": {
+                      "winsNow": false,
+                      "opponentImmediateWinningReplies": 1,
+                      "isCenter": false,
+                      "isCorner": false
+                    }
+                  },
+                  {
+                    "actionId": "cell_3",
+                    "cell": 3,
+                    "coordinate": "A2",
+                    "boardAfter": [
+                      "O",
+                      ".",
+                      "X",
+                      "O",
+                      "X",
+                      ".",
+                      ".",
+                      ".",
+                      "."
+                    ],
+                    "features": {
+                      "winsNow": false,
+                      "opponentImmediateWinningReplies": 1,
+                      "isCenter": false,
+                      "isCorner": false
+                    }
+                  },
+                  {
+                    "actionId": "cell_5",
+                    "cell": 5,
+                    "coordinate": "C2",
+                    "boardAfter": [
+                      "O",
+                      ".",
+                      "X",
+                      ".",
+                      "X",
+                      "O",
+                      ".",
+                      ".",
+                      "."
+                    ],
+                    "features": {
+                      "winsNow": false,
+                      "opponentImmediateWinningReplies": 1,
+                      "isCenter": false,
+                      "isCorner": false
+                    }
+                  },
+                  {
+                    "actionId": "cell_7",
+                    "cell": 7,
+                    "coordinate": "B3",
+                    "boardAfter": [
+                      "O",
+                      ".",
+                      "X",
+                      ".",
+                      "X",
+                      ".",
+                      ".",
+                      "O",
+                      "."
+                    ],
+                    "features": {
+                      "winsNow": false,
+                      "opponentImmediateWinningReplies": 1,
+                      "isCenter": false,
+                      "isCorner": false
+                    }
+                  }
+                ]
+              },
+              "questions": {
+                "preference": {
+                  "type": "choice",
+                  "instructions": "Select the legal placement giving JEV the best eventual result against optimal opposition. Prefer win to draw to loss. X moves first. Three matching marks in a row wins. All candidates are legal.",
+                  "criteria": {
+                    "cell_6": {
+                      "cell": 6,
+                      "coordinate": "A3"
+                    },
+                    "cell_8": {
+                      "cell": 8,
+                      "coordinate": "C3"
+                    },
+                    "cell_1": {
+                      "cell": 1,
+                      "coordinate": "B1"
+                    },
+                    "cell_3": {
+                      "cell": 3,
+                      "coordinate": "A2"
+                    },
+                    "cell_5": {
+                      "cell": 5,
+                      "coordinate": "C2"
+                    },
+                    "cell_7": {
+                      "cell": 7,
+                      "coordinate": "B3"
+                    }
+                  }
+                }
+              }
+            },
+            "inputHash": "4a9e0c7eb074098e0f7591afd35ec51af5f468f4858aa6389d8b6979bd415d45",
+            "reason": null
+          },
+          "previousHash": "f7e3d70cac1b5091bb2f2cef573f0223c49a9ae0f50fe14d919288a7e36a2768",
+          "hash": "12e5613f18e6101a32a7a8ff6ed89a8fd44fc842bdf2d24032ea2846db44899c"
+        },
+        {
+          "schemaVersion": 1,
+          "matchId": "669e9533-8d98-4367-8db5-b552cab19616",
+          "seq": 8,
+          "type": "jev_result",
+          "at": "2026-10-14T22:15:38.111Z",
+          "causedBy": 7,
+          "payload": {
+            "decision": {
+              "action": {
+                "type": "place",
+                "cell": 6
+              },
+              "source": "jev",
+              "modelId": "jev-1.13.0",
+              "inputHash": "4a9e0c7eb074098e0f7591afd35ec51af5f468f4858aa6389d8b6979bd415d45",
+              "request": {
+                "model": "jev-1.13.0",
+                "state": {
+                  "game": "tic-tac-toe",
+                  "rulesVersion": "ttt/1",
+                  "board": [
+                    "O",
+                    ".",
+                    "X",
+                    ".",
+                    "X",
+                    ".",
+                    ".",
+                    ".",
+                    "."
+                  ],
+                  "jevMark": "O",
+                  "humanMark": "X",
+                  "toMove": "O",
+                  "candidates": [
+                    {
+                      "actionId": "cell_6",
+                      "cell": 6,
+                      "coordinate": "A3",
+                      "boardAfter": [
+                        "O",
+                        ".",
+                        "X",
+                        ".",
+                        "X",
+                        ".",
+                        "O",
+                        ".",
+                        "."
+                      ],
+                      "features": {
+                        "winsNow": false,
+                        "opponentImmediateWinningReplies": 0,
+                        "isCenter": false,
+                        "isCorner": true
+                      }
+                    },
+                    {
+                      "actionId": "cell_8",
+                      "cell": 8,
+                      "coordinate": "C3",
+                      "boardAfter": [
+                        "O",
+                        ".",
+                        "X",
+                        ".",
+                        "X",
+                        ".",
+                        ".",
+                        ".",
+                        "O"
+                      ],
+                      "features": {
+                        "winsNow": false,
+                        "opponentImmediateWinningReplies": 1,
+                        "isCenter": false,
+                        "isCorner": true
+                      }
+                    },
+                    {
+                      "actionId": "cell_1",
+                      "cell": 1,
+                      "coordinate": "B1",
+                      "boardAfter": [
+                        "O",
+                        "O",
+                        "X",
+                        ".",
+                        "X",
+                        ".",
+                        ".",
+                        ".",
+                        "."
+                      ],
+                      "features": {
+                        "winsNow": false,
+                        "opponentImmediateWinningReplies": 1,
+                        "isCenter": false,
+                        "isCorner": false
+                      }
+                    },
+                    {
+                      "actionId": "cell_3",
+                      "cell": 3,
+                      "coordinate": "A2",
+                      "boardAfter": [
+                        "O",
+                        ".",
+                        "X",
+                        "O",
+                        "X",
+                        ".",
+                        ".",
+                        ".",
+                        "."
+                      ],
+                      "features": {
+                        "winsNow": false,
+                        "opponentImmediateWinningReplies": 1,
+                        "isCenter": false,
+                        "isCorner": false
+                      }
+                    },
+                    {
+                      "actionId": "cell_5",
+                      "cell": 5,
+                      "coordinate": "C2",
+                      "boardAfter": [
+                        "O",
+                        ".",
+                        "X",
+                        ".",
+                        "X",
+                        "O",
+                        ".",
+                        ".",
+                        "."
+                      ],
+                      "features": {
+                        "winsNow": false,
+                        "opponentImmediateWinningReplies": 1,
+                        "isCenter": false,
+                        "isCorner": false
+                      }
+                    },
+                    {
+                      "actionId": "cell_7",
+                      "cell": 7,
+                      "coordinate": "B3",
+                      "boardAfter": [
+                        "O",
+                        ".",
+                        "X",
+                        ".",
+                        "X",
+                        ".",
+                        ".",
+                        "O",
+                        "."
+                      ],
+                      "features": {
+                        "winsNow": false,
+                        "opponentImmediateWinningReplies": 1,
+                        "isCenter": false,
+                        "isCorner": false
+                      }
+                    }
+                  ]
+                },
+                "questions": {
+                  "preference": {
+                    "type": "choice",
+                    "instructions": "Select the legal placement giving JEV the best eventual result against optimal opposition. Prefer win to draw to loss. X moves first. Three matching marks in a row wins. All candidates are legal.",
+                    "criteria": {
+                      "cell_6": {
+                        "cell": 6,
+                        "coordinate": "A3"
+                      },
+                      "cell_8": {
+                        "cell": 8,
+                        "coordinate": "C3"
+                      },
+                      "cell_1": {
+                        "cell": 1,
+                        "coordinate": "B1"
+                      },
+                      "cell_3": {
+                        "cell": 3,
+                        "coordinate": "A2"
+                      },
+                      "cell_5": {
+                        "cell": 5,
+                        "coordinate": "C2"
+                      },
+                      "cell_7": {
+                        "cell": 7,
+                        "coordinate": "B3"
+                      }
+                    }
+                  }
+                }
+              },
+              "response": {
+                "model": "jev-1.13.0",
+                "answers": {
+                  "preference": {
+                    "type": "choice",
+                    "choice": "cell_6",
+                    "probabilities": {
+                      "cell_6": 1,
+                      "cell_8": 0,
+                      "cell_1": 0,
+                      "cell_3": 0,
+                      "cell_5": 0,
+                      "cell_7": 0
+                    },
+                    "confidence": 1
+                  }
+                },
+                "usage": {
+                  "input_tokens": 100,
+                  "output_tokens": 20
+                }
+              },
+              "attempts": [
+                {
+                  "index": 1,
+                  "startedAt": "2026-10-14T22:15:38.111Z",
+                  "httpStatus": 200,
+                  "latencyMs": 0.1231250000000017,
+                  "result": "valid"
+                }
+              ],
+              "latencyMs": 0.29816600000000903,
+              "inputBytes": 1871,
+              "probabilities": {
+                "cell_6": 1,
+                "cell_8": 0,
+                "cell_1": 0,
+                "cell_3": 0,
+                "cell_5": 0,
+                "cell_7": 0
+              },
+              "distribution": {
+                "entropyBits": 0,
+                "normalizedEntropy": 0,
+                "topMargin": 1
+              },
+              "fallbackReason": null,
+              "estimatedCostUsd": null,
+              "costBasis": "not_configured"
+            }
+          },
+          "previousHash": "12e5613f18e6101a32a7a8ff6ed89a8fd44fc842bdf2d24032ea2846db44899c",
+          "hash": "bc9623da1af4e6a56e52a259208f5c6e04ba8732ea9382cdeaf2c0cea2d7e7a2"
+        },
+        {
+          "schemaVersion": 1,
+          "matchId": "669e9533-8d98-4367-8db5-b552cab19616",
+          "seq": 9,
+          "type": "action_applied",
+          "at": "2026-10-14T22:15:38.111Z",
+          "causedBy": null,
+          "payload": {
+            "ply": 4,
+            "cell": 6,
+            "mark": "O",
+            "actor": "jev",
+            "source": "jev",
+            "before": "O.X.X....",
+            "after": "O.X.X.O.."
+          },
+          "previousHash": "bc9623da1af4e6a56e52a259208f5c6e04ba8732ea9382cdeaf2c0cea2d7e7a2",
+          "hash": "58ffff424bd5da2a0956c928b1660106e90c9a3700e74ba450103eba3c8b83f0"
+        },
+        {
+          "schemaVersion": 1,
+          "matchId": "669e9533-8d98-4367-8db5-b552cab19616",
+          "seq": 10,
+          "type": "action_applied",
+          "at": "2026-10-14T22:15:38.112Z",
+          "causedBy": null,
+          "payload": {
+            "ply": 5,
+            "cell": 3,
+            "mark": "X",
+            "actor": "human",
+            "source": "human",
+            "before": "O.X.X.O..",
+            "after": "O.XXX.O.."
+          },
+          "previousHash": "58ffff424bd5da2a0956c928b1660106e90c9a3700e74ba450103eba3c8b83f0",
+          "hash": "49e852e742e299438dd31050457f6c979e4d60bcee1b661687383826c3ab7b38"
+        },
+        {
+          "schemaVersion": 1,
+          "matchId": "669e9533-8d98-4367-8db5-b552cab19616",
+          "seq": 11,
+          "type": "jev_request_prepared",
+          "at": "2026-10-14T22:15:38.112Z",
+          "causedBy": null,
+          "payload": {
+            "basisBoard": "O.XXX.O..",
+            "request": {
+              "model": "jev-1.13.0",
+              "state": {
+                "game": "tic-tac-toe",
+                "rulesVersion": "ttt/1",
+                "board": [
+                  "O",
+                  ".",
+                  "X",
+                  "X",
+                  "X",
+                  ".",
+                  "O",
+                  ".",
+                  "."
+                ],
+                "jevMark": "O",
+                "humanMark": "X",
+                "toMove": "O",
+                "candidates": [
+                  {
+                    "actionId": "cell_8",
+                    "cell": 8,
+                    "coordinate": "C3",
+                    "boardAfter": [
+                      "O",
+                      ".",
+                      "X",
+                      "X",
+                      "X",
+                      ".",
+                      "O",
+                      ".",
+                      "O"
+                    ],
+                    "features": {
+                      "winsNow": false,
+                      "opponentImmediateWinningReplies": 1,
+                      "isCenter": false,
+                      "isCorner": true
+                    }
+                  },
+                  {
+                    "actionId": "cell_1",
+                    "cell": 1,
+                    "coordinate": "B1",
+                    "boardAfter": [
+                      "O",
+                      "O",
+                      "X",
+                      "X",
+                      "X",
+                      ".",
+                      "O",
+                      ".",
+                      "."
+                    ],
+                    "features": {
+                      "winsNow": false,
+                      "opponentImmediateWinningReplies": 1,
+                      "isCenter": false,
+                      "isCorner": false
+                    }
+                  },
+                  {
+                    "actionId": "cell_5",
+                    "cell": 5,
+                    "coordinate": "C2",
+                    "boardAfter": [
+                      "O",
+                      ".",
+                      "X",
+                      "X",
+                      "X",
+                      "O",
+                      "O",
+                      ".",
+                      "."
+                    ],
+                    "features": {
+                      "winsNow": false,
+                      "opponentImmediateWinningReplies": 0,
+                      "isCenter": false,
+                      "isCorner": false
+                    }
+                  },
+                  {
+                    "actionId": "cell_7",
+                    "cell": 7,
+                    "coordinate": "B3",
+                    "boardAfter": [
+                      "O",
+                      ".",
+                      "X",
+                      "X",
+                      "X",
+                      ".",
+                      "O",
+                      "O",
+                      "."
+                    ],
+                    "features": {
+                      "winsNow": false,
+                      "opponentImmediateWinningReplies": 1,
+                      "isCenter": false,
+                      "isCorner": false
+                    }
+                  }
+                ]
+              },
+              "questions": {
+                "preference": {
+                  "type": "choice",
+                  "instructions": "Select the legal placement giving JEV the best eventual result against optimal opposition. Prefer win to draw to loss. X moves first. Three matching marks in a row wins. All candidates are legal.",
+                  "criteria": {
+                    "cell_8": {
+                      "cell": 8,
+                      "coordinate": "C3"
+                    },
+                    "cell_1": {
+                      "cell": 1,
+                      "coordinate": "B1"
+                    },
+                    "cell_5": {
+                      "cell": 5,
+                      "coordinate": "C2"
+                    },
+                    "cell_7": {
+                      "cell": 7,
+                      "coordinate": "B3"
+                    }
+                  }
+                }
+              }
+            },
+            "inputHash": "24098c44ff580fe6ae7d3fde2e564a6abbbfa2708a5cfa8f698e5f7f6342de06",
+            "reason": null
+          },
+          "previousHash": "49e852e742e299438dd31050457f6c979e4d60bcee1b661687383826c3ab7b38",
+          "hash": "2d03ad1f419157b4c2570a04ef0494d66617a103fafec11641c89ceb372a83d5"
+        },
+        {
+          "schemaVersion": 1,
+          "matchId": "669e9533-8d98-4367-8db5-b552cab19616",
+          "seq": 12,
+          "type": "jev_result",
+          "at": "2026-10-14T22:15:38.113Z",
+          "causedBy": 11,
+          "payload": {
+            "decision": {
+              "action": {
+                "type": "place",
+                "cell": 5
+              },
+              "source": "jev",
+              "modelId": "jev-1.13.0",
+              "inputHash": "24098c44ff580fe6ae7d3fde2e564a6abbbfa2708a5cfa8f698e5f7f6342de06",
+              "request": {
+                "model": "jev-1.13.0",
+                "state": {
+                  "game": "tic-tac-toe",
+                  "rulesVersion": "ttt/1",
+                  "board": [
+                    "O",
+                    ".",
+                    "X",
+                    "X",
+                    "X",
+                    ".",
+                    "O",
+                    ".",
+                    "."
+                  ],
+                  "jevMark": "O",
+                  "humanMark": "X",
+                  "toMove": "O",
+                  "candidates": [
+                    {
+                      "actionId": "cell_8",
+                      "cell": 8,
+                      "coordinate": "C3",
+                      "boardAfter": [
+                        "O",
+                        ".",
+                        "X",
+                        "X",
+                        "X",
+                        ".",
+                        "O",
+                        ".",
+                        "O"
+                      ],
+                      "features": {
+                        "winsNow": false,
+                        "opponentImmediateWinningReplies": 1,
+                        "isCenter": false,
+                        "isCorner": true
+                      }
+                    },
+                    {
+                      "actionId": "cell_1",
+                      "cell": 1,
+                      "coordinate": "B1",
+                      "boardAfter": [
+                        "O",
+                        "O",
+                        "X",
+                        "X",
+                        "X",
+                        ".",
+                        "O",
+                        ".",
+                        "."
+                      ],
+                      "features": {
+                        "winsNow": false,
+                        "opponentImmediateWinningReplies": 1,
+                        "isCenter": false,
+                        "isCorner": false
+                      }
+                    },
+                    {
+                      "actionId": "cell_5",
+                      "cell": 5,
+                      "coordinate": "C2",
+                      "boardAfter": [
+                        "O",
+                        ".",
+                        "X",
+                        "X",
+                        "X",
+                        "O",
+                        "O",
+                        ".",
+                        "."
+                      ],
+                      "features": {
+                        "winsNow": false,
+                        "opponentImmediateWinningReplies": 0,
+                        "isCenter": false,
+                        "isCorner": false
+                      }
+                    },
+                    {
+                      "actionId": "cell_7",
+                      "cell": 7,
+                      "coordinate": "B3",
+                      "boardAfter": [
+                        "O",
+                        ".",
+                        "X",
+                        "X",
+                        "X",
+                        ".",
+                        "O",
+                        "O",
+                        "."
+                      ],
+                      "features": {
+                        "winsNow": false,
+                        "opponentImmediateWinningReplies": 1,
+                        "isCenter": false,
+                        "isCorner": false
+                      }
+                    }
+                  ]
+                },
+                "questions": {
+                  "preference": {
+                    "type": "choice",
+                    "instructions": "Select the legal placement giving JEV the best eventual result against optimal opposition. Prefer win to draw to loss. X moves first. Three matching marks in a row wins. All candidates are legal.",
+                    "criteria": {
+                      "cell_8": {
+                        "cell": 8,
+                        "coordinate": "C3"
+                      },
+                      "cell_1": {
+                        "cell": 1,
+                        "coordinate": "B1"
+                      },
+                      "cell_5": {
+                        "cell": 5,
+                        "coordinate": "C2"
+                      },
+                      "cell_7": {
+                        "cell": 7,
+                        "coordinate": "B3"
+                      }
+                    }
+                  }
+                }
+              },
+              "response": {
+                "model": "jev-1.13.0",
+                "answers": {
+                  "preference": {
+                    "type": "choice",
+                    "choice": "cell_5",
+                    "probabilities": {
+                      "cell_8": 0,
+                      "cell_1": 0,
+                      "cell_5": 1,
+                      "cell_7": 0
+                    },
+                    "confidence": 1
+                  }
+                },
+                "usage": {
+                  "input_tokens": 100,
+                  "output_tokens": 20
+                }
+              },
+              "attempts": [
+                {
+                  "index": 1,
+                  "startedAt": "2026-10-14T22:15:38.112Z",
+                  "httpStatus": 200,
+                  "latencyMs": 0.10620900000000688,
+                  "result": "valid"
+                }
+              ],
+              "latencyMs": 0.23308400000000518,
+              "inputBytes": 1398,
+              "probabilities": {
+                "cell_8": 0,
+                "cell_1": 0,
+                "cell_5": 1,
+                "cell_7": 0
+              },
+              "distribution": {
+                "entropyBits": 0,
+                "normalizedEntropy": 0,
+                "topMargin": 1
+              },
+              "fallbackReason": null,
+              "estimatedCostUsd": null,
+              "costBasis": "not_configured"
+            }
+          },
+          "previousHash": "2d03ad1f419157b4c2570a04ef0494d66617a103fafec11641c89ceb372a83d5",
+          "hash": "3e24aefb5d7002d6a56959f95fce3a9e42c4f29c17a54ffd69986c8873dad103"
+        },
+        {
+          "schemaVersion": 1,
+          "matchId": "669e9533-8d98-4367-8db5-b552cab19616",
+          "seq": 13,
+          "type": "action_applied",
+          "at": "2026-10-14T22:15:38.113Z",
+          "causedBy": null,
+          "payload": {
+            "ply": 6,
+            "cell": 5,
+            "mark": "O",
+            "actor": "jev",
+            "source": "jev",
+            "before": "O.XXX.O..",
+            "after": "O.XXXOO.."
+          },
+          "previousHash": "3e24aefb5d7002d6a56959f95fce3a9e42c4f29c17a54ffd69986c8873dad103",
+          "hash": "c25dfeb8109b2a4a78f5711195ff8d7796b8ccd5a6ee51695563a867c71a517c"
+        },
+        {
+          "schemaVersion": 1,
+          "matchId": "669e9533-8d98-4367-8db5-b552cab19616",
+          "seq": 14,
+          "type": "action_applied",
+          "at": "2026-10-14T22:15:38.114Z",
+          "causedBy": null,
+          "payload": {
+            "ply": 7,
+            "cell": 8,
+            "mark": "X",
+            "actor": "human",
+            "source": "human",
+            "before": "O.XXXOO..",
+            "after": "O.XXXOO.X"
+          },
+          "previousHash": "c25dfeb8109b2a4a78f5711195ff8d7796b8ccd5a6ee51695563a867c71a517c",
+          "hash": "c206b97f62a2570b67d72797b6623c3708ff8b81a8f5d1f18b426cfbff07b288"
+        },
+        {
+          "schemaVersion": 1,
+          "matchId": "669e9533-8d98-4367-8db5-b552cab19616",
+          "seq": 15,
+          "type": "jev_request_prepared",
+          "at": "2026-10-14T22:15:38.114Z",
+          "causedBy": null,
+          "payload": {
+            "basisBoard": "O.XXXOO.X",
+            "request": {
+              "model": "jev-1.13.0",
+              "state": {
+                "game": "tic-tac-toe",
+                "rulesVersion": "ttt/1",
+                "board": [
+                  "O",
+                  ".",
+                  "X",
+                  "X",
+                  "X",
+                  "O",
+                  "O",
+                  ".",
+                  "X"
+                ],
+                "jevMark": "O",
+                "humanMark": "X",
+                "toMove": "O",
+                "candidates": [
+                  {
+                    "actionId": "cell_1",
+                    "cell": 1,
+                    "coordinate": "B1",
+                    "boardAfter": [
+                      "O",
+                      "O",
+                      "X",
+                      "X",
+                      "X",
+                      "O",
+                      "O",
+                      ".",
+                      "X"
+                    ],
+                    "features": {
+                      "winsNow": false,
+                      "opponentImmediateWinningReplies": 0,
+                      "isCenter": false,
+                      "isCorner": false
+                    }
+                  },
+                  {
+                    "actionId": "cell_7",
+                    "cell": 7,
+                    "coordinate": "B3",
+                    "boardAfter": [
+                      "O",
+                      ".",
+                      "X",
+                      "X",
+                      "X",
+                      "O",
+                      "O",
+                      "O",
+                      "X"
+                    ],
+                    "features": {
+                      "winsNow": false,
+                      "opponentImmediateWinningReplies": 0,
+                      "isCenter": false,
+                      "isCorner": false
+                    }
+                  }
+                ]
+              },
+              "questions": {
+                "preference": {
+                  "type": "choice",
+                  "instructions": "Select the legal placement giving JEV the best eventual result against optimal opposition. Prefer win to draw to loss. X moves first. Three matching marks in a row wins. All candidates are legal.",
+                  "criteria": {
+                    "cell_1": {
+                      "cell": 1,
+                      "coordinate": "B1"
+                    },
+                    "cell_7": {
+                      "cell": 7,
+                      "coordinate": "B3"
+                    }
+                  }
+                }
+              }
+            },
+            "inputHash": "402e0231f2c2c0ef9606b77c562334e4ee6b7bc459d80ac06997a0201d5bc983",
+            "reason": null
+          },
+          "previousHash": "c206b97f62a2570b67d72797b6623c3708ff8b81a8f5d1f18b426cfbff07b288",
+          "hash": "f4e3d32ffca8e0a62b4dcf75cb0edc6384b3b306754bf97151649c3e0e36c8cb"
+        },
+        {
+          "schemaVersion": 1,
+          "matchId": "669e9533-8d98-4367-8db5-b552cab19616",
+          "seq": 16,
+          "type": "jev_result",
+          "at": "2026-10-14T22:15:38.114Z",
+          "causedBy": 15,
+          "payload": {
+            "decision": {
+              "action": {
+                "type": "place",
+                "cell": 1
+              },
+              "source": "jev",
+              "modelId": "jev-1.13.0",
+              "inputHash": "402e0231f2c2c0ef9606b77c562334e4ee6b7bc459d80ac06997a0201d5bc983",
+              "request": {
+                "model": "jev-1.13.0",
+                "state": {
+                  "game": "tic-tac-toe",
+                  "rulesVersion": "ttt/1",
+                  "board": [
+                    "O",
+                    ".",
+                    "X",
+                    "X",
+                    "X",
+                    "O",
+                    "O",
+                    ".",
+                    "X"
+                  ],
+                  "jevMark": "O",
+                  "humanMark": "X",
+                  "toMove": "O",
+                  "candidates": [
+                    {
+                      "actionId": "cell_1",
+                      "cell": 1,
+                      "coordinate": "B1",
+                      "boardAfter": [
+                        "O",
+                        "O",
+                        "X",
+                        "X",
+                        "X",
+                        "O",
+                        "O",
+                        ".",
+                        "X"
+                      ],
+                      "features": {
+                        "winsNow": false,
+                        "opponentImmediateWinningReplies": 0,
+                        "isCenter": false,
+                        "isCorner": false
+                      }
+                    },
+                    {
+                      "actionId": "cell_7",
+                      "cell": 7,
+                      "coordinate": "B3",
+                      "boardAfter": [
+                        "O",
+                        ".",
+                        "X",
+                        "X",
+                        "X",
+                        "O",
+                        "O",
+                        "O",
+                        "X"
+                      ],
+                      "features": {
+                        "winsNow": false,
+                        "opponentImmediateWinningReplies": 0,
+                        "isCenter": false,
+                        "isCorner": false
+                      }
+                    }
+                  ]
+                },
+                "questions": {
+                  "preference": {
+                    "type": "choice",
+                    "instructions": "Select the legal placement giving JEV the best eventual result against optimal opposition. Prefer win to draw to loss. X moves first. Three matching marks in a row wins. All candidates are legal.",
+                    "criteria": {
+                      "cell_1": {
+                        "cell": 1,
+                        "coordinate": "B1"
+                      },
+                      "cell_7": {
+                        "cell": 7,
+                        "coordinate": "B3"
+                      }
+                    }
+                  }
+                }
+              },
+              "response": {
+                "model": "jev-1.13.0",
+                "answers": {
+                  "preference": {
+                    "type": "choice",
+                    "choice": "cell_1",
+                    "probabilities": {
+                      "cell_1": 1,
+                      "cell_7": 0
+                    },
+                    "confidence": 1
+                  }
+                },
+                "usage": {
+                  "input_tokens": 100,
+                  "output_tokens": 20
+                }
+              },
+              "attempts": [
+                {
+                  "index": 1,
+                  "startedAt": "2026-10-14T22:15:38.114Z",
+                  "httpStatus": 200,
+                  "latencyMs": 0.07108300000000156,
+                  "result": "valid"
+                }
+              ],
+              "latencyMs": 0.15895799999999838,
+              "inputBytes": 925,
+              "probabilities": {
+                "cell_1": 1,
+                "cell_7": 0
+              },
+              "distribution": {
+                "entropyBits": 0,
+                "normalizedEntropy": 0,
+                "topMargin": 1
+              },
+              "fallbackReason": null,
+              "estimatedCostUsd": null,
+              "costBasis": "not_configured"
+            }
+          },
+          "previousHash": "f4e3d32ffca8e0a62b4dcf75cb0edc6384b3b306754bf97151649c3e0e36c8cb",
+          "hash": "6e4676ad36f3d96fbdbb009a05a0d4cbecd24adce9c99bd10d2727314f3cd939"
+        },
+        {
+          "schemaVersion": 1,
+          "matchId": "669e9533-8d98-4367-8db5-b552cab19616",
+          "seq": 17,
+          "type": "action_applied",
+          "at": "2026-10-14T22:15:38.114Z",
+          "causedBy": null,
+          "payload": {
+            "ply": 8,
+            "cell": 1,
+            "mark": "O",
+            "actor": "jev",
+            "source": "jev",
+            "before": "O.XXXOO.X",
+            "after": "OOXXXOO.X"
+          },
+          "previousHash": "6e4676ad36f3d96fbdbb009a05a0d4cbecd24adce9c99bd10d2727314f3cd939",
+          "hash": "0ccb0472767d589f80f0cf1aca1a8ee5586527b1ca2b50691ed5f0e63c9de9f8"
+        },
+        {
+          "schemaVersion": 1,
+          "matchId": "669e9533-8d98-4367-8db5-b552cab19616",
+          "seq": 18,
+          "type": "action_applied",
+          "at": "2026-10-14T22:15:38.115Z",
+          "causedBy": null,
+          "payload": {
+            "ply": 9,
+            "cell": 7,
+            "mark": "X",
+            "actor": "human",
+            "source": "human",
+            "before": "OOXXXOO.X",
+            "after": "OOXXXOOXX"
+          },
+          "previousHash": "0ccb0472767d589f80f0cf1aca1a8ee5586527b1ca2b50691ed5f0e63c9de9f8",
+          "hash": "d0d2fa8ba9f4bdac471fe687fea2b9a80c23b1378ebef9bf692bdb60a41282f5"
+        },
+        {
+          "schemaVersion": 1,
+          "matchId": "669e9533-8d98-4367-8db5-b552cab19616",
+          "seq": 19,
+          "type": "match_completed",
+          "at": "2026-10-14T22:15:38.115Z",
+          "causedBy": null,
+          "payload": {
+            "outcome": "draw",
+            "termination": "board",
+            "eligible": false
+          },
+          "previousHash": "d0d2fa8ba9f4bdac471fe687fea2b9a80c23b1378ebef9bf692bdb60a41282f5",
+          "hash": "969a9901d816b3a570a7fa2eefbb372f2f44eaaacf1f5248c6892d8e1a354c59"
+        },
+        {
+          "schemaVersion": 1,
+          "matchId": "669e9533-8d98-4367-8db5-b552cab19616",
+          "seq": 20,
+          "type": "replay_verified",
+          "at": "2026-10-14T22:15:38.117Z",
+          "causedBy": null,
+          "payload": {
+            "ok": true,
+            "reason": null,
+            "verifiedHead": "969a9901d816b3a570a7fa2eefbb372f2f44eaaacf1f5248c6892d8e1a354c59"
+          },
+          "previousHash": "969a9901d816b3a570a7fa2eefbb372f2f44eaaacf1f5248c6892d8e1a354c59",
+          "hash": "1cb05466ba931f03c513050fdf79809c2ea672982450658e302c71b42b423b19"
+        }
+      ],
+      "audit": {
+        "ok": true,
+        "events": 19,
+        "head": "969a9901d816b3a570a7fa2eefbb372f2f44eaaacf1f5248c6892d8e1a354c59",
+        "moves": 9
+      },
+      "exportedAt": "2026-10-14T22:15:38.117Z"
+    }
+  ]
+}
