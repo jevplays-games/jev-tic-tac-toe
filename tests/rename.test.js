@@ -35,17 +35,28 @@ test('allowed origins are PUBLIC_ORIGIN plus the legacy host; unknown hosts fall
   assert.deepEqual(allowedOrigins({PUBLIC_ORIGIN:NEW}),[NEW]);
 });
 
-test('legacy entries with credentials, a path, query or hash are skipped and never admit the host they hide',t=>{
+test('D9: legacy entries that are not a bare origin are skipped and never admit the host they hide',async t=>{
   const logged=[],error=console.error;console.error=(...a)=>logged.push(a.join(' '));t.after(()=>{console.error=error;});
-  const tricks=['https://user:pw@evil.example','https://evil.example#@tic-tac-toe.jevplay.games','https://evil.example/path','https://evil.example?x=1'];
+  const tricks=['https://user:pw@evil.example',`https://evil.example#@${new URL(OLD).host}`,'https://evil.example/path','https://evil.example?q=1','https://*.jevplay.games'];
   for(const trick of tricks){
     const env=hosted(t,{LEGACY_PUBLIC_ORIGINS:`${trick},${OLD}`}),allowed=allowedOrigins(env);
-    assert.deepEqual(allowed,[NEW,OLD],trick);assert.ok(!allowed.includes('https://evil.example'),trick);
-    assert.equal(originFor(new Request('https://evil.example/api/auth/discord'),env),NEW,trick);
-    assert.equal(originFor(new Request(OLD+'/x'),env),OLD);assert.equal(originFor(new Request(NEW+'/x'),env),NEW);
-    assert.ok(logged.some(l=>l.includes('legacy_origin_ignored')&&l.includes('evil.example')),trick);
+    assert.deepEqual(allowed,[NEW,OLD],trick);
+    assert.ok(logged.some(l=>l.includes('legacy_origin_ignored')&&l.includes(JSON.stringify(trick).slice(1,-1))),trick);
+    // The evil host gets the repo's reject status: its Origin is refused (403) and OAuth stays on PUBLIC_ORIGIN.
+    const evil='https://evil.example',me=await handle(new Request(evil+'/api/me'),env),cookie=cookieOf(me),{csrf}=await me.json();
+    const body=JSON.stringify({requestId:crypto.randomUUID(),humanMark:'X',difficulty:'normal',ranked:false});
+    assert.equal((await handle(new Request(evil+'/api/matches',{method:'POST',headers:{cookie,origin:evil,'x-csrf-token':csrf,'content-type':'application/json'},body}),env)).status,403,trick);
+    const begin=await handle(new Request(evil+'/api/auth/discord',{headers:{cookie}}),env);
+    assert.equal(new URL(begin.headers.get('location')).searchParams.get('redirect_uri'),`${NEW}/api/auth/discord/callback`,trick);
+    // The canonical and the real legacy host are still served on their own origin.
+    for(const host of [NEW,OLD]){
+      const m=await handle(new Request(host+'/api/me'),env),c=cookieOf(m),{csrf:k}=await m.json();
+      const created=await handle(new Request(host+'/api/matches',{method:'POST',headers:{cookie:c,origin:host,'x-csrf-token':k,'content-type':'application/json'},body:JSON.stringify({requestId:crypto.randomUUID(),humanMark:'X',difficulty:'normal',ranked:false})}),env);
+      assert.equal(created.status,201,`${host} with ${trick}`);
+    }
   }
   assert.deepEqual(allowedOrigins({PUBLIC_ORIGIN:NEW,LEGACY_PUBLIC_ORIGINS:`${OLD}/`}),[NEW,OLD]);
+  assert.deepEqual(allowedOrigins({PUBLIC_ORIGIN:NEW,LEGACY_PUBLIC_ORIGINS:'http://tic-tac-toe.jevplay.games,http://localhost:8788'}),[NEW,'http://localhost:8788']);
 });
 
 test('a malformed LEGACY_PUBLIC_ORIGINS entry is skipped and logged, never a 500 on moves or sign-in',async t=>{
