@@ -6,10 +6,11 @@ export function cookie(env,token,age=604800){return `${cookieName(env)}=${token}
 // One Worker answers on PUBLIC_ORIGIN and, until the legacy host is 301-redirected, on each LEGACY_PUBLIC_ORIGINS entry
 // (comma-separated). A request on an allowed host is answered on that host, so its __Host- cookie, OAuth callback and
 // Origin check stay on one origin; any other host (e.g. workers.dev) falls back to PUBLIC_ORIGIN.
-// An unparsable legacy entry is skipped and logged once, so a config typo cannot turn moves or sign-in into 500s.
+// A legacy entry must be a bare http(s) origin. Anything else (unparsable, credentials, a path, query or hash) is
+// skipped and logged once: a typo must neither 500 moves or sign-in nor admit a host it only appears to name.
 const badLegacyOrigins=new Set();
 function legacyOrigin(value){
-  try{const url=new URL(value);if(['http:','https:'].includes(url.protocol))return url.origin;}catch{}
+  try{const url=new URL(value);if(['http:','https:'].includes(url.protocol)&&!url.username&&!url.password&&url.pathname==='/'&&!url.search&&!url.hash&&!value.includes('#')&&!value.includes('?'))return url.origin;}catch{}
   if(!badLegacyOrigins.has(value)){badLegacyOrigins.add(value);console.error(JSON.stringify({type:'legacy_origin_ignored',value:value.slice(0,200)}));}
   return null;
 }

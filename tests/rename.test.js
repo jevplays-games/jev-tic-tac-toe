@@ -35,6 +35,19 @@ test('allowed origins are PUBLIC_ORIGIN plus the legacy host; unknown hosts fall
   assert.deepEqual(allowedOrigins({PUBLIC_ORIGIN:NEW}),[NEW]);
 });
 
+test('legacy entries with credentials, a path, query or hash are skipped and never admit the host they hide',t=>{
+  const logged=[],error=console.error;console.error=(...a)=>logged.push(a.join(' '));t.after(()=>{console.error=error;});
+  const tricks=['https://user:pw@evil.example','https://evil.example#@tic-tac-toe.jevplay.games','https://evil.example/path','https://evil.example?x=1'];
+  for(const trick of tricks){
+    const env=hosted(t,{LEGACY_PUBLIC_ORIGINS:`${trick},${OLD}`}),allowed=allowedOrigins(env);
+    assert.deepEqual(allowed,[NEW,OLD],trick);assert.ok(!allowed.includes('https://evil.example'),trick);
+    assert.equal(originFor(new Request('https://evil.example/api/auth/discord'),env),NEW,trick);
+    assert.equal(originFor(new Request(OLD+'/x'),env),OLD);assert.equal(originFor(new Request(NEW+'/x'),env),NEW);
+    assert.ok(logged.some(l=>l.includes('legacy_origin_ignored')&&l.includes('evil.example')),trick);
+  }
+  assert.deepEqual(allowedOrigins({PUBLIC_ORIGIN:NEW,LEGACY_PUBLIC_ORIGINS:`${OLD}/`}),[NEW,OLD]);
+});
+
 test('a malformed LEGACY_PUBLIC_ORIGINS entry is skipped and logged, never a 500 on moves or sign-in',async t=>{
   const logged=[],error=console.error;console.error=(...a)=>logged.push(a.join(' '));t.after(()=>{console.error=error;});
   const env=hosted(t,{LEGACY_PUBLIC_ORIGINS:`not a url, ${OLD} ,javascript:alert(1)`});

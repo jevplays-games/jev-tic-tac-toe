@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceHash": "125ec45c064082ef1cd99b7f7e1341308d96c2e34cbaadb1529d01cacc2cc953",
+  "sourceHash": "d86d609d9f42250498ec0a9abd9e0c01a6f48acddc3b08d83224b28304fc3c54",
   "files": [
     {
       "path": "local/database.js",
@@ -164,8 +164,8 @@
     },
     {
       "path": "server/auth.js",
-      "sha256": "342554b974064aa80f6b3b05d79b28b90124f90924b5287942efa6a467e9cbf8",
-      "bytes": 8451
+      "sha256": "94914f1216dea98fad2a11594c44f672974ca6cd078bd65bddc61e88b1c33249",
+      "bytes": 8680
     },
     {
       "path": "server/discord.js",
