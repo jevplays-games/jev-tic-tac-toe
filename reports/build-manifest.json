@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceHash": "09ba0a1dd1113bec999c47f889c61f9b9d3122d23a4fa02039dde78666bdd966",
+  "sourceHash": "ffd7affeb8c86669363764590c7adab9e23621cad53a193169039a93ac24d000",
   "files": [
     {
       "path": "local/database.js",
@@ -34,8 +34,8 @@
     },
     {
       "path": "public/app.js",
-      "sha256": "28e28cc99da8df052ad6bec66dcf84410749d1da06a623a53ef87b0d56a14150",
-      "bytes": 35449
+      "sha256": "2c1e9756075babd8e220f826754bba29bd6aa9568f56b88873681f20c3b6feb7",
+      "bytes": 35437
     },
     {
       "path": "public/art/o.svg",
@@ -119,8 +119,8 @@
     },
     {
       "path": "public/game.css",
-      "sha256": "a5aa35aead7e3c0a73aac2502a8ef7d6e93c7777b6f03c9b13a9661a4bea7fd2",
-      "bytes": 22667
+      "sha256": "b4b27b034b85d9f1637a8283ff1690f16c17e126326e6dd939dfbe1a5767ba1b",
+      "bytes": 23445
     },
     {
       "path": "public/game/analytics.js",

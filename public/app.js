@@ -213,7 +213,7 @@ function describeBootError(error){const text=!error?.status?'The game service di
 const bootStageText={connect:'Could not reach the game service.',load:'Could not load your saved game.',resume:'Could not refresh your saved game.',create:'Could not start a new game.'};
 async function loadSession(){
   me=await api('/api/me');backend=true;$('identity-name').textContent=me.user?.displayName??'Guest';$('login').hidden=Boolean(me.user);$('logout').hidden=!me.user;
-  $('service-status').textContent=me.jevConfigured?'Hosted Jev available':'Local fallback · Jev key not configured';$('service-dot').classList.remove('is-off');$('service-dot').classList.add('is-live');
+  $('service-status').textContent=me.jevConfigured?'Hosted Jev available':'Local fallback · no Jev key';$('service-dot').classList.remove('is-off');$('service-dot').classList.add('is-live');
   if(!me.discordConfigured){$('login').hidden=true;sessionNote('Local-ready build. Add server-side Jev and Discord credentials to enable hosted inference and authentication.');}
   if(me.pendingLaunch){try{me.context=(await api('/api/context/redeem',{method:'POST'})).context;sessionNote('Discord channel context verified. Ranked results can be attributed to this community.');}catch(e){sessionNote(humanMessage(e));}}
 }

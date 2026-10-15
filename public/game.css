@@ -23,7 +23,15 @@ button:not(:disabled):active,.button:active{background:var(--surface)}
 /* The sheet is hidden from 900px, so the footer carries its note above that width. */
 .wide-only{display:none}
 .nav{justify-content:flex-start;font-size:var(--fs-sm)}
-.nav.active,.jv-sheet-item[aria-current=page]{background:var(--raised);color:var(--accent-text)}
+/* The current view keeps the shared key from brand.css (ink face, pink label), also under the pointer, where the
+   generic button hover above would otherwise paint it grey. */
+.jv-sheet-item[aria-current=page]:hover,.jv-sheet-item[aria-current=page]:active{background:var(--ink);color:var(--pink)}
+/* The status chip names the opponent's provenance (hosted Jev, local fallback, service unreachable), which must never
+   be cut off: where the header is too narrow for one line it wraps, and below 600px it steps down to 14px. */
+.jv-status{white-space:normal;line-height:1.05}
+@media(max-width:599px){.jv-status{font-size:var(--fs-sm);letter-spacing:.02em;padding:2px var(--s2)}}
+/* From 360px up to the inline-nav header the game title keeps its full width and the wrapping chip gives way instead. */
+@media(min-width:360px) and (max-width:899px){.jv-brand{flex-shrink:0}}
 .page-heading{display:flex;justify-content:space-between;align-items:center;gap:var(--s5);margin:0 0 var(--s3)}
 .eyebrow{font-family:var(--font-pixel);font-size:var(--fs-sm);font-weight:400;letter-spacing:var(--track-caps);color:var(--muted);margin:0 0 var(--s3)}
 h2{font-size:var(--fs-lg);letter-spacing:-.3px;font-weight:600;margin:0}h3{font-size:var(--fs-xs);font-weight:600;margin:0}
