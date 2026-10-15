@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceHash": "e257a0da3eaf5dea0bb3e14c0af51918b0790d8b99f87d622731065465f1d500",
+  "sourceHash": "c98971fb0a0adc711a149f37ca6f001954d8dcb471f7a6ab7976b6632f6a6edf",
   "files": [
     {
       "path": "local/database.js",
@@ -59,8 +59,8 @@
     },
     {
       "path": "public/brand/apple-touch-icon.png",
-      "sha256": "76ad403fc14a44a0a6e651cb0d6906be1efbf559151845985868afae2a7997dd",
-      "bytes": 753
+      "sha256": "b3f37d57f4570c5233f19b13d03ac1b29c23e213c3449bdf8593db343a746ff2",
+      "bytes": 630
     },
     {
       "path": "public/brand/brand.css",
@@ -74,13 +74,13 @@
     },
     {
       "path": "public/brand/favicon-32.png",
-      "sha256": "ff40e823fe651b71b27e87ce0ae68a35f94f0d9c0c015a88f9ea92b25154a1d7",
-      "bytes": 289
+      "sha256": "bf41429f1492cad883490617e45397f602d1b85028091372959d660b54a1bc06",
+      "bytes": 224
     },
     {
       "path": "public/brand/icon.svg",
-      "sha256": "9cb571b05c55edce9c99c11f55446b980c73487acf6354dde41f7df89c9c6c2b",
-      "bytes": 624
+      "sha256": "377bb73106cc52a0c646db3c42d1f769c43b2a8ac7dd4a6eab3773a8328f53ea",
+      "bytes": 522
     },
     {
       "path": "public/brand/inter-var.woff2",
@@ -89,8 +89,8 @@
     },
     {
       "path": "public/brand/mark.svg",
-      "sha256": "93b1f4e7f6bbf2154a3ac6dc32dd6cc9451e872c73fd109f9b719af62344a08f",
-      "bytes": 525
+      "sha256": "31bb002a0b762c23182729fcb50d032a733017e6392c64d38ab3cff8014666ca",
+      "bytes": 479
     },
     {
       "path": "public/brand/og.png",
