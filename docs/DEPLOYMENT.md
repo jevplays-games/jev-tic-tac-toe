@@ -70,7 +70,7 @@ The deployment file has no actual account/database IDs, secrets, or custom domai
 | Variable | Default / purpose |
 |---|---|
 | `PUBLIC_ORIGIN` | Exact browser origin; required. `https://tic-tac-typed.jevplay.games` in production |
-| `LEGACY_PUBLIC_ORIGINS` | Optional, comma-separated. Extra origins served by the same deployment (`https://tic-tac-toe.jevplay.games` until the 301 cutover). Worker only; the Node server ignores it |
+| `LEGACY_PUBLIC_ORIGINS` | Optional, comma-separated. Extra origins served by the same deployment (`https://tic-tac-toe.jevplay.games` until the 301 cutover). Worker only; the Node server ignores it. Each entry must be a bare `https://host` origin, exactly as the browser sends it: lowercase host, an optional single trailing `/`, and no userinfo, path, query, fragment or `*` (`http://` only on a loopback host). The match is case-sensitive. Any other entry is skipped and logged as `legacy_origin_ignored`; it never fails a request |
 | `PINNED_JEV_MODEL` | `jev-1.13.0`; must be an explicit `jev-x.y.z` version |
 | `TYPESAFE_API_KEY` | Empty means labeled fallback only |
 | `DISCORD_APPLICATION_ID` | Application/client ID |

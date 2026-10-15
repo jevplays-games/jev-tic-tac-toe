@@ -730,7 +730,8 @@ def layout(browser, label, token, name):
         check(f'#10 {tag}: Discord is configured in this env (inert dummy credentials), so Sign in can exist', configured is True, configured)
         shown = page.locator(action).is_visible()
         label_text = page.locator(action).inner_text().strip() if shown else ''
-        check(f'#10 {tag}: the expected {want_text} control is visible with its label (a hidden control is a failure)', shown and label_text.startswith(want_text), repr(label_text))
+        # The rendered label is uppercase (brand.css .jv-btn uses text-transform), so it is compared without case.
+        check(f'#10 {tag}: the expected {want_text} control is visible with its label (a hidden control is a failure)', shown and label_text.lower().startswith(want_text.lower()), repr(label_text))
         check(f'#10 {tag}: the opposite account control is hidden', page.locator(other).is_hidden())
         want_name = name if token else 'Guest'
         check(f'#10 {tag}: identity text is {want_name!r}', page.locator('#identity-name').inner_text().strip() == want_name, page.locator('#identity-name').inner_text())

@@ -4,8 +4,12 @@
    heatmap ramp steps that brand.css does not name.
    X and O differ by shape, so the game keeps the default ink accent; magenta marks
    the winning line (a highlight, never a fill behind text). */
-:root{--x:var(--magenta);--o:var(--magenta);--cell-line:var(--ink)}
+/* Chart colours (orchestrator decision D8): the snapshot brand.css blue/amber fail on #DEDEDE, so the game
+   defines darker series colours here. Fills and swatches only; text stays ink. */
+:root{--x:var(--magenta);--o:var(--magenta);--cell-line:var(--ink);--chart-jev:#7A4E0B;--chart-human:#155A80}
 body{font-size:var(--fs-sm);line-height:1.6}
+/* The header is sticky: anything scrolled into view (Records > Open, the skip link, keyboard focus) lands below it. */
+html{scroll-padding-top:calc(var(--header-h) + var(--sa-t) + var(--s3))}
 button,.button{cursor:pointer;text-decoration:none;border:1px solid var(--ink);border-radius:var(--radius-sm);padding:var(--s2) var(--s4);min-height:var(--tap);color:var(--text);background:var(--raised);display:inline-flex;align-items:center;justify-content:center;gap:var(--s2);white-space:nowrap}
 button:disabled,select:disabled{cursor:not-allowed;opacity:.48}
 @media(hover:hover){button:not(:disabled):hover,.button:hover{background:var(--surface)}.primary:not(:disabled):hover{background:var(--accent)}}
@@ -21,7 +25,18 @@ button:not(:disabled):active,.button:active{background:var(--surface)}
 /* The sheet is hidden from 900px, so the footer carries its note above that width. */
 .wide-only{display:none}
 .nav{justify-content:flex-start;font-size:var(--fs-sm)}
-.nav.active,.jv-sheet-item[aria-current=page]{background:var(--raised);color:var(--accent-text)}
+/* The current view keeps the shared key from brand.css (ink face, pink label), also under the pointer, where the
+   generic button hover above would otherwise paint it grey. */
+.jv-sheet-item[aria-current=page]:hover,.jv-sheet-item[aria-current=page]:active{background:var(--ink);color:var(--pink)}
+/* The status chip names the opponent's provenance (hosted Jev, local fallback, service unreachable), which must never
+   be cut off: where the header is too narrow for one line it wraps, and below 600px it steps down to 14px. */
+.jv-status{white-space:normal;line-height:1.05}
+@media(max-width:599px){.jv-status{font-size:var(--fs-sm);letter-spacing:.02em;padding:2px var(--s2)}}
+/* From 360px up the game title keeps its full width and the wrapping chip gives way instead. */
+@media(min-width:360px){.jv-brand{flex-shrink:0}}
+/* brand.css caps the inline controls at min(50vw,46rem) and lets them scroll, which suits five-tab games. Here three
+   tabs and the account group always fit, and the cap only hid "Sign in with Discord" / "Sign out" at 900-1280px. */
+@media(min-width:900px){#jv-controls{max-width:none}}
 .page-heading{display:flex;justify-content:space-between;align-items:center;gap:var(--s5);margin:0 0 var(--s3)}
 .eyebrow{font-family:var(--font-pixel);font-size:var(--fs-sm);font-weight:400;letter-spacing:var(--track-caps);color:var(--muted);margin:0 0 var(--s3)}
 h2{font-size:var(--fs-lg);letter-spacing:-.3px;font-weight:600;margin:0}h3{font-size:var(--fs-xs);font-weight:600;margin:0}
@@ -39,7 +54,9 @@ h2{font-size:var(--fs-lg);letter-spacing:-.3px;font-weight:600;margin:0}h3{font-
 .competitor.right{justify-content:flex-end;text-align:right}
 .competitor>div{min-width:0}
 .competitor.is-turn{border-color:var(--ink);box-shadow:var(--drop-sm),inset 0 -3px 0 var(--magenta)}
-.competitor strong{font-size:var(--fs-sm);font-weight:650;display:block}.competitor small{font-size:var(--fs-2xs);color:var(--muted);display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* The second line carries provenance ("Perfect-play fallback · unranked", "Browser-only · unranked"): it wraps
+   on a narrow card instead of being cut off. */
+.competitor strong{font-size:var(--fs-sm);font-weight:650;display:block}.competitor small{font-size:var(--fs-2xs);color:var(--muted);display:block}
 .mark{flex:none;width:2.25rem;height:2.25rem;font-size:0;line-height:0;color:transparent;background:center/contain no-repeat}
 .mark.x{background-image:url(/art/x.svg)}.mark.o{background-image:url(/art/o.svg)}
 .versus{align-self:center;font-family:var(--mono);font-size:var(--fs-2xs);color:var(--subtle)}
@@ -47,12 +64,13 @@ h2{font-size:var(--fs-lg);letter-spacing:-.3px;font-weight:600;margin:0}h3{font-
    --fit-reserve is everything that shares the viewport with it: the panel chrome
    above and the status line below. */
 .board-wrap{--fit-max:26rem;--fit-reserve:14.5rem;--fit-ratio:1}
-/* A lacquer tray (.jv-tray) holding nine wells. Percentages, so the art scales
+/* A pixel-window tray (.jv-tray) holding nine wells. Percentages, so the art scales
    with the board from a 100px picture-in-picture frame to a 4K display. */
 .board{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);aspect-ratio:1;gap:3%;padding:3.4%}
 .cell{--focus-offset:-3px;position:relative;min-width:0;min-height:0;width:100%;height:100%;padding:0;border:1px solid var(--cell-line);border-radius:0;background:var(--sunken);box-shadow:var(--well);transition:border-color .12s,box-shadow .12s}
 .cell[aria-disabled=true]{cursor:default}
-@media(hover:hover){.cell[aria-disabled=true]:hover{filter:none}}.cell[aria-disabled=true]:active{filter:none}
+/* A taken or locked square does not answer the pointer: it keeps its well colour under the generic button hover. */
+@media(hover:hover){.cell[aria-disabled=true]:hover{background:var(--sunken)}}.cell[aria-disabled=true]:active{background:var(--sunken)}
 .cell .coord{position:absolute;left:8%;top:7%;font-family:var(--mono);font-size:var(--fs-xs);color:var(--muted);font-weight:400;line-height:1}
 /* The piece: art/x.svg or art/o.svg, painted by the cell's x/o class. */
 .piece{position:absolute;inset:9%;background:center/contain no-repeat;pointer-events:none}
@@ -75,7 +93,9 @@ h2{font-size:var(--fs-lg);letter-spacing:-.3px;font-weight:600;margin:0}h3{font-
    through them and the other pieces step back. */
 .board[data-winner=X]{--win:var(--x)}.board[data-winner=O]{--win:var(--o)}
 .cell.winning{border-color:var(--ink);box-shadow:inset 0 0 0 3px var(--win)}
-.board[data-winner] .cell:not(.winning) .piece{opacity:.38}
+/* Stepped back, still a mark: ink at .55 on the paper well holds 3.8:1 (at .38 it was 2.4:1). This shows whenever the
+   pop animation is not holding the piece at full opacity, e.g. for players who prefer reduced motion. */
+.board[data-winner] .cell:not(.winning) .piece{opacity:.55}
 .board::after{content:"";position:absolute;left:6%;right:6%;top:50%;height:1.6%;margin-top:-.8%;border-radius:0;background:var(--ink);box-shadow:0 0 0 2px var(--win);opacity:0;pointer-events:none}
 .board[data-strike]::after{opacity:1;animation:strike .42s var(--ease-out) both}
 .board[data-strike="012"]::after{top:18%}.board[data-strike="678"]::after{top:82%}
@@ -107,7 +127,7 @@ select{color:var(--text);background:var(--sunken);border:1px solid var(--line);b
 .probability-row{display:grid;grid-template-columns:26px 1fr 34px;align-items:center;gap:var(--s2);margin:var(--s2) 0;font-family:var(--mono);font-size:var(--fs-2xs);color:var(--muted)}
 .probability-row.selected{color:var(--ink);font-weight:700}
 .probability-row.selected>span:first-child::before{content:"▸"}
-meter{width:100%;height:8px;border:1px solid var(--ink);border-radius:0;background:var(--paper)}meter::-webkit-meter-bar{background:var(--paper);border:0;border-radius:0;height:6px}meter::-webkit-meter-optimum-value{background:var(--human);border-radius:0}meter::-moz-meter-bar{background:var(--human)}
+meter{width:100%;height:8px;border:1px solid var(--ink);border-radius:0;background:var(--paper)}meter::-webkit-meter-bar{background:var(--paper);border:0;border-radius:0;height:6px}meter::-webkit-meter-optimum-value{background:var(--chart-human);border-radius:0}meter::-moz-meter-bar{background:var(--chart-human)}
 .empty{font-size:var(--fs-xs);color:var(--muted);padding:var(--s4) 0;margin:0}
 .factors-heading{margin:var(--s2) 0}
 .factor{font-size:var(--fs-2xs);margin:var(--s2) 0;padding-left:var(--s4);position:relative;color:var(--text)}.factor:before{content:"+";position:absolute;left:0;color:var(--ink);font-family:var(--mono)}
@@ -131,8 +151,9 @@ details{border-top:1px solid var(--line);margin-top:var(--s4);padding-top:var(--
 pre{white-space:pre-wrap;word-break:break-word;font-size:var(--fs-2xs);font-family:var(--mono);max-height:400px;overflow:auto;background:var(--sunken);padding:var(--s4);border-radius:var(--radius-sm)}
 .analytics-filters{display:flex;gap:var(--s4);align-items:end;flex-wrap:wrap}.analytics-filters .muted{margin-left:auto}
 .metric-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--s3)}
-/* Built by app.js with a legacy .panel class, so the pixel-window card is restated here. */
-.metric{padding:var(--s5);min-width:0;background:var(--surface);border:1px solid var(--line);border-radius:0;box-shadow:var(--raise)}
+/* Built by app.js with a legacy .panel class, so the pixel-window card is restated here. Each card spans three rows of
+   the grid as a subgrid, so label, value and note line up across a row even when one label wraps to two lines. */
+.metric{padding:var(--s5);min-width:0;background:var(--surface);border:1px solid var(--line);border-radius:0;box-shadow:var(--raise);display:grid;grid-row:span 3;grid-template-rows:subgrid;row-gap:0;align-content:start}
 .metric>span{font-family:var(--font-pixel);font-size:var(--fs-sm);text-transform:uppercase;letter-spacing:var(--track-caps);color:var(--muted);display:block;margin-bottom:var(--s3)}
 .metric>strong{font-size:var(--fs-num-lg);font-family:var(--mono);font-weight:400;letter-spacing:0}
 .metric>small{font-size:var(--fs-2xs);color:var(--muted);display:block;margin-top:var(--s1)}
@@ -151,7 +172,7 @@ pre{white-space:pre-wrap;word-break:break-word;font-size:var(--fs-2xs);font-fami
 .view{display:flex;flex-direction:column;gap:var(--s5)}
 footer{font-family:var(--font-pixel);display:flex;align-items:center;justify-content:space-between;gap:var(--s4);width:100%;max-width:var(--shell);margin:0 auto;padding:var(--s5) var(--s4) calc(var(--s5) + var(--sa-b));border-top:1px solid var(--line);font-size:var(--fs-2xs);color:var(--muted);letter-spacing:.5px;flex-wrap:wrap}
 .footer-separator{margin:0 var(--s2);color:var(--ink)}footer .jv-link-btn{font-size:var(--fs-2xs)}
-.notice{margin:0;padding:var(--s3) var(--s4);border:1px solid var(--ink);border-left:6px solid var(--amber);border-radius:0;background:var(--paper);color:var(--ink);font-size:var(--fs-xs)}
+.notice{margin:0;padding:var(--s3) var(--s4);border:1px solid var(--ink);border-left:6px solid var(--chart-jev);border-radius:0;background:var(--paper);color:var(--ink);font-size:var(--fs-xs)}
 dialog{color:var(--text);background:var(--surface);border:1px solid var(--line);border-radius:0;box-shadow:var(--raise);max-width:min(37rem,calc(100% - 2rem));max-height:85vh;max-height:85dvh;padding:0}
 dialog::backdrop{background:rgba(30,30,30,.6)}
 .dialog-content{padding:var(--s6)}

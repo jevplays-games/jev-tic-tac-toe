@@ -17,7 +17,7 @@ test('all profiles contain exactly the legal actions, no oracle or identity fiel
     if(difficulty==='easy')assert.equal(req.state.candidates[0].features,undefined);
   }
 });
-test('JEV full profile encodes candidate references in question instructions',()=>{const req=buildJevRequest(createInitialState(),'jev',model);assert.equal(Object.keys(req.questions).length,10);assert.equal(req.questions.outcome_0.instructions.candidateActionId,'cell_0');});
+test('Jev full profile encodes candidate references in question instructions',()=>{const req=buildJevRequest(createInitialState(),'jev',model);assert.equal(Object.keys(req.questions).length,10);assert.equal(req.questions.outcome_0.instructions.candidateActionId,'cell_0');});
 test('valid documented response is accepted without extra provider fields',()=>{const r=responseFor(request);r.debug='discard';assert.equal(validateJevResponse(r,request).debug,undefined);});
 test('wrong model, missing question, invalid action, bad distributions, bad confidence reject',()=>{
   const mutators=[r=>{r.model='jev-latest';},r=>{delete r.answers.preference;},r=>{r.answers.preference.choice='cell_0';},r=>{r.answers.preference.probabilities.cell_8=5;},r=>{r.answers.preference.probabilities.cell_4=NaN;},r=>{r.answers.preference.confidence=2;},r=>{r.usage.input_tokens=-1;},r=>{r.answers.preference.choice='cell_1';}];
@@ -32,7 +32,7 @@ test('adapter records actual request, response, latency, tokens and hashes',asyn
   const result=await chooseJevAction({state:replay([0]),difficulty:'normal',modelId:model,apiKey:'fixture',fetchFn:async(_url,options)=>new Response(JSON.stringify(responseFor(JSON.parse(options.body))))});
   assert.equal(result.source,'jev');assert.ok(result.latencyMs>=0);assert.equal(result.inputHash.length,64);assert.equal(result.response.usage.input_tokens,100);assert.equal(result.estimatedCostUsd,null);
 });
-test('no API key means a labeled deterministic fallback, not mock JEV',async()=>{const d=await chooseJevAction({state:createInitialState(),difficulty:'normal',modelId:model});assert.equal(d.source,'fallback-minimax');assert.equal(d.fallbackReason,'missing_api_key');assert.equal(d.response,null);assert.equal(d.action.cell,4);});
+test('no API key means a labeled deterministic fallback, not mock Jev',async()=>{const d=await chooseJevAction({state:createInitialState(),difficulty:'normal',modelId:model});assert.equal(d.source,'fallback-minimax');assert.equal(d.fallbackReason,'missing_api_key');assert.equal(d.response,null);assert.equal(d.action.cell,4);});
 test('one legal placement avoids a provider call and is labeled forced',async()=>{
   const state=replay([0,4,1,2,6,3,5,7]);let calls=0;
   const d=await chooseJevAction({state,difficulty:'jev',modelId:model,apiKey:'fixture',fetchFn:async()=>{calls++;throw new Error();}});assert.equal(d.source,'forced');assert.equal(calls,0);assert.equal(d.action.cell,8);

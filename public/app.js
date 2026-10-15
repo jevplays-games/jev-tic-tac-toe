@@ -15,6 +15,8 @@ const pct=n=>typeof n==='number'?`${(n*100).toFixed(1)}%`:'—';
 const ms=n=>typeof n==='number'?n>=1000?`${(n/1000).toFixed(2)} s`:`${Math.round(n)} ms`:'—';
 const outcomeName=v=>v===1?'Win':v===0?'Draw':'Loss';
 const profileText={easy:'Easy · board and legal actions',normal:'Normal · immediate tactical features',hard:'Hard · forks and bounded replies',jev:'Jev · candidate outcome distributions'};
+// Display names for the stored profile keys ('jev' is data; the profile is shown as Jev, as in the selects).
+const profileName=d=>({easy:'Easy',normal:'Normal',hard:'Hard',jev:'Jev'}[d]??d);
 const sourceName=s=>({'jev':'Jev','human':'Human','forced':'Forced','fallback-minimax':'Fallback','local-minimax':'Local oracle'}[s]??s);
 let me=null,match=null,busy=false,pendingCell=null,pendingAction=null,replayPly=null;
 let boot={state:'loading',stage:null};
@@ -42,7 +44,7 @@ async function api(path,{method='GET',body}={}){
   if(!response.ok){const error=new Error(data.error??'Request failed');error.status=response.status;error.detail=data.detail;throw error;}
   return data;
 }
-function humanMessage(error){const messages={discord_not_configured:'Discord is not configured on this host.',fresh_discord_context_required:'Launch /play tic-tac-typed in a Discord channel to view its community leaderboard.',rate_limit:'The request limit was reached. Your existing match is preserved.',active_match_exists:'Resume or resign the existing match before starting another.',jev_not_configured:'Ranked play needs a server-side Jev API key.',csrf_rejected:'The session changed. Reload the page before continuing.',launch_expired:'This Discord launch expired. Run /play tic-tac-toe again.',launch_user_mismatch:'This personal launch belongs to a different Discord account.'};return messages[error.message]??error.message;}
+function humanMessage(error){const messages={discord_not_configured:'Discord is not configured on this host.',fresh_discord_context_required:'Launch /play tic-tac-typed in a Discord channel to view its community leaderboard.',rate_limit:'The request limit was reached. Your existing match is preserved.',active_match_exists:'Resume or resign the existing match before starting another.',jev_not_configured:'Ranked play needs a server-side Jev API key.',csrf_rejected:'The session changed. Reload the page before continuing.',launch_expired:'This Discord launch expired. Run /play tic-tac-typed again.',launch_user_mismatch:'This personal launch belongs to a different Discord account.'};return messages[error.message]??error.message;}
 function makeBoard(){
   for(let cell=0;cell<9;cell++){
     const button=element('button',null,'cell');button.type='button';button.dataset.cell=cell;button.setAttribute('aria-label',`${coordinate(cell)}, empty`);
@@ -78,7 +80,10 @@ function renderGame(){
   $('human-symbol').textContent=human==='X'?'×':'○';$('human-symbol').className=`mark ${human.toLowerCase()}`;
   $('jev-symbol').textContent=human==='X'?'○':'×';$('jev-symbol').className=`mark ${human==='X'?'o':'x'}`;
   $('human-label').textContent=`Play as ${human} · ${human==='X'?'goes first':'goes second'}`;
-  const fallback=match?.actions?.some(a=>a.decision?.source?.includes('minimax'));
+  // A host without a Jev key can only answer with the labelled fallback, so the opponent is named that from the first
+  // frame, not only after its first move. A stored match that holds real Jev decisions keeps the Jev label.
+  const noJev=Boolean(backend&&me&&!me.jevConfigured&&!match?.local&&!match?.actions?.some(a=>a.decision?.source==='jev'));
+  const fallback=match?.actions?.some(a=>a.decision?.source?.includes('minimax'))||noJev;
   $('opponent-name').textContent=match?.local||fallback?'Local oracle':'Jev';
   $('opponent-label').textContent=match?.local?'Browser-only · unranked':fallback?'Perfect-play fallback · unranked':'Structured decision model';
   $('mode-badge').textContent=match?.rankedStarted&&match?.eligible?'RANKED MATCH':match?.local?'LOCAL PRACTICE':'CASUAL PLAY';
@@ -208,7 +213,7 @@ function describeBootError(error){const text=!error?.status?'The game service di
 const bootStageText={connect:'Could not reach the game service.',load:'Could not load your saved game.',resume:'Could not refresh your saved game.',create:'Could not start a new game.'};
 async function loadSession(){
   me=await api('/api/me');backend=true;$('identity-name').textContent=me.user?.displayName??'Guest';$('login').hidden=Boolean(me.user);$('logout').hidden=!me.user;
-  $('service-status').textContent=me.jevConfigured?'Hosted Jev available':'Local fallback · Jev key not configured';$('service-dot').classList.remove('is-off');$('service-dot').classList.add('is-live');
+  $('service-status').textContent=me.jevConfigured?'Hosted Jev available':'Local fallback · no Jev key';$('service-dot').classList.remove('is-off');$('service-dot').classList.add('is-live');
   if(!me.discordConfigured){$('login').hidden=true;sessionNote('Local-ready build. Add server-side Jev and Discord credentials to enable hosted inference and authentication.');}
   if(me.pendingLaunch){try{me.context=(await api('/api/context/redeem',{method:'POST'})).context;sessionNote('Discord channel context verified. Ranked results can be attributed to this community.');}catch(e){sessionNote(humanMessage(e));}}
 }
@@ -274,7 +279,7 @@ async function loadAnalytics(){
     const calibration=live?.calibration;
     keyValues('calibration-detail',[['Candidate predictions',fmt(calibration?.n??0)],['Multiclass Brier score',fmt(calibration?.multiclassBrier,4)],['Negative log likelihood',fmt(calibration?.nll,4)],['Expected calibration error',fmt(calibration?.ece,4)],['Outcome classification accuracy',pct(calibration?.accuracy)],['Mean preference mass on optimal set',pct(live?.optimalPreferenceMass?.mean)]]);
     $('ply-table').replaceChildren(...Object.entries(summary.byPly).filter(([,s])=>s.moves).map(([ply,s])=>tableRow([ply,s.moves,pct(s.optimalRate),fmt(s.meanRegret,3),`${s.missedWins} / ${s.winOpportunities}`,`${s.missedBlocks} / ${s.blockOpportunities}`])));
-    $('cohort-list').replaceChildren(...Object.entries(summary.byCohort).map(([hash,c])=>{const row=element('div',null,'cohort');row.append(element('p',`${c.config.modelId} · ${c.config.difficulty} · human ${c.humanMark} · ${c.matches} matches`),element('code',hash));return row;}));
+    $('cohort-list').replaceChildren(...Object.entries(summary.byCohort).map(([hash,c])=>{const row=element('div',null,'cohort');row.append(element('p',`${c.config.modelId} · ${profileName(c.config.difficulty)} · human ${c.humanMark} · ${c.matches} matches`),element('code',hash));return row;}));
     renderHeatmap();
   }catch(e){$('analytics-coverage').textContent=humanMessage(e);}
 }
@@ -284,7 +289,7 @@ async function loadHistory(next=false){
   try{
     const data=await api(`/api/history?${new URLSearchParams(next?historyNext??{}:{})}`);historyNext=data.next;
     if(!next)$('history-table').replaceChildren();
-    for(const m of data.matches){const button=element('button','Open','text-button');button.addEventListener('click',async()=>{if(match&&!['complete','void'].includes(match.status)&&match.id!==m.id){notice('Finish or resign your active match before inspecting a different replay.');return;}await acceptMatch(m);showView('play');$('postgame').scrollIntoView({block:'start'});});$('history-table').append(tableRow([new Date(m.startedAt).toLocaleString(),m.config.difficulty,m.humanMark,m.outcome??m.status,m.eligible?'Ranked':'Unranked',m.actions.length,button]));}
+    for(const m of data.matches){const button=element('button','Open','text-button');button.addEventListener('click',async()=>{if(match&&!['complete','void'].includes(match.status)&&match.id!==m.id){notice('Finish or resign your active match before inspecting a different replay.');return;}await acceptMatch(m);showView('play');$('postgame').scrollIntoView({block:'start'});});$('history-table').append(tableRow([new Date(m.startedAt).toLocaleString(),profileName(m.config.difficulty),m.humanMark,m.outcome??m.status,m.eligible?'Ranked':'Unranked',m.actions.length,button]));}
     $('history-note').textContent=data.matches.length?'':'No server matches yet.';$('history-more').hidden=!historyNext;
   }catch(e){$('history-note').textContent=humanMessage(e);}
 }

@@ -1,4 +1,4 @@
-<p align="center"><img src="assets/banner.jpg" alt="Pixel-art robot Jev playing a game of Tic-Tac-Typed with glowing cyan X and magenta O marks in a neon arcade" width="100%"></p>
+<p align="center"><img src="assets/banner.png" alt="Pink pixel-window banner reading Tic-Tac-Typed, with a 3x3 board window where ink Xs win the top row under a magenta line, a Jev choice window listing move probabilities, and the boxy robot Jev beside them." width="100%"></p>
 
 <div align="center">
 
@@ -198,6 +198,7 @@ scripts/                export verification, source manifest, Discord command se
 tests/                  exhaustive rules, API/security, adapter, analytics, browser
 reports/                generated audits, baseline runs, tests and screenshots
 docs/                   architecture, analytics, API, deployment and sources
+assets/                 README banner, GitHub social preview and their HTML sources (assets/src/)
 wrangler.jsonc          Cloudflare deployment configuration
 ```
 
@@ -205,7 +206,13 @@ Local data lives in `.data/game.sqlite` and is not included in the ZIP. Secrets,
 
 ## Contributing
 
-Issues and pull requests are welcome. Before opening a pull request, run `npm test` and `npm run check`, then regenerate `server/build-info.js`, `reports/build-manifest.json` and `SHA256SUMS` with `node scripts/build-manifest.js`.
+Issues and pull requests are welcome. Before opening a pull request, run `npm test` and `npm run check`. Then regenerate the generated files: `node scripts/build-manifest.js` rewrites `server/build-info.js` and `reports/build-manifest.json`, and `SHA256SUMS` lists every tracked file except itself, sorted by path:
+
+```sh
+node scripts/build-manifest.js
+git ls-files | grep -vx SHA256SUMS | LC_ALL=C sort | xargs shasum -a 256 > SHA256SUMS
+shasum -a 256 -c SHA256SUMS
+```
 
 Keep `public/game/` free of DOM and I/O. Do not change these stored identifiers without a version bump:
 
