@@ -1,6 +1,9 @@
 import {assert,randomToken,sha256,json,readBody} from './util.js';
 import {one,run} from './store.js';
-import {userFor} from './auth.js';
+import {userFor,originFor} from './auth.js';
+// `tic-tac-toe` is the pre-rename subcommand. It stays accepted (and registered) for one release so existing
+// command caches and muscle memory keep working; drop it after the hostname cutover.
+export const PLAY_SUBCOMMANDS=['tic-tac-typed','tic-tac-toe'];
 function hexBytes(hex){return Uint8Array.from(hex.match(/.{2}/g)??[],b=>parseInt(b,16));}
 export async function verifyInteraction(request,publicKey,body) {
   const signature=request.headers.get('x-signature-ed25519'),timestamp=request.headers.get('x-signature-timestamp');
@@ -13,15 +16,16 @@ export async function interaction(request,env) {
   let data;try{data=JSON.parse(new TextDecoder().decode(body));}catch{assert(false,400,'invalid_interaction');}
   if(data.type===1)return json({type:1});
   assert(data.application_id===env.DISCORD_APPLICATION_ID,403,'application_mismatch');
-  const supported=data.type===2 && data.data?.name==='play' && data.data?.options?.some(o=>o.name==='tic-tac-toe'&&o.type===1);
+  const supported=data.type===2 && data.data?.name==='play' && data.data?.options?.some(o=>PLAY_SUBCOMMANDS.includes(o.name)&&o.type===1);
   assert(supported,400,'unsupported_command');
   const identity=data.member?.user?.id;
   assert([data.guild_id,data.channel_id,identity,data.id].every(s=>typeof s==='string'&&/^\d{5,25}$/.test(s)),403,'guild_context_required');
   const existing=await one(env,'SELECT interaction_id FROM launches WHERE interaction_id=?',data.id);
-  if(existing)return json({type:4,data:{content:'This launch was already issued. Run /play tic-tac-toe again for a new link.',flags:64}});
+  if(existing)return json({type:4,data:{content:'This launch was already issued. Run /play tic-tac-typed again for a new link.',flags:64}});
   const token=randomToken(),at=Date.now();
   try{await run(env,'INSERT INTO launches(token_hash,interaction_id,discord_id,guild_id,channel_id,issued_at,redeem_expires,context_expires) VALUES(?,?,?,?,?,?,?,?)',await sha256(token),data.id,identity,data.guild_id,data.channel_id,at,at+300000,at+900000);}catch(e){if(/UNIQUE/i.test(e.message))return json({type:4,data:{content:'Launch already issued. Run the command again.',flags:64}});throw e;}
-  return json({type:4,data:{content:`Play Tic-Tac-Toe against JEV. This personal launch expires in five minutes.\n${env.PUBLIC_ORIGIN}/api/auth/discord?launch=${token}`,flags:64,allowed_mentions:{parse:[]}}});
+  // The link uses the host Discord delivered this interaction to, so it follows the portal's Interactions Endpoint URL.
+  return json({type:4,data:{content:`Play Tic-Tac-Typed against Jev. This personal launch expires in five minutes.\n${originFor(request,env)}/api/auth/discord?launch=${token}`,flags:64,allowed_mentions:{parse:[]}}});
 }
 export async function redeemContext(env,session) {
   const user=await userFor(env,session);assert(user && user.moderation_state==='active',401,'discord_login_required');

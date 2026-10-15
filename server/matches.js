@@ -1,4 +1,4 @@
-import {createInitialState,getPlayerToMove,getOutcome,getLegalActions,applyAction,replay,key} from '../public/game/rules.js';
+import {createInitialState,getPlayerToMove,getOutcome,getLegalActions,applyAction,replay,key,GAME_ID} from '../public/game/rules.js';
 import {DIFFICULTIES,POLICY_VERSION,buildJevRequest,validateJevResponse,selectJevAction} from '../public/game/policy.js';
 import {inspectMove,ANALYTICS_VERSION} from '../public/game/analytics.js';
 import {minimaxAction} from '../public/game/oracle.js';
@@ -12,7 +12,7 @@ export function configuration(env,difficulty) {
   assert(DIFFICULTIES.includes(difficulty),400,'invalid_difficulty');
   const modelId=env.PINNED_JEV_MODEL??'jev-1.13.0';
   assert(/^jev-\d+\.\d+\.\d+$/.test(modelId),503,'pinned_model_required');
-  return {gameId:'tic-tac-toe',rulesVersion:'ttt/1',difficulty,modelId,policyVersion:POLICY_VERSION,analyticsVersion:ANALYTICS_VERSION,sourceRevision:SOURCE_REVISION,fallback:'minimax-unranked/v1',budgetMs:3000};
+  return {gameId:GAME_ID,rulesVersion:'ttt/1',difficulty,modelId,policyVersion:POLICY_VERSION,analyticsVersion:ANALYTICS_VERSION,sourceRevision:SOURCE_REVISION,fallback:'minimax-unranked/v1',budgetMs:3000};
 }
 export async function ownedMatch(env,session,id) {
   assert(typeof id==='string' && /^[a-f0-9-]{36}$/.test(id),400,'invalid_match_id');
@@ -25,7 +25,7 @@ export function publicMatch(doc) {
   // Exact oracle scores and raw provider evidence are withheld until completion.
   return {id:doc.id,schemaVersion:1,revision:doc.revision,status:doc.status,humanMark:doc.humanMark,board:replay(doc.actions).board,
     config:doc.config,configHash:doc.configHash,rankedStarted:doc.rankedStarted,eligible:doc.eligible,
-    opponent:doc.actions.some(a=>a.decision?.source==='fallback-minimax')?'Local perfect-play fallback — unranked':'JEV',
+    opponent:doc.actions.some(a=>a.decision?.source==='fallback-minimax')?'Local perfect-play fallback — unranked':'Jev',
     context:doc.context?{guildId:doc.context.guildId,channelId:doc.context.channelId}:null,
     outcome:doc.outcome??null,termination:doc.termination??null,startedAt:doc.startedAt,finishedAt:doc.finishedAt??null,expiresAt:doc.expiresAt,
     actions:doc.actions.map(a=>closed?a:{cell:a.cell,mark:a.mark,actor:a.actor,acceptedAt:a.acceptedAt,decision:a.decision?{

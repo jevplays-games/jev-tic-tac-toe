@@ -14,8 +14,8 @@ const fmt=(n,digits=0)=>typeof n==='number'&&Number.isFinite(n)?n.toLocaleString
 const pct=n=>typeof n==='number'?`${(n*100).toFixed(1)}%`:'—';
 const ms=n=>typeof n==='number'?n>=1000?`${(n/1000).toFixed(2)} s`:`${Math.round(n)} ms`:'—';
 const outcomeName=v=>v===1?'Win':v===0?'Draw':'Loss';
-const profileText={easy:'Easy · board and legal actions',normal:'Normal · immediate tactical features',hard:'Hard · forks and bounded replies',jev:'JEV · candidate outcome distributions'};
-const sourceName=s=>({'jev':'JEV','human':'Human','forced':'Forced','fallback-minimax':'Fallback','local-minimax':'Local oracle'}[s]??s);
+const profileText={easy:'Easy · board and legal actions',normal:'Normal · immediate tactical features',hard:'Hard · forks and bounded replies',jev:'Jev · candidate outcome distributions'};
+const sourceName=s=>({'jev':'Jev','human':'Human','forced':'Forced','fallback-minimax':'Fallback','local-minimax':'Local oracle'}[s]??s);
 let me=null,match=null,busy=false,pendingCell=null,pendingAction=null,replayPly=null;
 let boot={state:'loading',stage:null};
 const createRequest=createRequestHolder(()=>({requestId:newId(),humanMark:$('human-mark').value,difficulty:$('difficulty').value,ranked:$('ranked').checked}));
@@ -42,7 +42,7 @@ async function api(path,{method='GET',body}={}){
   if(!response.ok){const error=new Error(data.error??'Request failed');error.status=response.status;error.detail=data.detail;throw error;}
   return data;
 }
-function humanMessage(error){const messages={discord_not_configured:'Discord is not configured on this host.',fresh_discord_context_required:'Launch /play tic-tac-toe in a Discord channel to view its community leaderboard.',rate_limit:'The request limit was reached. Your existing match is preserved.',active_match_exists:'Resume or resign the existing match before starting another.',jev_not_configured:'Ranked play needs a server-side JEV API key.',csrf_rejected:'The session changed. Reload the page before continuing.',launch_expired:'This Discord launch expired. Run /play tic-tac-toe again.',launch_user_mismatch:'This personal launch belongs to a different Discord account.'};return messages[error.message]??error.message;}
+function humanMessage(error){const messages={discord_not_configured:'Discord is not configured on this host.',fresh_discord_context_required:'Launch /play tic-tac-typed in a Discord channel to view its community leaderboard.',rate_limit:'The request limit was reached. Your existing match is preserved.',active_match_exists:'Resume or resign the existing match before starting another.',jev_not_configured:'Ranked play needs a server-side Jev API key.',csrf_rejected:'The session changed. Reload the page before continuing.',launch_expired:'This Discord launch expired. Run /play tic-tac-toe again.',launch_user_mismatch:'This personal launch belongs to a different Discord account.'};return messages[error.message]??error.message;}
 function makeBoard(){
   for(let cell=0;cell<9;cell++){
     const button=element('button',null,'cell');button.type='button';button.dataset.cell=cell;button.setAttribute('aria-label',`${coordinate(cell)}, empty`);
@@ -79,7 +79,7 @@ function renderGame(){
   $('jev-symbol').textContent=human==='X'?'○':'×';$('jev-symbol').className=`mark ${human==='X'?'o':'x'}`;
   $('human-label').textContent=`Play as ${human} · ${human==='X'?'goes first':'goes second'}`;
   const fallback=match?.actions?.some(a=>a.decision?.source?.includes('minimax'));
-  $('opponent-name').textContent=match?.local||fallback?'Local oracle':'JEV';
+  $('opponent-name').textContent=match?.local||fallback?'Local oracle':'Jev';
   $('opponent-label').textContent=match?.local?'Browser-only · unranked':fallback?'Perfect-play fallback · unranked':'Structured decision model';
   $('mode-badge').textContent=match?.rankedStarted&&match?.eligible?'RANKED MATCH':match?.local?'LOCAL PRACTICE':'CASUAL PLAY';
   let text=boot.state==='loading'?'Loading your game…':boot.state==='error'?(match?'Could not refresh your game.':'Could not load your game.'):'Choose your settings and start a game.';
@@ -88,7 +88,7 @@ function renderGame(){
     else if(match.status==='complete')text=match.termination==='resign'?'Match resigned.':match.termination==='expired'?'Match expired.':match.outcome==='win'?'You win. Three in a row.':match.outcome==='loss'?'Your opponent wins.':'A draw. No squares left.';
     else if(match.status==='void')text='Match void · excluded from rankings';
     else if(busy&&pendingCell!==null)text='Move submitted · waiting for opponent';
-    else if(match.status==='jev_pending'||busy)text=match.local?'Local opponent is selecting a move…':'JEV is evaluating legal actions…';
+    else if(match.status==='jev_pending'||busy)text=match.local?'Local opponent is selecting a move…':'Jev is evaluating legal actions…';
     else text=`Your turn · place ${human}`;
     // A refresh in flight or failed on a displayed game is said plainly; the board itself stays as it was.
     if(replayPly===null&&boot.state==='loading')text='Loading your game…';
@@ -116,7 +116,7 @@ function renderGame(){
 }
 function renderEvidence(){
   const action=[...(match?.actions??[])].reverse().find(a=>a.decision),d=action?.decision;
-  if(!d){$('candidate-count').textContent='—';$('selected-cell').textContent='—';$('decision-latency').textContent='—';$('confidence').textContent='No response yet';$('probabilities').replaceChildren(element('p','JEV’s actual option distribution will appear after a decision.','empty jv-empty'));$('factors').replaceChildren(element('p','Play a move to begin.','empty'));return;}
+  if(!d){$('candidate-count').textContent='—';$('selected-cell').textContent='—';$('decision-latency').textContent='—';$('confidence').textContent='No response yet';$('probabilities').replaceChildren(element('p','Jev’s actual option distribution will appear after a decision.','empty jv-empty'));$('factors').replaceChildren(element('p','Play a move to begin.','empty'));return;}
   $('candidate-count').textContent=d.candidateCount??action.analysis?.candidates?.length??'—';$('selected-cell').textContent=coordinate(action.cell);$('decision-latency').textContent=ms(d.latencyMs);
   const confidence=d.response?.answers?.preference?.confidence??d.reportedConfidence;
   $('confidence').textContent=typeof confidence==='number'?`Confidence ${pct(confidence)}`:sourceName(d.source);
@@ -124,17 +124,17 @@ function renderEvidence(){
   $('probabilities').replaceChildren();
   if(probabilities){for(const [id,p]of Object.entries(probabilities).sort((a,b)=>a[0].localeCompare(b[0]))){
     const cell=Number(id.slice(5)),row=element('div',null,`probability-row ${cell===action.cell?'selected':''}`),meter=element('meter');meter.min=0;meter.max=1;meter.value=p;meter.setAttribute('aria-label',`${coordinate(cell)} preference ${pct(p)}`);row.append(element('span',coordinate(cell)),meter,element('span',`${Math.round(p*100)}%`));$('probabilities').append(row);
-  }}else $('probabilities').append(element('p',d.source==='forced'?'Only one legal move remained; no model call was needed.':`No JEV distribution. ${d.fallbackReason??'Local practice opponent'}.`,'empty'));
+  }}else $('probabilities').append(element('p',d.source==='forced'?'Only one legal move remained; no model call was needed.':`No Jev distribution. ${d.fallbackReason??'Local practice opponent'}.`,'empty'));
   $('factors').replaceChildren(...(action.analysis?.factors??d.factors??[]).map(f=>element('p',f,'factor')));
   if(!$('factors').childNodes.length)$('factors').append(element('p','No immediate tactical factors flagged.','empty'));
-  $('evidence-note').textContent=d.source==='jev'?'Confidence describes the model’s answer distribution, not a calibrated probability of winning.':d.source==='forced'?'A forced legal action is not an inference result.':'This move was not selected by JEV. It cannot contribute to official JEV rankings.';
+  $('evidence-note').textContent=d.source==='jev'?'Confidence describes the model’s answer distribution, not a calibrated probability of winning.':d.source==='forced'?'A forced legal action is not an inference result.':'This move was not selected by Jev. It cannot contribute to official Jev rankings.';
 }
 async function acceptMatch(data,{auto=true}={}){
   match=data;replayPly=null;pendingCell=null;renderGame();renderPostgame();
   clearTimeout(resumeTimer);
   if(match.status!=='jev_pending')autoPolls=0;
   if(auto&&match.status==='jev_pending'&&!match.local){
-    if(autoPolls>=maxAutoPolls)notice('JEV is still working on this move. Use Reconnect to check again.');
+    if(autoPolls>=maxAutoPolls)notice('Jev is still working on this move. Use Reconnect to check again.');
     else resumeTimer=setTimeout(()=>{if(boot.state==='ready')resume(false);},1800);
   }
   if(['complete','void'].includes(match.status)&&!match.local){loadLeaderboard();loadAnalytics();}
@@ -201,15 +201,15 @@ async function resume(manual=true){
    match is resolved. A live match is restored (never a second one beside it), an expired one is resumed
    first, and only an absent or ended one is replaced by a new match. A connection or server failure at any
    step leaves the page in a visible error state with Retry; it never starts a local game on its own and
-   never replaces the match already on screen. Ranked follows the checkbox rule (signed in AND hosted JEV),
+   never replaces the match already on screen. Ranked follows the checkbox rule (signed in AND hosted Jev),
    so auto-start cannot rank a game the player could not have ranked by hand. */
 function setBoot(state,stage=null){boot={state,stage};renderGame();}
 function describeBootError(error){const text=!error?.status?'The game service did not respond':error.status>=500?'The game service had a problem':humanMessage(error);return text.replace(/\.?$/,'.');}
 const bootStageText={connect:'Could not reach the game service.',load:'Could not load your saved game.',resume:'Could not refresh your saved game.',create:'Could not start a new game.'};
 async function loadSession(){
   me=await api('/api/me');backend=true;$('identity-name').textContent=me.user?.displayName??'Guest';$('login').hidden=Boolean(me.user);$('logout').hidden=!me.user;
-  $('service-status').textContent=me.jevConfigured?'Hosted JEV available':'Local fallback · JEV key not configured';$('service-dot').classList.remove('is-off');$('service-dot').classList.add('is-live');
-  if(!me.discordConfigured){$('login').hidden=true;sessionNote('Local-ready build. Add server-side JEV and Discord credentials to enable hosted inference and authentication.');}
+  $('service-status').textContent=me.jevConfigured?'Hosted Jev available':'Local fallback · Jev key not configured';$('service-dot').classList.remove('is-off');$('service-dot').classList.add('is-live');
+  if(!me.discordConfigured){$('login').hidden=true;sessionNote('Local-ready build. Add server-side Jev and Discord credentials to enable hosted inference and authentication.');}
   if(me.pendingLaunch){try{me.context=(await api('/api/context/redeem',{method:'POST'})).context;sessionNote('Discord channel context verified. Ranked results can be attributed to this community.');}catch(e){sessionNote(humanMessage(e));}}
 }
 const runBoot=singleFlight(()=>withBootLock(async()=>{
@@ -218,7 +218,7 @@ const runBoot=singleFlight(()=>withBootLock(async()=>{
   try{await loadSession();}
   catch(error){
     backend=false;$('service-status').textContent='Game service unreachable';$('service-dot').classList.remove('is-live');$('service-dot').classList.add('is-off');
-    errorNote(`${bootStageText.connect} ${describeBootError(error)} Retry, or practice locally without JEV.`);setBoot('error','connect');return;
+    errorNote(`${bootStageText.connect} ${describeBootError(error)} Retry, or practice locally without Jev.`);setBoot('error','connect');return;
   }
   const request={get current(){if(!createRequest.peek())$('ranked').checked=Boolean(me?.user&&me?.jevConfigured);return createRequest.current;},clear:()=>createRequest.clear()};
   const result=await resolveInitialMatch({me,api,request});
@@ -231,7 +231,7 @@ const runBoot=singleFlight(()=>withBootLock(async()=>{
 }));
 async function startLocal(){
   const at=Date.now();match={local:true,id:newId(),schemaVersion:1,status:'human_turn',revision:0,board:Array(9).fill('.'),humanMark:$('human-mark').value,config:{difficulty:$('difficulty').value,modelId:null},configHash:'local-untrusted',actions:[],events:[],eligible:false,rankedStarted:false,startedAt:at};
-  notice('The backend is unreachable. Playing a local perfect-play opponent, not JEV.');
+  notice('The backend is unreachable. Playing a local perfect-play opponent, not Jev.');
   await localOpponent();renderPostgame();
 }
 function localMove(cell,actor){
@@ -268,9 +268,9 @@ async function loadAnalytics(){
     const data=await api(`/api/analytics?${params}`);summary=data.summary;
     $('analytics-coverage').textContent=`${data.coverage.matchesIncluded} matches included${data.coverage.truncated?' · newest 500 only; export for full history':''}`;
     const live=summary.bySource.jev,totals=summary.summary;
-    $('metric-grid').replaceChildren(metric('COMPLETED MATCHES',fmt(summary.matches),`${summary.wins} wins · ${summary.draws} draws · ${summary.losses} losses`),metric('HUMAN RESULT RATE',pct(summary.resultRate),'Descriptive; may mix configurations'),metric('LIVE JEV OPTIMAL MOVES',pct(live?.optimalRate),`${fmt(live?.moves??0)} actual model decisions`),metric('LIVE JEV P95 LATENCY',ms(live?.latencyMs?.p95),'Decision wall time · measured, not simulated'),metric('FALLBACK MOVES',fmt(totals.fallback),'Excluded from official JEV rankings'),metric('VERIFIED RANKED MATCHES',fmt(summary.rankedEligible),'Same-configuration leaderboard cohorts'));
+    $('metric-grid').replaceChildren(metric('Completed matches',fmt(summary.matches),`${summary.wins} wins · ${summary.draws} draws · ${summary.losses} losses`),metric('Human result rate',pct(summary.resultRate),'Descriptive; may mix configurations'),metric('Live Jev optimal moves',pct(live?.optimalRate),`${fmt(live?.moves??0)} actual model decisions`),metric('Live Jev p95 latency',ms(live?.latencyMs?.p95),'Decision wall time · measured, not simulated'),metric('Fallback moves',fmt(totals.fallback),'Excluded from official Jev rankings'),metric('Verified ranked matches',fmt(summary.rankedEligible),'Same-configuration leaderboard cohorts'));
     $('source-table').replaceChildren(...Object.entries(summary.bySource).map(([source,s])=>tableRow([sourceName(source),s.moves,pct(s.optimalRate),fmt(s.meanRegret,3),s.avoidableLosses])));
-    keyValues('latency-detail', [['JEV p50 / p95 / p99',`${ms(live?.latencyMs?.p50)} / ${ms(live?.latencyMs?.p95)} / ${ms(live?.latencyMs?.p99)}`],['Transport retries',fmt(totals.retries)],['Forced placements',fmt(totals.forced)],['Input / output tokens',`${fmt(totals.inputTokens)} / ${fmt(totals.outputTokens)}`],['Responses with token usage',`${totals.usageKnown} / ${totals.jevCalls}`],['Attempts with unknown billing usage',fmt(totals.unknownAttemptUsage)],['Known estimated cost (operator prices)',totals.knownEstimatedCostUsd===null?'Not configured':`$${totals.knownEstimatedCostUsd.toFixed(6)}`],['Mean human dwell',ms(totals.humanDwellMs.mean)]]);
+    keyValues('latency-detail', [['Jev p50 / p95 / p99',`${ms(live?.latencyMs?.p50)} / ${ms(live?.latencyMs?.p95)} / ${ms(live?.latencyMs?.p99)}`],['Transport retries',fmt(totals.retries)],['Forced placements',fmt(totals.forced)],['Input / output tokens',`${fmt(totals.inputTokens)} / ${fmt(totals.outputTokens)}`],['Responses with token usage',`${totals.usageKnown} / ${totals.jevCalls}`],['Attempts with unknown billing usage',fmt(totals.unknownAttemptUsage)],['Known estimated cost (operator prices)',totals.knownEstimatedCostUsd===null?'Not configured':`$${totals.knownEstimatedCostUsd.toFixed(6)}`],['Mean human dwell',ms(totals.humanDwellMs.mean)]]);
     const calibration=live?.calibration;
     keyValues('calibration-detail',[['Candidate predictions',fmt(calibration?.n??0)],['Multiclass Brier score',fmt(calibration?.multiclassBrier,4)],['Negative log likelihood',fmt(calibration?.nll,4)],['Expected calibration error',fmt(calibration?.ece,4)],['Outcome classification accuracy',pct(calibration?.accuracy)],['Mean preference mass on optimal set',pct(live?.optimalPreferenceMass?.mean)]]);
     $('ply-table').replaceChildren(...Object.entries(summary.byPly).filter(([,s])=>s.moves).map(([ply,s])=>tableRow([ply,s.moves,pct(s.optimalRate),fmt(s.meanRegret,3),`${s.missedWins} / ${s.winOpportunities}`,`${s.missedBlocks} / ${s.blockOpportunities}`])));
@@ -292,7 +292,7 @@ function download(name,data,type='application/json'){const link=element('a');con
 function movesCsv(m){return csv(m.actions.map(a=>({matchId:m.id,configHash:m.configHash,profile:m.config.difficulty,humanMark:m.humanMark,ply:a.analysis.ply,actor:a.actor,cell:coordinate(a.cell),source:a.decision?.source??'human',board:a.analysis.board,valueBefore:a.analysis.valueBefore,valueAfter:a.analysis.valueAfter,regret:a.analysis.regret,optimal:a.analysis.optimal,missedImmediateWin:a.analysis.missedImmediateWin,missedNecessaryBlock:a.analysis.missedNecessaryBlock,latencyMs:a.decision?.latencyMs??null,serverDwellMs:a.serverDwellMs??null,confidence:a.decision?.response?.answers?.preference?.confidence??null,inputTokens:a.decision?.response?.usage?.input_tokens??null,outputTokens:a.decision?.response?.usage?.output_tokens??null})) );}
 async function exportAll(){
   $('export-all').disabled=true;
-  try{const matches=[];let cursor={};do{const page=await api(`/api/history?${new URLSearchParams({...cursor,limit:100})}`);matches.push(...page.matches);cursor=page.next;}while(cursor);download(`jev-matches-${new Date().toISOString().slice(0,10)}.json`,{schemaVersion:1,exportedAt:new Date().toISOString(),scope:'own-account-or-session',matches});notice(`Exported ${matches.length} matches. Community IDs may be present; review before sharing.`);}catch(e){notice(`Export stopped without a partial file: ${humanMessage(e)}`);}finally{$('export-all').disabled=false;}
+  try{const matches=[];let cursor={};do{const page=await api(`/api/history?${new URLSearchParams({...cursor,limit:100})}`);matches.push(...page.matches);cursor=page.next;}while(cursor);download(`tic-tac-typed-matches-${new Date().toISOString().slice(0,10)}.json`,{schemaVersion:1,exportedAt:new Date().toISOString(),scope:'own-account-or-session',matches});notice(`Exported ${matches.length} matches. Community IDs may be present; review before sharing.`);}catch(e){notice(`Export stopped without a partial file: ${humanMessage(e)}`);}finally{$('export-all').disabled=false;}
 }
 function showView(view){for(const node of document.querySelectorAll('.view'))node.hidden=node.id!==`view-${view}`;for(const button of document.querySelectorAll('[data-view]')){button.classList.toggle('active',button.dataset.view===view);if(button.dataset.view===view)button.setAttribute('aria-current','page');else button.removeAttribute('aria-current');}if(view==='analytics')loadAnalytics();if(view==='records')loadHistory();}
 async function initialize(){
@@ -307,7 +307,7 @@ async function initialize(){
   for(const id of ['leader-profile','leader-mark'])$(id).addEventListener('change',()=>loadLeaderboard());$('leader-more').addEventListener('click',()=>loadLeaderboard(true));
   $('show-rules').addEventListener('click',()=>$('rules-dialog').showModal());$('show-privacy').addEventListener('click',()=>$('privacy-dialog').showModal());for(const b of document.querySelectorAll('[data-close-dialog]'))b.addEventListener('click',()=>b.closest('dialog').close());
   $('replay-step').addEventListener('input',()=>{replayPly=Number($('replay-step').value);$('replay-output').textContent=`${replayPly} / ${match.actions.length}`;renderGame();});$('return-live').addEventListener('click',()=>{replayPly=null;$('replay-step').value=match.actions.length;$('replay-output').textContent='Final';renderGame();});
-  $('download-match').addEventListener('click',()=>download(`jev-${match.id}.json`,match));$('download-moves').addEventListener('click',()=>download(`jev-${match.id}-moves.csv`,movesCsv(match),'text/csv'));
+  $('download-match').addEventListener('click',()=>download(`tic-tac-typed-${match.id}.json`,match));$('download-moves').addEventListener('click',()=>download(`tic-tac-typed-${match.id}-moves.csv`,movesCsv(match),'text/csv'));
   $('refresh-analytics').addEventListener('click',loadAnalytics);for(const id of ['analytics-profile','analytics-mark'])$(id).addEventListener('change',loadAnalytics);$('heatmap-source').addEventListener('change',renderHeatmap);
   $('refresh-records').addEventListener('click',()=>loadHistory());$('history-more').addEventListener('click',()=>loadHistory(true));$('export-all').addEventListener('click',exportAll);
   $('logout').addEventListener('click',async()=>{try{await api('/api/logout',{method:'POST'});location.reload();}catch(e){notice(humanMessage(e));}});

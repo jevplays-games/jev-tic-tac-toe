@@ -1,3 +1,5 @@
+> **Historical record.** These are the original requirements, kept unchanged. They predate the rename to Tic-Tac-Typed and the jevplay.games brand: "JEV Arcade" and "JEV" here mean jevplay.games and Jev.
+
 # JEV Single-Page Game — Architecture & Implementation Planning Prompt
 
 You are a senior game engineer, web architect, security engineer, and JEV/TypeSafe AI integration engineer.

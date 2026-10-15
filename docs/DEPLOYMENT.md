@@ -16,7 +16,7 @@ Local state is ordinary SQLite. Stop the process before making a simple file cop
 4. Configure the HTTPS interactions endpoint `https://YOUR_HOST/api/discord/interactions`. The endpoint must be publicly reachable for Discord's signed verification ping. A loopback server cannot receive that ping directly; use the staged Worker deployment.
 5. Set `DISCORD_APPLICATION_ID`, `DISCORD_CLIENT_SECRET`, and `DISCORD_PUBLIC_KEY` in the server configuration.
 6. Run `npm run discord:register` from a local shell with those credentials. The script uses a short-lived client-credentials token scoped to `applications.commands.update`, then POSTs/upserts only the `play` command. It does not bulk-replace unrelated commands or keep a runtime bot token.
-7. Install the application into a participating server and configure command access through Discord's integration permissions. Run `/play tic-tac-toe` in the intended channel.
+7. Install the application into a participating server and configure command access through Discord's integration permissions. Run `/play tic-tac-typed` in the intended channel. The legacy `/play tic-tac-toe` subcommand is still registered and accepted for one release after the rename.
 
 The command returns an ephemeral personal URL. The app authenticates the original invoking user, then the browser redeems the pending code with a CSRF-protected POST. Another Discord account cannot redeem it. Codes expire after five minutes; attributed context expires fifteen minutes after issuance. A match snapshots the valid context at its start.
 
@@ -30,6 +30,8 @@ Cloudflare tooling is a deployment-only dependency, deliberately not installed b
 npx wrangler login
 npx wrangler d1 create jev-arcade
 ```
+
+The production database keeps the name `jev-arcade` after the rename to Tic-Tac-Typed (owner decision, 2026-10-14). D1 binds by `database_id`, so there is no recreate or migration.
 
 Copy the returned database ID into `wrangler.jsonc`. Set `vars.PUBLIC_ORIGIN` to the actual HTTPS Worker/custom-domain origin. This must not retain the example placeholder. Set the Discord application ID/public key as Worker variables or secrets.
 
@@ -67,7 +69,8 @@ The deployment file has no actual account/database IDs, secrets, or custom domai
 
 | Variable | Default / purpose |
 |---|---|
-| `PUBLIC_ORIGIN` | Exact browser origin; required |
+| `PUBLIC_ORIGIN` | Exact browser origin; required. `https://tic-tac-typed.jevplay.games` in production |
+| `LEGACY_PUBLIC_ORIGINS` | Optional, comma-separated. Extra origins served by the same deployment (`https://tic-tac-toe.jevplay.games` until the 301 cutover). Worker only; the Node server ignores it |
 | `PINNED_JEV_MODEL` | `jev-1.13.0`; must be an explicit `jev-x.y.z` version |
 | `TYPESAFE_API_KEY` | Empty means labeled fallback only |
 | `DISCORD_APPLICATION_ID` | Application/client ID |
@@ -87,11 +90,34 @@ Per-session API admission is additionally limited to 240 calls/minute. Abuse cou
 
 ## Staging smoke test before opening public ranked play
 
-Use your actual API key and a non-production Discord server. Check a live JEV game on each profile and both starting sides, returned model/version, correct request/response parsing, all fallback conditions, signed command launch, wrong-account redemption rejection, OAuth logout/re-login, genuine scoped ranking attribution, interrupted requests, and all-match exports.
+Use your actual API key and a non-production Discord server. Check a live Jev game on each profile and both starting sides, returned model/version, correct request/response parsing, all fallback conditions, signed command launch, wrong-account redemption rejection, OAuth logout/re-login, genuine scoped ranking attribution, interrupted requests, and all-match exports.
 
 Run a bounded live benchmark before advertising any difficulty's strength. Keep pinned-model cohorts separate after upgrades. Re-run `scripts/build-manifest.js` after changing production source so official configurations obtain a new fingerprint.
 
 The included tests exercise a D1-compatible interface backed by real local SQLite and mock external identity/model services. They do not establish the behavior of an actual deployed D1 account, Discord application configuration, provider credentials, or network edge. Those checks require staging.
+
+## Hostnames: tic-tac-typed and the legacy tic-tac-toe
+
+The game moved from `tic-tac-toe.jevplay.games` to `tic-tac-typed.jevplay.games`. Until the old hostname is 301-redirected, one Worker serves both. `wrangler.jsonc` has a custom-domain route for each, `PUBLIC_ORIGIN` is the new origin and `LEGACY_PUBLIC_ORIGINS` is the old one.
+
+A request on either host is answered on that host:
+
+- **Cookies.** The session cookie is `__Host-`, so it stays on its own host.
+- **Origin check.** Mutations must send the `Origin` of the host they were posted to. A cookie from one host cannot be used for a POST from the other.
+- **OAuth.** The OAuth `redirect_uri` is `https://<that host>/api/auth/discord/callback`. **Register both callbacks in the Discord developer portal** before deploying.
+- **Discord launch links.** These use the host Discord delivered the interaction to. They therefore follow the portal's Interactions Endpoint URL.
+
+Requests on any other host, such as `*.workers.dev`, fall back to `PUBLIC_ORIGIN`.
+
+Cutover order:
+
+1. Add the `tic-tac-typed` OAuth callback in the Discord portal, keeping the `tic-tac-toe` callback.
+2. Create the new Worker `jev-tic-tac-typed` and set its secrets **before its first live deploy**: `npx wrangler secret put` for `TYPESAFE_API_KEY`, `DISCORD_CLIENT_SECRET`, `RATE_LIMIT_SALT` and (optional) `ADMIN_ANALYTICS_KEY`, plus the Discord application ID and public key. A new Worker inherits nothing from `jev-tic-tac-toe`.
+3. Deploy `jev-tic-tac-typed`. Its routes claim `tic-tac-typed.jevplay.games` and move `tic-tac-toe.jevplay.games` over from the old Worker (Wrangler asks to override that custom domain). The new Worker must exist before the domain can be attached to it.
+4. Retire the old Worker `jev-tic-tac-toe` promptly after step 3, or at least remove its cron trigger. Its every-minute maintenance cron runs against the same D1 database as the new Worker's.
+5. Point the portal's Interactions Endpoint URL and Activity URL mapping at `tic-tac-typed.jevplay.games`, and re-run `npm run discord:register`.
+6. Add the 301 redirect `tic-tac-toe.jevplay.games/*` → `https://tic-tac-typed.jevplay.games/$path`, preserving path and query. Do this only after step 5: Discord does not follow a redirect on the interactions POST.
+7. After one release, remove the legacy route, `LEGACY_PUBLIC_ORIGINS`, the legacy `/play tic-tac-toe` option and its callback.
 
 ## Operations and privacy
 
@@ -110,7 +136,7 @@ Match evidence and results are retained until the operator removes them; they ar
 The same Worker handler runs as a plain Node app. GoDaddy runs `npm run build` (a no-op) and then `npm start`, which is `node --env-file-if-exists=.env local/server.js`.
 
 - Production mode is on when `NODE_ENV=production` **or** `PUBLIC_ORIGIN` is an https origin on a non-loopback host (GoDaddy's platform env can override `NODE_ENV`). Loopback or http origins stay local dev. Production omits `DEV_LOCAL`, so ranked play, Discord interactions, OAuth and Activity, `__Host-` Secure cookies and HSTS behave as on the Worker. It binds `0.0.0.0` on the platform-injected `PORT` (override with `HOST`). `PUBLIC_ORIGIN` and `RATE_LIMIT_SALT` are mandatory or the process exits.
-- `PUBLIC_ORIGIN=https://tic-tac-toe.jevplay.games`; origin and CSRF checks compare against it, never against the Host header.
+- `PUBLIC_ORIGIN=https://tic-tac-typed.jevplay.games`. Origin and CSRF checks compare against it. The Node server builds every request URL from `PUBLIC_ORIGIN` and ignores the Host header, so it answers on that one origin only: `LEGACY_PUBLIC_ORIGINS` has no effect here, and serving the old hostname is Worker-only. Redirect any old hostname to `PUBLIC_ORIGIN` at the proxy instead.
 - `TRUST_PROXY=1` uses the last `X-Forwarded-For` hop as the client IP for rate limits. Without it every client shares one rate-limit bucket. Set it only behind a proxy that appends that header.
 - Other env: `TYPESAFE_API_KEY`, `PINNED_JEV_MODEL`, `DISCORD_APPLICATION_ID`, `DISCORD_CLIENT_SECRET`, `DISCORD_PUBLIC_KEY`, the quota variables, and optional `ADMIN_ANALYTICS_KEY`. Real process env vars override `.env`.
 - SQLite lives at `data/game.sqlite` (override `DATABASE_PATH`), outside `public/`, so it is never served. The filesystem is ephemeral: a redeploy loses matches, sessions and rankings (accepted).

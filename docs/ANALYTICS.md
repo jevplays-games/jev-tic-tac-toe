@@ -10,7 +10,7 @@ The dashboard covers a labeled, bounded account/session window; the full export 
 
 ## 2. Observation sources
 
-| Source | Meaning | Counts as measured JEV inference? | Ranking consequence |
+| Source | Meaning | Counts as measured Jev inference? | Ranking consequence |
 |---|---|---|---|
 | `human` | Accepted human placement | No | Server-owned ranked match can remain eligible |
 | `jev` | Valid, expected-version provider response selected the move | Yes | Eligible when all other checks pass |
@@ -21,7 +21,7 @@ The dashboard covers a labeled, bounded account/session window; the full export 
 | `baseline-tactical` | Offline win/block/positional heuristic | No | Benchmark only |
 | `baseline-random` | Seeded random legal action | No | Benchmark only |
 
-Never report fallback or exact-solver quality as JEV quality. `forced` observations are excluded from provider inference sample counts. A match played against a fallback may still contain earlier genuine JEV observations; analytics preserve both sources even though the game is no longer ranked.
+Never report fallback or exact-solver quality as Jev quality. `forced` observations are excluded from provider inference sample counts. A match played against a fallback may still contain earlier genuine Jev observations; analytics preserve both sources even though the game is no longer ranked.
 
 ## 3. Exact move quality
 
@@ -75,7 +75,7 @@ operator-priced token-cost estimate when configured
 
 Authorization headers, credentials, cookies, OAuth tokens, user identity and Discord channel names are not in the model request or trace. Arbitrary extra provider fields are discarded. Probability keys must exactly match the options; finite values must be in `[0,1]`, their sum within `0.001` of one, and the documented choice must be a maximum-probability option. Returned model identity must match the pinned version.
 
-The JEV profile uses model-provided candidate probabilities to calculate `P(win) - P(loss)`, rounds comparisons to six decimal places, then uses preference probability and a fixed center/corners/edges order for ties. It never consults minimax when selecting an ordinary JEV move.
+The Jev profile uses model-provided candidate probabilities to calculate `P(win) - P(loss)`, rounds comparisons to six decimal places, then uses preference probability and a fixed center/corners/edges order for ties. It never consults minimax when selecting an ordinary Jev move.
 
 ## 6. Probability diagnostics
 
@@ -88,11 +88,11 @@ The JEV profile uses model-provided candidate probabilities to calculate `P(win)
 | `optimalPreferenceMass` | Total normalized preference probability assigned to the exact optimal action set |
 | `preferenceExpectedOracleValue` | Sum over legal candidates of preference probability × exact candidate value |
 
-Preference confidence is not calibrated against game outcomes by assumption. A low-confidence decision can be good when many moves are equally optimal. The JEV profile's selected action may differ from the most likely move-preference option because its outcome questions are combined separately.
+Preference confidence is not calibrated against game outcomes by assumption. A low-confidence decision can be good when many moves are equally optimal. The Jev profile's selected action may differ from the most likely move-preference option because its outcome questions are combined separately.
 
 ## 7. Outcome calibration
 
-Only actual JEV-profile candidate `win/draw/loss` predictions produce these measurements. The label is the exact outcome after committing the candidate and assuming both sides continue optimally—not the observed result against a possibly imperfect human.
+Only actual Jev-profile candidate `win/draw/loss` predictions produce these measurements. The label is the exact outcome after committing the candidate and assuming both sides continue optimally—not the observed result against a possibly imperfect human.
 
 `multiclassBrier = mean(Σ_k (p_k - 1[k = label])²)`.
 
@@ -126,9 +126,9 @@ The dashboard fetches the newest 500 closed matches, then applies its filters. C
 
 Each event contains `schemaVersion`, `matchId`, monotonic per-match `seq`, UTC `at`, event `type`, `causedBy`, `payload`, `previousHash`, and `hash`. Sequence—not UTC wall time—establishes event order. Cross-request wall clocks do not claim a globally monotonic absolute time.
 
-The chain is committed in the same match document as the authoritative transition through a conditional revision update. Before a JEV request, the backend persists the prepared state, questions, request hash and short-lived lease. It records accepted results before accepting the computer move. Crash recovery never silently re-samples the opponent; it marks the match unranked and uses a labeled fallback.
+The chain is committed in the same match document as the authoritative transition through a conditional revision update. Before a Jev request, the backend persists the prepared state, questions, request hash and short-lived lease. It records accepted results before accepting the computer move. Crash recovery never silently re-samples the opponent; it marks the match unranked and uses a labeled fallback.
 
-Offline verification checks the chain, manifest binding, all move actors and legality, regenerated exact annotations, duplicate decision evidence versus its event, reconstructed JEV requests, response schema, selection policy, actions versus application events, terminal outcome and completion event. It does not contact any external service.
+Offline verification checks the chain, manifest binding, all move actors and legality, regenerated exact annotations, duplicate decision evidence versus its event, reconstructed Jev requests, response schema, selection policy, actions versus application events, terminal outcome and completion event. It does not contact any external service.
 
 **Limit:** hash links only detect changes relative to a trusted copy/head. They are not a cryptographic attestation that the provider really ran. The server-controlled records are the official authority; arbitrary uploaded exports never create leaderboard results.
 
@@ -150,4 +150,4 @@ The backend maintains daily counters by normalized route, method, HTTP status, e
 - Browser match JSON: full completed-match replay, decisions and event chain.
 - Browser moves CSV: flat decision rows; text cells that could become spreadsheet formulas are escaped while negative numeric oracle values remain numeric.
 
-Seeded source baselines, paired starting marks, symmetry-grouped splits and configuration pinning make comparisons reproducible. Whole-game metrics also report games containing any fallback. Frozen-policy adversarial evaluation requires coverage of every policy state it reaches and refuses fallback-contaminated JEV policies.
+Seeded source baselines, paired starting marks, symmetry-grouped splits and configuration pinning make comparisons reproducible. Whole-game metrics also report games containing any fallback. Frozen-policy adversarial evaluation requires coverage of every policy state it reaches and refuses fallback-contaminated Jev policies.

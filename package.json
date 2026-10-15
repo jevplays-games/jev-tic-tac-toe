@@ -1,9 +1,10 @@
 {
-  "name": "jev-tic-tac-toe",
+  "name": "jev-tic-tac-typed",
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Human vs JEV with authoritative matches, Discord community rankings and exhaustive decision analytics.",
+  "license": "MIT",
+  "description": "Human vs Jev with authoritative matches, Discord community rankings and exhaustive decision analytics.",
   "engines": { "node": ">=22.16.0" },
   "scripts": {
     "build": "node -e \"process.exit(0)\"",

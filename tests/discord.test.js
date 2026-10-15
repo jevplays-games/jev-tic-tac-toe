@@ -14,14 +14,14 @@ test('native Ed25519 verifies exact body and timestamp, rejects modification',as
 test('Discord ping and guild command are verified, personal launches are one-time',async t=>{
   const{keys,publicKey}=await signing(),env=environment({DISCORD_PUBLIC_KEY:publicKey,DISCORD_APPLICATION_ID:'123456789'});t.after(()=>env.DB.close());
   const ping=await handle(await signed(env,{type:1},keys),env);assert.deepEqual(await ping.json(),{type:1});
-  const payload={type:2,application_id:'123456789',id:'987654321',guild_id:'777777777',channel_id:'666666666',member:{user:{id:'555555555'}},data:{name:'play',options:[{type:1,name:'tic-tac-toe'}]}};
+  const payload={type:2,application_id:'123456789',id:'987654321',guild_id:'777777777',channel_id:'666666666',member:{user:{id:'555555555'}},data:{name:'play',options:[{type:1,name:'tic-tac-typed'}]}};
   const response=await handle(await signed(env,payload,keys),env),data=await response.json();assert.equal(response.status,200);assert.equal(data.data.flags,64);assert.match(data.data.content,/launch=[a-f0-9]{64}/);
   const duplicate=await handle(await signed(env,payload,keys),env);assert.match((await duplicate.json()).data.content,/already issued/);
 });
 test('stale signatures and non-guild launch contexts reject',async t=>{
   const{keys,publicKey}=await signing(),env=environment({DISCORD_PUBLIC_KEY:publicKey,DISCORD_APPLICATION_ID:'123456789'});t.after(()=>env.DB.close());
   assert.equal((await handle(await signed(env,{type:1},keys,String(Math.floor(Date.now()/1000)-1000)),env)).status,401);
-  const payload={type:2,application_id:'123456789',id:'987654322',data:{name:'play',options:[{type:1,name:'tic-tac-toe'}]},user:{id:'555555555'}};assert.equal((await handle(await signed(env,payload,keys),env)).status,403);
+  const payload={type:2,application_id:'123456789',id:'987654322',data:{name:'play',options:[{type:1,name:'tic-tac-typed'}]},user:{id:'555555555'}};assert.equal((await handle(await signed(env,payload,keys),env)).status,403);
 });
 test('launch grants bind to Discord identity and survive idempotent same-session redemption',async t=>{
   const env=environment();t.after(()=>env.DB.close());const a=await browser(env),b=await browser(env),identity=await loginFixture(a),other=await loginFixture(b),token=randomToken(),hash=await sha256(token),at=Date.now();

@@ -3,7 +3,7 @@
 // bearer session token in memory. Nothing here changes the normal browser sign-in.
 import {assert,randomToken,sha256,json,readJson} from './util.js';
 import {run,quota} from './store.js';
-import {activityOrigin,isLocal,discordIdentity,upsertDiscordUser} from './auth.js';
+import {activityOrigin,originFor,isLocal,discordIdentity,upsertDiscordUser} from './auth.js';
 
 export function activityConfig(env) {
   assert(env.DISCORD_APPLICATION_ID&&env.DISCORD_CLIENT_SECRET,503,'discord_not_configured');
@@ -12,7 +12,7 @@ export function activityConfig(env) {
 export async function createActivitySession(request,env) {
   assert(env.DISCORD_APPLICATION_ID&&env.DISCORD_CLIENT_SECRET,503,'discord_not_configured');
   const origin=request.headers.get('origin');
-  assert(origin&&(origin===activityOrigin(env)||origin===new URL(env.PUBLIC_ORIGIN).origin),403,'origin_rejected');
+  assert(origin&&(origin===activityOrigin(env)||origin===originFor(request,env)),403,'origin_rejected');
   const ip=request.headers.get('cf-connecting-ip')??(isLocal(env)?'local':'unknown');
   await quota(env,`activity-session:${ip}`,Number(env.SESSION_CREATIONS_PER_HOUR??60),3600000);
   const {code}=await readJson(request);

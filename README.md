@@ -1,34 +1,56 @@
-<p align="center"><img src="assets/banner.jpg" alt="Pixel-art robot Jev playing tic-tac-toe with glowing cyan X and magenta O marks in a neon arcade" width="100%"></p>
+<p align="center"><img src="assets/banner.jpg" alt="Pixel-art robot Jev playing a game of Tic-Tac-Typed with glowing cyan X and magenta O marks in a neon arcade" width="100%"></p>
 
-# JEV Arcade · Tic-Tac-Toe
+<div align="center">
 
-A complete vanilla HTML/CSS/JavaScript game with a real TypeSafe/JEV adapter, an authoritative backend, Discord OAuth and community launch grants, verified leaderboards, replay evidence, and exhaustive rules-space analytics.
+# Tic-Tac-Typed
 
-**No browser or server runtime packages are required for the native local server.** The local runtime uses Node's built-in HTTP, Fetch, Web Crypto, and SQLite APIs. Cloudflare deployment uses a Worker, Static Assets, and D1.
+**Three in a row against Jev, where every Jev move is a typed answer to a typed question, and every move is on the record.**
 
-## Start locally
+![Play: tic-tac-typed.jevplay.games](https://img.shields.io/badge/Play-tic--tac--typed.jevplay.games-F386A1?style=flat-square&labelColor=1E1E1E)
+![Status: live, in Discord](https://img.shields.io/badge/Status-live%2C%20in%20Discord-E551BA?style=flat-square&labelColor=1E1E1E)
+![Node: 22.16+](https://img.shields.io/badge/Node-22.16%2B-F386A1?style=flat-square&labelColor=1E1E1E)
+![Cloudflare Workers](https://img.shields.io/badge/Cloudflare-Workers-F386A1?style=flat-square&labelColor=1E1E1E)
+![License: MIT](https://img.shields.io/badge/License-MIT-DEDEDE?style=flat-square&labelColor=1E1E1E)
+
+[Quick start](#quick-start) · [How it works](#how-it-works) · [Discord and ranked play](#discord-and-ranked-play) · [Analytics](#analytics-and-integrity) · [Verify](#verify-the-implementation) · [Benchmark](#benchmark-independently-of-the-ui) · [Repository layout](#repository-layout) · [Contributing](#contributing)
+
+</div>
+
+---
+
+Tic-Tac-Typed is the classic three-in-a-row game, played in one page against Jev. Every Jev move answers a typed question about the board, which is where the name comes from. Behind the game are a real TypeSafe/Jev adapter, an authoritative backend, Discord OAuth and community launch grants, verified leaderboards, replay evidence and exhaustive rules-space analytics. It is part of [jevplay.games](https://jevplay.games), and it can also be played inside Discord.
+
+> [!NOTE]
+> **What is shipped and what is measured.**
+> - Without credentials, the game runs against a clearly labeled perfect-play fallback. Live Jev play needs a TypeSafe API key, and Discord sign-in needs your own Discord application.
+> - The tests mock TypeSafe and Discord.
+> - The packaged exhaustive reference audit measures the rules space. It is not a live Jev benchmark, and no live strength claim is made here.
+
+**No browser or server runtime packages are required for the native local server.** The local runtime uses Node's built-in HTTP, Fetch, Web Crypto and SQLite APIs. The Cloudflare deployment uses a Worker, Static Assets and D1.
+
+## Quick start
 
 Requires **Node 22.16.0 or newer**. The package was tested on Node 22.16.0; that version emits an experimental warning for its built-in SQLite module.
 
 ```powershell
 # Windows PowerShell, after extracting the ZIP:
-cd jev-tic-tac-toe
+cd jev-tic-tac-typed
 Copy-Item .env.example .env
 npm start
 ```
 
 ```sh
 # macOS / Linux:
-cd jev-tic-tac-toe
+cd jev-tic-tac-typed
 cp .env.example .env
 npm start
 ```
 
 Open **http://localhost:8787**. There is no `npm install` step for local gameplay.
 
-Without credentials, the game works against a **clearly labeled perfect-play fallback**. This is not JEV, is not a fabricated model response, and never produces official JEV leaderboard results. Browser-only practice is also available when the API cannot be reached after the page assets have loaded; the application does not install a service worker or promise offline loading of uncached assets.
+Without credentials, the game works against a **clearly labeled perfect-play fallback**. This is not Jev, is not a fabricated model response, and never produces official Jev leaderboard results. Browser-only practice is also available when the API cannot be reached after the page assets have loaded; the application does not install a service worker or promise offline loading of uncached assets.
 
-### Enable actual JEV
+### Enable actual Jev
 
 Set the following in `.env`, then restart the server:
 
@@ -44,17 +66,38 @@ The key remains server-side. The adapter calls `POST https://api.typesafe.ai/v1/
 | Easy | Board and every legal action; one move Choice |
 | Normal | Immediate win / threat facts; one move Choice |
 | Hard | Fork facts and bounded human-reply summaries; one move Choice |
-| JEV | Hard inputs plus a win/draw/loss Choice per candidate; maximize the model's predicted utility |
+| Jev | Hard inputs plus a win/draw/loss Choice per candidate; maximize the model's predicted utility |
 
-Normal play is selected by JEV, **not silently corrected by minimax**. Exact minimax is used after selection for evaluation and as the visibly labeled fallback. The intended strength ordering is unverified until live benchmarks are run. Model confidence is not an independently calibrated game-winning probability.
+Normal play is selected by Jev, **not silently corrected by minimax**. Exact minimax is used after selection for evaluation and as the visibly labeled fallback. The intended strength ordering is unverified until live benchmarks are run. Model confidence is not an independently calibrated game-winning probability.
 
-### Enable Discord and ranked play
+## How it works
 
-See [the deployment guide](docs/DEPLOYMENT.md) for Discord application setup, the callback URL, `/play tic-tac-toe`, and Cloudflare deployment. Credentials are configuration tasks, not hard-coded placeholders in the game logic.
+```mermaid
+flowchart LR
+  Player([Player in browser or Discord Activity]) --> Page[Single-page UI<br>public/]
+  Discord([Discord /play tic-tac-typed]) -->|signed interaction| Worker
+  Page -->|cookie or bearer session, CSRF| Worker[Worker backend<br>server/]
+  Worker --> Rules[Pure rules and policy<br>public/game/]
+  Worker -->|typed Choice questions| Jev([Jev via TypeSafe API])
+  Worker --> D1[(D1 / SQLite<br>match documents)]
+  D1 --> Verify[Replay and hash-chain verification]
+  Verify --> Board[Leaderboards and analytics]
+  classDef ink fill:#1E1E1E,color:#FEFEFE,stroke:#1E1E1E
+  classDef pink fill:#F386A1,color:#1E1E1E,stroke:#1E1E1E
+  class Player,Discord,Jev ink
+  class Page,Worker,Rules,D1,Verify,Board pink
+  linkStyle default stroke:#E551BA
+```
+
+The server owns every match. It applies the human move, prepares a structured request for Jev and records the answer. It then verifies the whole match by replaying it from the empty board before the result can count. The browser renders state and evidence, and never holds keys.
+
+## Discord and ranked play
+
+See [the deployment guide](docs/DEPLOYMENT.md) for Discord application setup, the callback URL, `/play tic-tac-typed` (the legacy `/play tic-tac-toe` is still accepted for one release), and Cloudflare deployment. Credentials are configuration tasks, not hard-coded placeholders in the game logic.
 
 Authentication uses `identify` only. Guild installation uses `applications.commands`. Signed Discord interactions issue a five-minute, single-use, user-bound launch code that grants fifteen minutes of verified guild/channel context. No persistent Gateway process or runtime bot token is required by this implementation.
 
-Ranked matches require a signed-in account and an actual configured JEV service. Guest matches are never converted retroactively into ranked games. A server-side fallback or recovery audit gap permanently removes that match from official rankings.
+Ranked matches require a signed-in account and an actual configured Jev service. Guest matches are never converted retroactively into ranked games. A server-side fallback or recovery audit gap permanently removes that match from official rankings.
 
 ## What is implemented
 
@@ -67,9 +110,9 @@ Ranked matches require a signed-in account and an actual configured JEV service.
 
 ## Analytics and integrity
 
-Every accepted move records its legal alternatives, exact before/after value, optimal set, minimax regret, immediate-win/block opportunities, fork features, source, and timestamps. A JEV decision additionally retains the exact structured request, allowlisted response, model ID, probabilities, confidence, input hash, retry attempts, latency, and reported token usage.
+Every accepted move records its legal alternatives, exact before/after value, optimal set, minimax regret, immediate-win/block opportunities, fork features, source, and timestamps. A Jev decision additionally retains the exact structured request, allowlisted response, model ID, probabilities, confidence, input hash, retry attempts, latency, and reported token usage.
 
-A per-match SHA-256-linked event sequence connects the manifest, prepared requests, results, accepted actions, completion, and verification. Exports can be independently replayed and checked without contacting JEV or Discord.
+A per-match SHA-256-linked event sequence connects the manifest, prepared requests, results, accepted actions, completion, and verification. Exports can be independently replayed and checked without contacting Jev or Discord.
 
 **Hash links are not signatures.** Anyone able to rewrite an entire export can recalculate the chain. Retain a trusted head hash or original export for meaningful tamper comparison. The server's private authoritative match records—not user-imported files—establish leaderboard eligibility.
 
@@ -98,7 +141,7 @@ The packaged audit confirms:
 | Legal state-transition edges | 16,167 |
 | Complete legal games, stopping on first terminal result | 255,168 |
 
-These counts describe the rules, **not JEV's measured strength**. `npm test` independently cross-checks the evaluator using a separate bitboard implementation on every reachable board and legal edge.
+These counts describe the rules, **not Jev's measured strength**. `npm test` independently cross-checks the evaluator using a separate bitboard implementation on every reachable board and legal edge.
 
 ```sh
 # Verify a completed match export, or the all-matches export:
@@ -120,7 +163,7 @@ node bench/run.js --mode positions --source random --limit 4520 --seed 20260922 
 # Alternating X/O, no external calls:
 node bench/run.js --mode games --source minimax --opponent random --limit 200 --out bench-runs/games
 
-# LIVE JEV: explicitly authorized, bounded, paid API calls.
+# LIVE Jev: explicitly authorized, bounded, paid API calls.
 # Set TYPESAFE_API_KEY in the shell, or use Node's --env-file-if-exists=.env option.
 node --env-file-if-exists=.env bench/run.js --source jev --mode positions --profile jev --limit 100 --max-calls 100 --confirm-live --out bench-runs/live-pilot
 
@@ -135,11 +178,19 @@ For a complete live position evaluation, use `--limit 4520` with a deliberately 
 
 Uncommitted live requests prevent automatic resume: the harness will not silently re-sample potentially completed inference. Preserve the interrupted run and use a new output directory. Offline baselines and fallback results always have distinct source labels.
 
-## Repository map
+## Release notes and boundaries
+
+**October 2026 — renamed to Tic-Tac-Typed.** The game moved from Tic-Tac-Toe on JEV Arcade to Tic-Tac-Typed on jevplay.games. Until the 301 cutover, both `tic-tac-typed.jevplay.games` and `tic-tac-toe.jevplay.games` are served, and both `/play tic-tac-typed` and `/play tic-tac-toe` work. New matches record `gameId: "tic-tac-typed"`; older matches keep `tic-tac-toe` and still verify. The Jev request is unchanged, so model input and request hashes are comparable across the rename. The UI moved to the shared pink/ink pixel-window theme. See [the hostname notes](docs/DEPLOYMENT.md#hostnames-tic-tac-typed-and-the-legacy-tic-tac-toe).
+
+No live TypeSafe quality claim, real Discord login, or production Cloudflare deployment was made during packaging. Their actual credentials and target account are required to perform those external smoke tests. Source and contract tests are not a substitute for that final staging check.
+
+The server verifies its game and opponent, but cannot establish that a human avoided an external solver. Do not advertise the leaderboard as cheat-proof or use it for cash-prize competitions. See [security boundaries](docs/SECURITY.md).
+
+## Repository layout
 
 ```text
 public/                 single-page UI, pure rules, policy, oracle and analysis
-server/                 portable Worker-style backend, auth, JEV, reports
+server/                 portable Worker-style backend, auth, Jev, reports
 local/                  Node HTTP + built-in SQLite / D1-compatible adapter
 migrations/             database schema
 bench/                  corpus audit, benchmark runner, frozen policy evaluation
@@ -152,8 +203,19 @@ wrangler.jsonc          Cloudflare deployment configuration
 
 Local data lives in `.data/game.sqlite` and is not included in the ZIP. Secrets, databases, dependency directories, and private browser sessions are excluded from the package.
 
-## Release notes and boundaries
+## Contributing
 
-No live TypeSafe quality claim, real Discord login, or production Cloudflare deployment was made during packaging. Their actual credentials and target account are required to perform those external smoke tests. Source and contract tests are not a substitute for that final staging check.
+Issues and pull requests are welcome. Before opening a pull request, run `npm test` and `npm run check`, then regenerate `server/build-info.js`, `reports/build-manifest.json` and `SHA256SUMS` with `node scripts/build-manifest.js`.
 
-The server verifies its game and opponent, but cannot establish that a human avoided an external solver. Do not advertise the leaderboard as cheat-proof or use it for cash-prize competitions. See [security boundaries](docs/SECURITY.md).
+Keep `public/game/` free of DOM and I/O. Do not change these stored identifiers without a version bump:
+
+- the rules version `ttt/1`
+- the Jev request's `state.game: "tic-tac-toe"`
+- the match format
+
+Matches recorded before the Tic-Tac-Typed rename carry `gameId: "tic-tac-toe"` and must keep verifying (see [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md#game-identifiers-after-the-rename)). Licensed under the [MIT License](LICENSE).
+
+<p align="center">
+<sub>A jevplay.games game · Steward: CompleteTech LLC · MIT licensed<br>
+Not an official TypeSafe AI publication; the pink, ink and pixel-window styling is a nod to <a href="https://typesafe.ai">typesafe.ai</a>. Jev, System One and TypeSafe are their respective owners' names.</sub>
+</p>

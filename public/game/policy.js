@@ -52,8 +52,10 @@ export function generateCandidates(state, difficulty='normal') {
 }
 export function buildJevRequest(state, difficulty, model) {
   const candidates = generateCandidates(state,difficulty);
-  if (!candidates.length) throw new Error('Terminal JEV request');
+  if (!candidates.length) throw new Error('Terminal Jev request');
   const mark=getPlayerToMove(state);
+  // The question text below is model input and keeps its original "JEV" wording: verifyMatch rebuilds it for every
+  // stored match, so rewording it would void pre-rename matches and change request hashes.
   const questions = {preference:{
     type:'choice',
     instructions:'Select the legal placement giving JEV the best eventual result against optimal opposition. Prefer win to draw to loss. X moves first. Three matching marks in a row wins. All candidates are legal.',
@@ -63,6 +65,8 @@ export function buildJevRequest(state, difficulty, model) {
     type:'choice', instructions:{candidateActionId:c.actionId,question:'After JEV commits candidateActionId, what eventual outcome can JEV achieve if BOTH sides subsequently play optimally?'},
     criteria:{win:'JEV can force a win.',draw:'JEV can force a draw but cannot force a win.',loss:'The human can force JEV to lose.'}
   };
+  // Model input. 'tic-tac-toe' names the rules, not the brand, and stays as is: verifyMatch rebuilds this request
+  // for every stored match, so changing it would void pre-rename matches and change the request hash.
   return {model,state:{game:'tic-tac-toe',rulesVersion:state.rulesVersion,board:state.board,jevMark:mark,humanMark:other(mark),toMove:mark,candidates},questions};
 }
 export function validateJevResponse(response, request) {

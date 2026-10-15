@@ -1,4 +1,4 @@
-/** Exact reference evaluator. NEVER included in a JEV request or normal selection policy. */
+/** Exact reference evaluator. NEVER included in a Jev request or normal selection policy. */
 import {key, other, getOutcome, getPlayerToMove, getLegalActions, applyAction, WIN_LINES} from './rules.js';
 const referenceCache = new Map();
 export function valueReference(state, perspective) {

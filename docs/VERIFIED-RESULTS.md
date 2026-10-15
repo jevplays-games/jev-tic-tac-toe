@@ -26,7 +26,7 @@ Browser checks use in-memory application assets and a bridge to the actual nativ
 
 The test suite separately implements bitboard win detection and minimax, checking every reachable board and every legal edge against the application evaluator. The terminal game-tree traversal stops immediately after a win or draw.
 
-## Offline reference baselines — not JEV
+## Offline reference baselines — not Jev
 
 Each reference policy was evaluated once at every one of the 4,520 nonterminal boards, without contacting the model service. These are uniformly weighted board observations, not estimates of player encounter frequency.
 

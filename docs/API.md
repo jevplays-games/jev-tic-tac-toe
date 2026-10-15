@@ -10,7 +10,7 @@ For browser mutations: session cookie, exact `Origin`, and `X-CSRF-Token` from `
 | `GET /api/auth/discord?launch=...` | Store optional pending launch hash and start OAuth; never consumes launch on GET |
 | `GET /api/auth/discord/callback` | Consume OAuth state, exchange code, rotate session, redirect to `/` |
 | `POST /api/logout` | Revoke current session |
-| `POST /api/discord/interactions` | Ed25519-verified Discord ping or guild `/play tic-tac-toe` |
+| `POST /api/discord/interactions` | Ed25519-verified Discord ping or guild `/play tic-tac-typed` (legacy `/play tic-tac-toe` still accepted) |
 | `POST /api/context/redeem` | Redeem the authenticated session's pending user-bound launch |
 | `POST /api/matches` | Start an authoritative match |
 | `GET /api/matches/:id` | Read own authoritative match; no inference triggered by GET |

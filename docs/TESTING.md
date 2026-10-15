@@ -2,7 +2,7 @@
 
 ## Automated code tests
 
-Run `npm test`. The suite uses Node's native test runner and actual local SQLite behind the same D1-shaped methods used by the Worker. TypeSafe and Discord responses are deliberately mocked for contract/integration tests; mocks are never offered to users as genuine JEV play.
+Run `npm test`. The suite uses Node's native test runner and actual local SQLite behind the same D1-shaped methods used by the Worker. TypeSafe and Discord responses are deliberately mocked for contract/integration tests; mocks are never offered to users as genuine Jev play.
 
 Covered paths include:
 
@@ -55,13 +55,13 @@ Resource bounds for any run: Chromium is launched with `--renderer-process-limit
 
 This container's managed Chromium blocks all URL navigation. Its policy was not changed. The recorded packaging run therefore uses `EMBEDDED_BROWSER=1`: the known application HTML/CSS/modules are supplied in memory, while an explicit test bridge forwards API requests to the actual local Node/SQLite server. This exercises rendering, actual application JavaScript, backend integration and exports, **but not normal browser navigation, same-origin transport behavior, browser cookie isolation or production CSP enforcement**.
 
-Those normal-navigation assertions remain in `tests/browser-smoke.py` for an unrestricted development/staging browser. Do not present the embedded run as an end-to-end production browser security test. Screenshots contain real no-key fallback sessions and do not fabricate JEV outputs.
+Those normal-navigation assertions remain in `tests/browser-smoke.py` for an unrestricted development/staging browser. Do not present the embedded run as an end-to-end production browser security test. Screenshots contain real no-key fallback sessions and do not fabricate Jev outputs.
 
 ## Reference and baseline artifacts
 
 `npm run audit` regenerates every reachable state and edge plus the complete-game counts. `reports/reference-audit.json` includes a corpus hash.
 
-The package's offline benchmark directories contain full position-level baseline outputs, frozen experiment manifests and source-separated summaries. They establish evaluator/baseline behavior, not JEV strength. The live harness is opt-in, requires credentials, is capped, retains request/response evidence and will not silently resume an uncommitted live request.
+The package's offline benchmark directories contain full position-level baseline outputs, frozen experiment manifests and source-separated summaries. They establish evaluator/baseline behavior, not Jev strength. The live harness is opt-in, requires credentials, is capped, retains request/response evidence and will not silently resume an uncommitted live request.
 
 ## External checks not performed here
 
