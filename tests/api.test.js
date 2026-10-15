@@ -17,7 +17,7 @@ test('CSRF and origin checks reject browser mutations independently',async t=>{
   assert.equal((await client.request('/api/matches',{method:'POST',body,headers:{'x-csrf-token':'bad'}})).status,403);
   assert.equal((await client.request('/api/matches',{method:'POST',body,headers:{origin:'https://attacker.example'}})).status,403);
 });
-test('ranked matches require both a real account session and a configured JEV key',async t=>{
+test('ranked matches require both a real account session and a configured Jev key',async t=>{
   const {client}=await setup(t);const body={requestId:crypto.randomUUID(),humanMark:'X',difficulty:'normal',ranked:true};
   assert.equal((await client.request('/api/matches',{method:'POST',body})).status,401);await loginFixture(client);assert.equal((await client.request('/api/matches',{method:'POST',body})).status,503);
 });
@@ -28,7 +28,7 @@ test('ranked match verifies genuine adapter decisions with a mocked provider',as
   const{client}=await setup(t,{TYPESAFE_API_KEY:'fixture-secret'});await loginFixture(client);const m=await playToEnd(client,await start(client,{ranked:true,difficulty:'jev'}));assert.equal(m.outcome,'draw');assert.equal(m.eligible,true);assert.equal(m.audit.ok,true);assert.ok(m.actions.some(a=>a.decision?.source==='jev'));assert.equal((await verifyMatch(m)).ok,true);
   const leader=await client.request('/api/leaderboard?difficulty=jev&mark=X');assert.equal(leader.status,200);assert.equal(leader.data.entries.length,1);assert.equal(leader.data.entries[0].draws,1);assert.equal(leader.data.entries[0].provisional,true);
 });
-test('playing as O schedules and records the initial JEV move',async t=>{
+test('playing as O schedules and records the initial Jev move',async t=>{
   const{client}=await setup(t,{TYPESAFE_API_KEY:'fixture'});const m=await start(client,{humanMark:'O'});assert.equal(m.actions.length,1);assert.equal(m.actions[0].actor,'jev');assert.equal(m.status,'human_turn');assert.equal(m.board.filter(c=>c==='X').length,1);
 });
 test('oracle data and raw request are not exposed during an active ranked game',async t=>{
@@ -82,7 +82,7 @@ test('export verifier detects action, model evidence and hash-chain tampering',a
   const{client}=await setup(t,{TYPESAFE_API_KEY:'fixture'});const m=await playToEnd(client,await start(client));assert.equal((await verifyMatch(m)).ok,true);
   const copies=[structuredClone(m),structuredClone(m),structuredClone(m)];copies[0].actions[0].cell=8;copies[1].actions.find(a=>a.decision?.source==='jev').decision.response.model='other';copies[2].events[0].payload.humanMark='O';for(const copy of copies)assert.equal((await verifyMatch(copy)).ok,false);
 });
-test('personal analytics separate human/JEV/forced/fallback and history is paginated',async t=>{
+test('personal analytics separate human/Jev/forced/fallback and history is paginated',async t=>{
   const{client}=await setup(t);for(let i=0;i<3;i++)await playToEnd(client,await start(client));
   const data=(await client.request('/api/analytics')).data;assert.equal(data.summary.matches,3);assert.ok(data.summary.bySource.human);assert.ok(data.summary.bySource['fallback-minimax']);assert.equal(data.summary.bySource.jev,undefined);assert.equal(data.summary.summary.inputTokens,0);assert.equal(data.coverage.truncated,false);
   const first=(await client.request('/api/history?limit=2')).data;assert.equal(first.matches.length,2);assert.ok(first.next);const second=(await client.request('/api/history?'+new URLSearchParams({...first.next,limit:2}))).data;assert.equal(second.matches.length,1);assert.equal(second.next,null);assert.equal(new Set([...first.matches,...second.matches].map(m=>m.id)).size,3);
@@ -97,7 +97,7 @@ test('oversized JSON and non-JSON mutations reject',async t=>{
   const{env,client}=await setup(t);let r=await client.request('/api/matches',{method:'POST',body:{huge:'x'.repeat(5000)}});assert.equal(r.status,413);
   r=await client.request('/api/matches',{method:'POST',body:{},headers:{'content-type':'text/plain'}});assert.equal(r.status,415);
 });
-test('unknown actions and arbitrary proxy paths do not expose a JEV proxy',async t=>{
+test('unknown actions and arbitrary proxy paths do not expose a Jev proxy',async t=>{
   const{client}=await setup(t);assert.equal((await client.request('/api/jev',{method:'POST',body:{state:'malicious'}})).status,404);
 });
 test('changing duplicate decision evidence while preserving its chosen cell is detected',async t=>{

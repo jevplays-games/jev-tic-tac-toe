@@ -139,6 +139,6 @@ with sync_playwright() as p:
     assert not errors, errors
     checks.append('No uncaught browser JavaScript exceptions')
     browser.close()
-result = {'browser': 'Chromium', 'basis': 'In-memory assets + actual local SQLite HTTP API via test bridge; navigation/cookie isolation not covered' if EMBEDDED else 'Actual local server + SQLite + no-key fallback, NOT live JEV or Discord', 'passed': len(checks), 'checks': checks, 'pageErrors': errors}
+result = {'browser': 'Chromium', 'basis': 'In-memory assets + actual local SQLite HTTP API via test bridge; navigation/cookie isolation not covered' if EMBEDDED else 'Actual local server + SQLite + no-key fallback, NOT live Jev or Discord', 'passed': len(checks), 'checks': checks, 'pageErrors': errors}
 (REPORT/'browser-test-results.json').write_text(json.dumps(result, indent=2)+'\n')
 print(json.dumps(result, indent=2))
