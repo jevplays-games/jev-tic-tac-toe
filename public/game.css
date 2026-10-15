@@ -8,6 +8,8 @@
    defines darker series colours here. Fills and swatches only; text stays ink. */
 :root{--x:var(--magenta);--o:var(--magenta);--cell-line:var(--ink);--chart-jev:#7A4E0B;--chart-human:#155A80}
 body{font-size:var(--fs-sm);line-height:1.6}
+/* The header is sticky: anything scrolled into view (Records > Open, the skip link, keyboard focus) lands below it. */
+html{scroll-padding-top:calc(var(--header-h) + var(--sa-t) + var(--s3))}
 button,.button{cursor:pointer;text-decoration:none;border:1px solid var(--ink);border-radius:var(--radius-sm);padding:var(--s2) var(--s4);min-height:var(--tap);color:var(--text);background:var(--raised);display:inline-flex;align-items:center;justify-content:center;gap:var(--s2);white-space:nowrap}
 button:disabled,select:disabled{cursor:not-allowed;opacity:.48}
 @media(hover:hover){button:not(:disabled):hover,.button:hover{background:var(--surface)}.primary:not(:disabled):hover{background:var(--accent)}}
@@ -49,7 +51,9 @@ h2{font-size:var(--fs-lg);letter-spacing:-.3px;font-weight:600;margin:0}h3{font-
 .competitor.right{justify-content:flex-end;text-align:right}
 .competitor>div{min-width:0}
 .competitor.is-turn{border-color:var(--ink);box-shadow:var(--drop-sm),inset 0 -3px 0 var(--magenta)}
-.competitor strong{font-size:var(--fs-sm);font-weight:650;display:block}.competitor small{font-size:var(--fs-2xs);color:var(--muted);display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* The second line carries provenance ("Perfect-play fallback · unranked", "Browser-only · unranked"): it wraps
+   on a narrow card instead of being cut off. */
+.competitor strong{font-size:var(--fs-sm);font-weight:650;display:block}.competitor small{font-size:var(--fs-2xs);color:var(--muted);display:block}
 .mark{flex:none;width:2.25rem;height:2.25rem;font-size:0;line-height:0;color:transparent;background:center/contain no-repeat}
 .mark.x{background-image:url(/art/x.svg)}.mark.o{background-image:url(/art/o.svg)}
 .versus{align-self:center;font-family:var(--mono);font-size:var(--fs-2xs);color:var(--subtle)}
@@ -62,7 +66,8 @@ h2{font-size:var(--fs-lg);letter-spacing:-.3px;font-weight:600;margin:0}h3{font-
 .board{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);aspect-ratio:1;gap:3%;padding:3.4%}
 .cell{--focus-offset:-3px;position:relative;min-width:0;min-height:0;width:100%;height:100%;padding:0;border:1px solid var(--cell-line);border-radius:0;background:var(--sunken);box-shadow:var(--well);transition:border-color .12s,box-shadow .12s}
 .cell[aria-disabled=true]{cursor:default}
-@media(hover:hover){.cell[aria-disabled=true]:hover{filter:none}}.cell[aria-disabled=true]:active{filter:none}
+/* A taken or locked square does not answer the pointer: it keeps its well colour under the generic button hover. */
+@media(hover:hover){.cell[aria-disabled=true]:hover{background:var(--sunken)}}.cell[aria-disabled=true]:active{background:var(--sunken)}
 .cell .coord{position:absolute;left:8%;top:7%;font-family:var(--mono);font-size:var(--fs-xs);color:var(--muted);font-weight:400;line-height:1}
 /* The piece: art/x.svg or art/o.svg, painted by the cell's x/o class. */
 .piece{position:absolute;inset:9%;background:center/contain no-repeat;pointer-events:none}
@@ -141,8 +146,9 @@ details{border-top:1px solid var(--line);margin-top:var(--s4);padding-top:var(--
 pre{white-space:pre-wrap;word-break:break-word;font-size:var(--fs-2xs);font-family:var(--mono);max-height:400px;overflow:auto;background:var(--sunken);padding:var(--s4);border-radius:var(--radius-sm)}
 .analytics-filters{display:flex;gap:var(--s4);align-items:end;flex-wrap:wrap}.analytics-filters .muted{margin-left:auto}
 .metric-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--s3)}
-/* Built by app.js with a legacy .panel class, so the pixel-window card is restated here. */
-.metric{padding:var(--s5);min-width:0;background:var(--surface);border:1px solid var(--line);border-radius:0;box-shadow:var(--raise)}
+/* Built by app.js with a legacy .panel class, so the pixel-window card is restated here. Each card spans three rows of
+   the grid as a subgrid, so label, value and note line up across a row even when one label wraps to two lines. */
+.metric{padding:var(--s5);min-width:0;background:var(--surface);border:1px solid var(--line);border-radius:0;box-shadow:var(--raise);display:grid;grid-row:span 3;grid-template-rows:subgrid;row-gap:0;align-content:start}
 .metric>span{font-family:var(--font-pixel);font-size:var(--fs-sm);text-transform:uppercase;letter-spacing:var(--track-caps);color:var(--muted);display:block;margin-bottom:var(--s3)}
 .metric>strong{font-size:var(--fs-num-lg);font-family:var(--mono);font-weight:400;letter-spacing:0}
 .metric>small{font-size:var(--fs-2xs);color:var(--muted);display:block;margin-top:var(--s1)}
