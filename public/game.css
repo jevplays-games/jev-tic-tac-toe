@@ -90,7 +90,9 @@ h2{font-size:var(--fs-lg);letter-spacing:-.3px;font-weight:600;margin:0}h3{font-
    through them and the other pieces step back. */
 .board[data-winner=X]{--win:var(--x)}.board[data-winner=O]{--win:var(--o)}
 .cell.winning{border-color:var(--ink);box-shadow:inset 0 0 0 3px var(--win)}
-.board[data-winner] .cell:not(.winning) .piece{opacity:.38}
+/* Stepped back, still a mark: ink at .55 on the paper well holds 3.8:1 (at .38 it was 2.4:1). This shows whenever the
+   pop animation is not holding the piece at full opacity, e.g. for players who prefer reduced motion. */
+.board[data-winner] .cell:not(.winning) .piece{opacity:.55}
 .board::after{content:"";position:absolute;left:6%;right:6%;top:50%;height:1.6%;margin-top:-.8%;border-radius:0;background:var(--ink);box-shadow:0 0 0 2px var(--win);opacity:0;pointer-events:none}
 .board[data-strike]::after{opacity:1;animation:strike .42s var(--ease-out) both}
 .board[data-strike="012"]::after{top:18%}.board[data-strike="678"]::after{top:82%}

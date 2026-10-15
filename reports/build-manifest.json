@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceHash": "c036330e70847c25b9a2442d0d9aff4a792be0c763a96dac554711b1c448d4c7",
+  "sourceHash": "cb771d16bce4a79d1d07b9b586ef634ac8d98ece413ec4006ef684dcb5e86f61",
   "files": [
     {
       "path": "local/database.js",
@@ -119,8 +119,8 @@
     },
     {
       "path": "public/game.css",
-      "sha256": "5978424ce863c861fea09c435d5e4aeb9f338d6237c283eec64af47d85ce4296",
-      "bytes": 24114
+      "sha256": "f17844d9164b4cceb0cf49026f8a56386b31282a3ea4cfee26b1b727135acab1",
+      "bytes": 24339
     },
     {
       "path": "public/game/analytics.js",
