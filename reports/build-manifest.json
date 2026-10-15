@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceHash": "011342d7725bc0ede04ffed1177a0932d7593e18ae45c766ef56ebb641f81fb3",
+  "sourceHash": "a088dcfd24fab49989387f6a2b061af2803e79f398803855bc5f13131ca6e6b3",
   "files": [
     {
       "path": "local/database.js",
@@ -99,18 +99,18 @@
     },
     {
       "path": "public/brand/result-draw.svg",
-      "sha256": "83f3465fe54af8fc6233baa51b78d0250f16ea0d71ae81b954aec6f4d4beb686",
-      "bytes": 1330
+      "sha256": "062b1870a9529cda260961a8752c1618b005e0fdb82852d1137a28cba30240b7",
+      "bytes": 1384
     },
     {
       "path": "public/brand/result-loss.svg",
-      "sha256": "5c745c975e035e1a3f5d4564b6a1e23534b65ac9cfeddd0e86cfb20eb762a17b",
-      "bytes": 1030
+      "sha256": "deefc98bac79f7f4c98db5f03d175a474693a7564e63e6ae26f78ce72e856aa3",
+      "bytes": 1477
     },
     {
       "path": "public/brand/result-win.svg",
-      "sha256": "9b3e8a0d4282609bd21acbe2002a797d63eb5ce4ed02c01b17d9eafca5f1dd44",
-      "bytes": 1118
+      "sha256": "d53d1ea9fe06022f6d4ac4abc4ef206f304bebf922168bc025695c3e4db6376c",
+      "bytes": 1350
     },
     {
       "path": "public/brand/vt323.woff2",

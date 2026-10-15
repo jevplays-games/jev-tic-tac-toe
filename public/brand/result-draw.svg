@@ -1,11 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" shape-rendering="crispEdges">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <title>Draw</title>
-  <path fill="#1E1E1E" d="M7 13h54v44H7z"/>
-  <path fill="#1E1E1E" d="M4 10h54v44H4z"/>
-  <path fill="#FEFEFE" d="M6 22h50v30H6z"/>
-  <path fill="#DEDEDE" d="M8 24h46v26H8z"/>
-  <!-- Pixel title-bar controls: _ x -->
-  <path fill="#FEFEFE" d="M38 18h6v2h-6z M48 14h2v2h-2z M52 14h2v2h-2z M50 16h2v2h-2z M48 18h2v2h-2z M52 18h2v2h-2z"/>
-  <!-- DRAW: font-independent pixel lettering. -->
-  <path fill="#1E1E1E" d="M11 30h7v2h-7z M11 32h2v2h-2z M18 32h2v2h-2z M11 34h2v2h-2z M18 34h2v2h-2z M11 36h2v2h-2z M18 36h2v2h-2z M11 38h2v2h-2z M18 38h2v2h-2z M11 40h2v2h-2z M18 40h2v2h-2z M11 42h7v2h-7z M21 30h7v2h-7z M21 32h2v2h-2z M28 32h2v2h-2z M21 34h2v2h-2z M28 34h2v2h-2z M21 36h7v2h-7z M21 38h2v2h-2z M25 38h1v2h-1z M21 40h2v2h-2z M26 40h2v2h-2z M21 42h2v2h-2z M28 42h2v2h-2z M33 30h5v2h-5z M31 32h2v2h-2z M38 32h2v2h-2z M31 34h2v2h-2z M38 34h2v2h-2z M31 36h9v2h-9z M31 38h2v2h-2z M38 38h2v2h-2z M31 40h2v2h-2z M38 40h2v2h-2z M31 42h2v2h-2z M38 42h2v2h-2z M41 30h2v2h-2z M48 30h2v2h-2z M41 32h2v2h-2z M48 32h2v2h-2z M41 34h2v2h-2z M48 34h2v2h-2z M41 36h2v2h-2z M45 36h1v2h-1z M48 36h2v2h-2z M41 38h2v2h-2z M45 38h1v2h-1z M48 38h2v2h-2z M41 40h2v2h-2z M45 40h1v2h-1z M48 40h2v2h-2z M43 42h2v2h-2z M46 42h2v2h-2z"/>
+  <g shape-rendering="crispEdges">
+    <!-- Hard two-pixel window shadow and one-pixel ink frame. -->
+    <rect x="7" y="7" width="52" height="52" fill="#1E1E1E"/>
+    <rect x="5" y="5" width="52" height="52" fill="#1E1E1E"/>
+    <rect x="6" y="6" width="50" height="50" fill="#FEFEFE"/>
+    <rect x="8" y="18" width="46" height="36" fill="#DEDEDE"/>
+    <rect x="8" y="8" width="46" height="10" fill="#1E1E1E"/>
+    <!-- Pixel lettering and window controls require no font. -->
+    <path d="M10 10h1v1h-1z M11 10h1v1h-1z M10 11h1v1h-1z M12 11h1v1h-1z M10 12h1v1h-1z M12 12h1v1h-1z M10 13h1v1h-1z M12 13h1v1h-1z M10 14h1v1h-1z M11 14h1v1h-1z M14 10h1v1h-1z M15 10h1v1h-1z M14 11h1v1h-1z M16 11h1v1h-1z M14 12h1v1h-1z M15 12h1v1h-1z M14 13h1v1h-1z M16 13h1v1h-1z M14 14h1v1h-1z M16 14h1v1h-1z M19 10h1v1h-1z M18 11h1v1h-1z M20 11h1v1h-1z M18 12h1v1h-1z M19 12h1v1h-1z M20 12h1v1h-1z M18 13h1v1h-1z M20 13h1v1h-1z M18 14h1v1h-1z M20 14h1v1h-1z M22 10h1v1h-1z M24 10h1v1h-1z M22 11h1v1h-1z M24 11h1v1h-1z M22 12h1v1h-1z M24 12h1v1h-1z M22 13h1v1h-1z M23 13h1v1h-1z M24 13h1v1h-1z M22 14h1v1h-1z M24 14h1v1h-1z" fill="#FEFEFE"/>
+    <path d="M39 14h5v1h-5zM47 10h2v2h2v-2h2v2h-2v2h2v2h-2v-2h-2v2h-2v-2h2v-2h-2z" fill="#FEFEFE"/>
+    <path d="M18 29h26v6H18zM18 41h26v6H18z" fill="#1E1E1E"/>
+  </g>
 </svg>
