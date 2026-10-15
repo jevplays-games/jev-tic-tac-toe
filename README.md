@@ -206,7 +206,13 @@ Local data lives in `.data/game.sqlite` and is not included in the ZIP. Secrets,
 
 ## Contributing
 
-Issues and pull requests are welcome. Before opening a pull request, run `npm test` and `npm run check`, then regenerate `server/build-info.js`, `reports/build-manifest.json` and `SHA256SUMS` with `node scripts/build-manifest.js`.
+Issues and pull requests are welcome. Before opening a pull request, run `npm test` and `npm run check`. Then regenerate the generated files: `node scripts/build-manifest.js` rewrites `server/build-info.js` and `reports/build-manifest.json`, and `SHA256SUMS` lists every tracked file except itself, sorted by path:
+
+```sh
+node scripts/build-manifest.js
+git ls-files | grep -vx SHA256SUMS | LC_ALL=C sort | xargs shasum -a 256 > SHA256SUMS
+shasum -a 256 -c SHA256SUMS
+```
 
 Keep `public/game/` free of DOM and I/O. Do not change these stored identifiers without a version bump:
 
