@@ -14,6 +14,7 @@
     "benchmark": "node bench/run.js",
     "verify-export": "node scripts/verify-export.js",
     "discord:register": "node --env-file-if-exists=.env scripts/register-discord.js",
-    "check": "node scripts/check.js"
+    "check": "node scripts/check.js",
+    "deploy:godaddy": "node --env-file-if-exists=.env scripts/godaddy-deploy.js"
   }
 }
