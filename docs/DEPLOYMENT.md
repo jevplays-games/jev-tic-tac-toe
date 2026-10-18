@@ -141,3 +141,12 @@ The same Worker handler runs as a plain Node app. GoDaddy runs `npm run build` (
 - Other env: `TYPESAFE_API_KEY`, `PINNED_JEV_MODEL`, `DISCORD_APPLICATION_ID`, `DISCORD_CLIENT_SECRET`, `DISCORD_PUBLIC_KEY`, the quota variables, and optional `ADMIN_ANALYTICS_KEY`. Real process env vars override `.env`.
 - SQLite lives at `data/game.sqlite` (override `DATABASE_PATH`), outside `public/`, so it is never served. The filesystem is ephemeral: a redeploy loses matches, sessions and rankings (accepted).
 - The Cloudflare cron trigger is replaced by the in-process 60 second `maintenance` timer.
+
+## Continuous deployment to GoDaddy
+
+`.github/workflows/deploy.yml` runs `npm test` on every pull request and push. On a push to `main` (or **Run workflow**) it then zips the committed tree with `git archive` and `scripts/godaddy-deploy.js` uploads it through the GoDaddy Hosting API (`https://api.godaddy.com/v1/hosting`), waits for the import, and deploys it to the published app `NODEJS-minm8ezhy6`. A failed test, import or build stops the run and leaves the live app unchanged.
+
+- Repository secret `GODADDY_PAT`: a GoDaddy Personal Access Token with `hosting.application:read`, `hosting.source:write` and `hosting.deployment:execute`. Without it the deploy step is skipped with a warning.
+- Optional repository variable `GODADDY_APP_ID` overrides the target app (API IDs carry the `NODEJS-` prefix).
+- Runtime configuration is not in the zip: keep it under the app's **Settings → Secrets** (Preview and Publish) in GoDaddy.
+- Manual deploy: put `GODADDY_APP_ID` and `GODADDY_PAT` in `.env`, then `git archive --format=zip -o deploy.zip HEAD && npm run deploy:godaddy -- deploy.zip`.
